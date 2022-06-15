@@ -1,0 +1,58 @@
+<form [formGroup]="form" novalidate>
+  <div class="selectors-wrapper">
+    <div class="currency">
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="currency">
+          <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+            {{currency.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="assets">
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="assets" multiple (selectionChange)="onMultiselectClick($event.value)">
+          <mat-option *ngFor="let asset of assets" [value]="asset">{{asset}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h4>My Assets</h4>
+    </div>
+  </div>
+</form>
+<div class="range-selectors">
+  <button
+    [ngClass]="{active: selectedRange === 'custom'}"
+    (click)="onSelectRange('custom')"
+  >
+    <span *ngIf="selectedRange !== 'custom'">{{'BUTTON.CUSTOM' | translate}}</span>
+    <span *ngIf="selectedRange === 'custom'">
+      {{form.controls['startDate']['value'] | date: 'dd.MM.yy'}} -
+      {{form.controls['endDate']['value'] | date: 'dd.MM.yy'}}
+    </span>
+  </button>
+  <button
+    [ngClass]="{active: selectedRange === 'startOfTheYear'}"
+    (click)="onSelectRange('startOfTheYear')"
+  >
+    {{'BUTTON.STARTOFTHEYEAR' | translate}}
+  </button>
+  <button
+    [ngClass]="{active: selectedRange === '12 month'}"
+    (click)="onSelectRange('12 month')"
+  >
+    {{'BUTTON.ONEYEAR' | translate}}
+  </button>
+  <button
+    [ngClass]="{active: selectedRange === '6 month'}"
+    (click)="onSelectRange('6 month')"
+  >
+    {{'BUTTON.HALFAYEAR' | translate}}
+  </button>
+  <button
+    [ngClass]="{active: selectedRange === '3 month'}"
+    (click)="onSelectRange('3 month')"
+  >
+    {{'BUTTON.QUARTER' | translate}}
+  </button>
+</div>

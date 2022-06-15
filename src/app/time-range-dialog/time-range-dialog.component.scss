@@ -1,0 +1,56 @@
+.dialog-content {
+
+  .row {
+    margin-bottom: 10px;
+
+    .label,
+    .example-full-width {
+      display: inline-block;
+    }
+  }
+
+  .label {
+    width: 50px;
+    text-align: right;
+    color: #43507c;
+  }
+
+  .example-full-width {
+    width: 120px;
+  }
+
+  .validation-message {
+    max-width: 150px;
+    background-color: #f6f9fd;
+    color: #43507c;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .save,
+  .close {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+
+    .mat-button {
+      width: 100%;
+      color: #43507c;
+    }
+
+    .mat-raised-button.mat-primary {
+      color: #43507c;
+      background-color: #ffc00e;
+      border-radius: 0;
+    }
+
+    .mat-raised-button:disabled,
+    .mat-raised-button[disabled] {
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
+    }
+  }
+}
+

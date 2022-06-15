@@ -1,0 +1,45 @@
+.selectors-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  .currency {
+    width: 40px;
+  }
+
+  .assets {
+    mat-select,
+    h4 {
+      display: inline !important;
+    }
+  }
+  mat-form-field {
+    margin-right: 20px;
+  }
+}
+
+.range-selectors {
+  padding: 30px 0;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    background-color: #f6f6f6;
+    color: #43507c;
+    width: 170px;
+    min-width: 100px;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      background-color: #ffc00e;
+      color: #19285f;
+      font-weight: 700;
+    }
+  }
+}

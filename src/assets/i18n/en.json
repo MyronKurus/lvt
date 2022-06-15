@@ -1,0 +1,19 @@
+{
+  "BUTTON": {
+    "QUARTER": "3 Month",
+    "HALFAYEAR": "6 Month",
+    "ONEYEAR": "12 Month",
+    "STARTOFTHEYEAR": "Current Year",
+    "CUSTOM": "Select Period",
+    "SAVE": "SAVE",
+    "CLOSE": "CLOSE"
+  },
+  "DATERANGE": {
+    "START": "Start:",
+    "END": "End:"
+  },
+  "VALIDATION": {
+    "REQUIRED": "All fields are required!",
+    "GREATERTHAN": "End date should be greater than Start date!"
+  }
+}

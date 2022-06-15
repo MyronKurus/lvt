@@ -1,0 +1,78 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 30px;
+}
+
+html, body {
+  height: 100%;
+}
+
+.mat-form-field {
+  text-align: right !important;
+  max-width: 100%;
+}
+
+.mat-select-arrow-wrapper {
+  position: absolute !important;
+}
+
+.mat-option-text {
+  text-align: right !important;
+}
+
+.mat-form-field-appearance-fill {
+  .mat-form-field-flex {
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+  .mat-form-field-infix {
+    padding: 0 !important;
+  }
+}
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #000;
+}
+
+.mat-select-arrow-wrapper {
+  transform: none !important;
+}
+
+.mat-select-value {
+  max-width: 90%;
+  margin-left: 20px;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked,
+.mat-primary .mat-pseudo-checkbox-indeterminate {
+  background: #ffc00e;
+}
+
+.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+  width: 1.5em !important;
+  height: 1.5em !important;
+}
+
+.mat-form-field-suffix .mat-icon {
+  font-size: 100% !important;
+}
+
+.mat-input-element {
+  caret-color: #000 !important;
+}
+
+.mat-focused .mat-form-field-label {
+  color: #6f6f6f !important;
+  font-size: 16px;
+}
+
+.mat-form-field-underline {
+  background-color: #6f6f6f !important;
+}
+
+.mat-form-field-ripple {
+  background-color: #6f6f6f !important;;
+}
