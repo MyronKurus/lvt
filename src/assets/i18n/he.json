@@ -1,19 +1,24 @@
 {
-  "BUTTON": {
+  "SELECTOR": {
+    "ASSETS": "My Assets"
+  },
+  "RANGE": {
     "QUARTER": "3 Month",
-    "HALFAYEAR": "6 Month",
-    "ONEYEAR": "12 Month",
-    "STARTOFTHEYEAR": "Current Year",
-    "CUSTOM": "Select Period",
+    "HALF_A_YEAR": "6 Month",
+    "ONE_YEAR": "12 Month",
+    "START_OF_THE_YEAR": "Current Year",
+    "CUSTOM": "Select Period"
+  },
+  "BUTTON": {
     "SAVE": "SAVE",
     "CLOSE": "CLOSE"
   },
-  "DATERANGE": {
+  "DATE_RANGE": {
     "START": "Start:",
     "END": "End:"
   },
   "VALIDATION": {
     "REQUIRED": "All fields are required!",
-    "GREATERTHAN": "End date should be greater than Start date!"
+    "GREATER_THAN": "End date should be greater than Start date!"
   }
 }
