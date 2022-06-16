@@ -16,7 +16,7 @@
           <mat-option *ngFor="let asset of assets" [value]="asset">{{asset}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <h4>My Assets</h4>
+      <h4>{{'SELECTOR.ASSETS' | translate}}</h4>
     </div>
   </div>
 </form>
@@ -25,7 +25,7 @@
     [ngClass]="{active: selectedRange === 'custom'}"
     (click)="onSelectRange('custom')"
   >
-    <span *ngIf="selectedRange !== 'custom'">{{'BUTTON.CUSTOM' | translate}}</span>
+    <span *ngIf="selectedRange !== 'custom'">{{'RANGE.CUSTOM' | translate}}</span>
     <span *ngIf="selectedRange === 'custom'">
       {{form.controls['startDate']['value'] | date: 'dd.MM.yy'}} -
       {{form.controls['endDate']['value'] | date: 'dd.MM.yy'}}
@@ -35,24 +35,24 @@
     [ngClass]="{active: selectedRange === 'startOfTheYear'}"
     (click)="onSelectRange('startOfTheYear')"
   >
-    {{'BUTTON.STARTOFTHEYEAR' | translate}}
+    {{'RANGE.START_OF_THE_YEAR' | translate}}
   </button>
   <button
     [ngClass]="{active: selectedRange === '12 month'}"
     (click)="onSelectRange('12 month')"
   >
-    {{'BUTTON.ONEYEAR' | translate}}
+    {{'RANGE.ONE_YEAR' | translate}}
   </button>
   <button
     [ngClass]="{active: selectedRange === '6 month'}"
     (click)="onSelectRange('6 month')"
   >
-    {{'BUTTON.HALFAYEAR' | translate}}
+    {{'RANGE.HALF_A_YEAR' | translate}}
   </button>
   <button
     [ngClass]="{active: selectedRange === '3 month'}"
     (click)="onSelectRange('3 month')"
   >
-    {{'BUTTON.QUARTER' | translate}}
+    {{'RANGE.QUARTER' | translate}}
   </button>
 </div>

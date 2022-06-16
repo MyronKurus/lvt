@@ -9,7 +9,7 @@
         </mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
       </mat-form-field>
-      <div class="label">{{'DATERANGE.START' | translate}}</div>
+      <div class="label">{{'DATE_RANGE.START' | translate}}</div>
     </div>
 
     <div class="row">
@@ -21,7 +21,7 @@
         </mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
-      <div class="label">{{'DATERANGE.END' | translate}}</div>
+      <div class="label">{{'DATE_RANGE.END' | translate}}</div>
     </div>
 
     <div class="row">
@@ -29,7 +29,7 @@
         class="validation-message"
         *ngIf="(form.controls['startDate'].value > form.controls['endDate'].value) && form.controls['endDate'].value"
       >
-        {{'VALIDATION.GREATERTHAN' | translate}}
+        {{'VALIDATION.GREATER_THAN' | translate}}
       </div>
       <div
         class="validation-message"
