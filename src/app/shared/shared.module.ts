@@ -1,41 +1,40 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {HttpClient} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 
-import {HttpLoaderFactory} from "../core/helpers/http-loader-factory";
-
+import {ChartModule} from "primeng/chart";
 import {MaterialModule} from "./material/material.module";
 
+import { ChartComponent } from './components/chart/chart.component';
 import {SelectionFiltersComponent} from "./components/selection-filters/selection-filters.component";
+
+const MODULES = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MaterialModule,
+  TranslateModule,
+  ChartModule
+];
+
+const COMPONENTS = [
+  SelectionFiltersComponent,
+  ChartComponent
+];
 
 
 @NgModule({
   declarations: [
-    SelectionFiltersComponent
+    ...COMPONENTS
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
+    ...MODULES
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    TranslateModule,
-    SelectionFiltersComponent
+    ...MODULES,
+    ...COMPONENTS
   ]
 })
 export class SharedModule {

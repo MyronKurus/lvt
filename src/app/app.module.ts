@@ -1,34 +1,37 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+
+import {HttpLoaderFactory} from "./core/helpers/http-loader-factory";
 import {DATE_FORMATS} from "./core/helpers/datepicker-formatter";
 
-import {SharedModule} from "./shared/shared.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {DialogModule} from "./shared/dialogs/dialog.module";
 
 import {AppComponent} from './app.component';
-import {ContentComponent} from './modules/content/content.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContentComponent,
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
-    SharedModule,
     DialogModule,
-  ],
-  exports: [
-    SharedModule
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient]
+      },
+      useDefaultLang: false
+    }),
   ],
   providers: [
     {
