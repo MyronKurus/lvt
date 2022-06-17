@@ -1,15 +1,23 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from "@angular/router";
+
+import {ERoutes} from "../../core/enums/routes";
+
+import {SharedModule} from "../../shared/shared.module";
 
 import {ContentComponent} from "./content.component";
 
+export const routes: Routes = [
+  {path: ERoutes.EMPTY, component: ContentComponent}
+];
 
 @NgModule({
   declarations: [
     ContentComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
+    RouterModule.forChild(routes),
   ]
 })
 export class ContentModule {
