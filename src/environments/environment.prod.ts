@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: '',
+  languages: ['en', 'he'],
+  defaultLang: 'he'
 };
