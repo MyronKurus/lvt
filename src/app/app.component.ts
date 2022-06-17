@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import {RepoConfig} from "./core/configs/config";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
 
   constructor(public translate: TranslateService) {
-    translate.addLangs(['en', 'he']);
-    translate.setDefaultLang('en');
-    translate.use('en');
+    translate.addLangs(RepoConfig.locales);
+    translate.setDefaultLang(RepoConfig.defLocale);
   }
 }

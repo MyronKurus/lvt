@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { TimeRangeDialogComponent } from "../time-range-dialog/time-range-dialog.component";
+import { TimeRangeDialogComponent } from "../../dialogs/time-range-dialog/time-range-dialog.component";
 
 
 interface Currency {
