@@ -7,7 +7,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {ChartModule} from "primeng/chart";
 import {MaterialModule} from "./material/material.module";
 
-import { ChartComponent } from './components/chart/chart.component';
+import {ChartComponent} from './components/chart/chart.component';
 import {SelectionFiltersComponent} from "./components/selection-filters/selection-filters.component";
 
 const MODULES = [
