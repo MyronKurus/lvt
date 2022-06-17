@@ -76,3 +76,12 @@ html, body {
 .mat-form-field-ripple {
   background-color: #6f6f6f !important;;
 }
+
+.ng-invalid.ng-touched {
+  .mat-form-field-underline {
+    background-color: red !important;
+  }
+  .mat-form-field-ripple {
+    background-color: red !important;;
+  }
+}
