@@ -4,11 +4,14 @@ import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-import {AppComponent} from './app.component';
-import {ContentComponent} from './content/content.component';
 import {DATE_FORMATS} from "./core/helpers/datepicker-formatter";
+
 import {SharedModule} from "./shared/shared.module";
+import {AppRoutingModule} from "./app-routing.module";
 import {DialogModule} from "./shared/dialogs/dialog.module";
+
+import {AppComponent} from './app.component';
+import {ContentComponent} from './modules/content/content.component';
 
 
 @NgModule({
@@ -19,6 +22,7 @@ import {DialogModule} from "./shared/dialogs/dialog.module";
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    AppRoutingModule,
     HttpClientModule,
     SharedModule,
     DialogModule,
