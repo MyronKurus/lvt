@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Moment} from "moment";
-import * as moment from "moment";
+import {dateValidator} from "../../../core/helpers/date.validator";
 
 @Component({
   selector: 'app-time-range-dialog',
@@ -30,8 +29,18 @@ export class TimeRangeDialogComponent implements OnInit {
     this.minDate = new Date(currentYear - 1, currentMonth, currentDay);
     this.maxDate = new Date();
     this.form = this.fb.group({
-      startDate: [null, Validators.required],
-      endDate: [null, Validators.required],
+      startDate: [null, {
+        validators: [
+          Validators.required,
+          dateValidator()
+        ]
+      }],
+      endDate: [null, {
+        validators: [
+          Validators.required,
+          dateValidator()
+        ]
+      }],
     });
   }
 

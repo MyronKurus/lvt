@@ -38,6 +38,12 @@
       >
         {{'VALIDATION.REQUIRED' | translate}}
       </div>
+      <div
+        class="validation-message"
+        *ngIf="form.controls['startDate']?.hasError('invalidDate')"
+      >
+        {{'VALIDATION.INVALID_DATE' | translate}}
+      </div>
     </div>
 
   </mat-dialog-content>
