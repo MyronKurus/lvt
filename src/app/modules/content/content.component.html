@@ -1,3 +1,4 @@
-<app-selection-filters></app-selection-filters>
+<app-selection-filters (formValue)="onFormValueChange($event)"></app-selection-filters>
+<app-summary-line *ngIf="formValue" [data]="formValue"></app-summary-line>
 <hr>
 <app-chart></app-chart>

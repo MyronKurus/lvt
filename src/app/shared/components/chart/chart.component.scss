@@ -1,0 +1,20 @@
+.add-index {
+  width: 100%;
+  margin: 40px 0;
+
+  button {
+    font-size: 18px;
+    font-weight: 700;
+    color: #19285f;
+    float: right;
+    padding: 0;
+
+    span {
+      background-color: #ffc00e;
+      padding: 0 8px;
+      margin-left: 10px;
+      width: 26px;
+      height: 26px;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormValue } from "../../shared/models/form-value.model";
 
 @Component({
   selector: 'app-content',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContentComponent implements OnInit {
 
+  formValue: FormValue | undefined;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onFormValueChange(value: FormValue) {
+    this.formValue = value;
   }
 
 }

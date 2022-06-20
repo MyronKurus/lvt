@@ -1,1 +1,6 @@
 <p-chart type="line" [data]="lineStylesData" [options]="config"></p-chart>
+<app-index-selection
+  *ngIf="!isCollapsed"
+  [indexCollection]="indexes"
+  (selectedIndexes)="onIndexChange($event)"
+></app-index-selection>

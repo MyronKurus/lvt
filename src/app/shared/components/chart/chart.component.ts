@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SelectedIndexes} from "../../models/selected-indexes.model";
+import {StockIndex} from "../../models/stock-index.model";
 
 @Component({
   selector: 'app-chart',
@@ -7,7 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartComponent implements OnInit {
 
+  isCollapsed = true;
   lineStylesData: any;
+  indexes: StockIndex[] = [
+    {
+      name: "Some Index One",
+      values: ['125', '9.05% 90', 'S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'MSCI World'],
+    },
+    {
+      name: "Some Index Two",
+      values: ['S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'Bloomberg US Agg TR'],
+    },
+    {
+      name: "Some Index Three",
+      values: ['125', '35'],
+    }
+  ];
 
   public config = {
     scales: {
@@ -48,6 +65,14 @@ export class ChartComponent implements OnInit {
         },
       ]
     };
+  }
+
+  public onIndexChange(value: SelectedIndexes): void {
+    console.log(value);
+  }
+
+  public onExpand(): void {
+    this.isCollapsed = !this.isCollapsed;
   }
 
 }
