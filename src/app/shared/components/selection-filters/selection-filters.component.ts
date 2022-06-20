@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import { FormBuilder } from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import * as moment from 'moment';
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { TimeRangeDialogComponent } from "../../dialogs/time-range-dialog/time-range-dialog.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {TimeRangeDialogComponent} from "../../dialogs/time-range-dialog/time-range-dialog.component";
 import {FormValue} from "../../models/form-value.model";
 import {Subscription} from "rxjs";
 
