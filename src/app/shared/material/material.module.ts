@@ -7,17 +7,20 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MomentDateAdapter, MomentDateModule} from "@angular/material-moment-adapter";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 import {DATE_FORMATS} from "../../core/helpers/datepicker-formatter";
 
 const MaterialModules = [
+  MomentDateModule,
   MatIconModule,
   MatInputModule,
   MatSelectModule,
   MatDialogModule,
   MatButtonModule,
-  MomentDateModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatIconModule,
+  MatCheckboxModule,
 ]
 
 @NgModule({

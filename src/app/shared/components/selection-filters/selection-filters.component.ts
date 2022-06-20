@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { TimeRangeDialogComponent } from "../../dialogs/time-range-dialog/time-range-dialog.component";
+import {FormValue} from "../../models/form-value.model";
+import {Subscription} from "rxjs";
 
 
 interface Currency {
@@ -15,7 +17,7 @@ interface Currency {
   templateUrl: './selection-filters.component.html',
   styleUrls: ['./selection-filters.component.scss']
 })
-export class SelectionFiltersComponent implements OnInit {
+export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   currencies: Currency[] = [
     {value: 'usd', viewValue: '$'},
@@ -28,10 +30,14 @@ export class SelectionFiltersComponent implements OnInit {
   form = this.formBuilder.group({
     currency: ['ils'],
     assets: [['Securities']],
-    startDate:  moment().startOf('day').subtract(6, 'months').format(),
+    startDate:  moment().startOf('day').subtract(1, 'year').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
-  })
+  });
 
+  private subscription: Subscription | undefined;
+
+  @Output()
+  formValue: EventEmitter<FormValue> = new EventEmitter<FormValue>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,7 +45,14 @@ export class SelectionFiltersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // console.log(this.filtersForm.getRawValue());
+    this.formValue.emit(this.form.getRawValue());
+    this.subscription = this.form.valueChanges?.subscribe(value => {
+      this.formValue.emit(value);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   onMultiselectClick(value: string[]) {
@@ -52,13 +65,19 @@ export class SelectionFiltersComponent implements OnInit {
     }
     switch (value) {
       case '3 month':
-        this.form.controls['startDate'].patchValue(moment().startOf('day').subtract(3, 'months').format());
+        this.form.controls['startDate'].patchValue(
+          moment().startOf('day').subtract(3, 'months').add(1, 'day').format()
+        );
         break;
       case '6 month':
-        this.form.controls['startDate'].patchValue(moment().startOf('day').subtract(6, 'months').format());
+        this.form.controls['startDate'].patchValue(
+          moment().startOf('day').subtract(6, 'months').add(1, 'day').format()
+        );
         break;
       case '12 month':
-        this.form.controls['startDate'].patchValue(moment().startOf('day').subtract(1, 'year').format());
+        this.form.controls['startDate'].patchValue(
+          moment().startOf('day').subtract(1, 'year').add(1, 'day').format()
+        );
         break;
       case 'startOfTheYear':
         this.form.controls['startDate'].patchValue(moment().startOf('year').format());
@@ -87,7 +106,6 @@ export class SelectionFiltersComponent implements OnInit {
           this.form.controls['startDate'].patchValue(data.startDate);
           this.form.controls['endDate'].patchValue(data.endDate);
           this.selectedRange = value;
-          console.log(this.form.getRawValue());
         }
       }
     );

@@ -1,0 +1,40 @@
+<form [formGroup]="form" novalidate>
+  <div class="index-content" *ngIf="indexCollection">
+    <div class="index-col col-3">
+      <div class="header">{{indexCollection[2]?.name}}</div>
+      <div class="checkbox-wrapper" *ngFor="let index of indexCollection[2]?.values">
+        <mat-checkbox
+          labelPosition="before"
+          [checked]="form.controls['indexThree'].value === index"
+          (change)="onCheckValue(index, 'indexThree', $event.checked)"
+        >
+          {{ index }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="index-col col-2">
+      <div class="header">{{indexCollection[1]?.name}}</div>
+      <div class="checkbox-wrapper" *ngFor="let index of indexCollection[1]?.values" >
+        <mat-checkbox
+          labelPosition="before"
+          [checked]="form.controls['indexTwo'].value === index"
+          (change)="onCheckValue(index, 'indexTwo', $event.checked)"
+        >
+          {{ index }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="index-col col-1">
+      <div class="header">{{indexCollection[0]?.name}}</div>
+      <div class="checkbox-wrapper" *ngFor="let index of indexCollection[0]?.values">
+        <mat-checkbox
+          labelPosition="before"
+          [checked]="form.controls['indexOne'].value === index"
+          (change)="onCheckValue(index, 'indexOne', $event.checked)"
+        >
+          {{ index }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+</form>

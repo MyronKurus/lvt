@@ -9,6 +9,8 @@ import {MaterialModule} from "./material/material.module";
 
 import {ChartComponent} from './components/chart/chart.component';
 import {SelectionFiltersComponent} from "./components/selection-filters/selection-filters.component";
+import {IndexSelectionComponent} from "./components/index-selection/index-selection.component";
+import { SummaryLineComponent } from './components/summary-line/summary-line.component';
 
 const MODULES = [
   CommonModule,
@@ -21,20 +23,23 @@ const MODULES = [
 
 const COMPONENTS = [
   SelectionFiltersComponent,
-  ChartComponent
+  ChartComponent,
+  IndexSelectionComponent,
 ];
 
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    SummaryLineComponent
   ],
   imports: [
     ...MODULES
   ],
   exports: [
     ...MODULES,
-    ...COMPONENTS
+    ...COMPONENTS,
+    SummaryLineComponent
   ]
 })
 export class SharedModule {
