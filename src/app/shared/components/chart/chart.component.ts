@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SelectedIndexes} from "../../models/selected-indexes.model";
 import {StockIndex} from "../../models/stock-index.model";
 import {Subject} from "rxjs";
