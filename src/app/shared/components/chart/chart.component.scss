@@ -2,10 +2,11 @@
   width: 100%;
   text-align: right;
   margin-bottom: 20px;
+  color: #545454;
+  font-size: 14px;
 
   span {
     padding-right: 37px;
-    font-size: 14px;
   }
 }
 
@@ -18,7 +19,7 @@
   a {
     text-decoration: underline;
     font-size: 14px;
-    color: #19285f;
+    color: #18285F;
     &:hover {
       cursor: pointer;
     }
@@ -28,7 +29,7 @@
     font-size: 18px;
     font-weight: 700;
     float: right;
-    color: #19285f;
+    color: #18285F;
     padding: 0;
     background-color: transparent;
     border: none;
@@ -38,7 +39,7 @@
     }
 
     span {
-      background-color: #ffc00e;
+      background-color: #ffc10e;
       width: 24px;
       height: 24px;
       padding-top: 2px;
