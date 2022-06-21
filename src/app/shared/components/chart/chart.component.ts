@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SelectedIndexes} from "../../models/selected-indexes.model";
 import {StockIndex} from "../../models/stock-index.model";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-chart',
@@ -9,6 +10,7 @@ import {StockIndex} from "../../models/stock-index.model";
 })
 export class ChartComponent implements OnInit {
 
+  cancel$: Subject<void> = new Subject<void>();
   isCollapsed = true;
   lineStylesData: any;
   indexes: StockIndex[] = [
@@ -73,6 +75,10 @@ export class ChartComponent implements OnInit {
 
   public onExpand(): void {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  public onCancelIndexes(): void {
+    this.cancel$.next();
   }
 
 }

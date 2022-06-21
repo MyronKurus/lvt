@@ -1,11 +1,12 @@
 <div class="summary">
   <div class="time-range">
-    <span>{{data?.endDate | date : 'dd.MM.yy'}}</span> to <span>{{data?.startDate | date : 'dd.MM.yy'}}</span> from
+    <span>{{data?.endDate | date : 'dd.MM.yy'}} </span> {{'SUMMARY.TO' | translate}}
+    <span>{{data?.startDate | date : 'dd.MM.yy'}} </span> {{'SUMMARY.FROM' | translate}}
   </div>
   <div class="profit">
     <mat-icon class="question-mark">help_outline</mat-icon><mat-icon class="icon-up">keyboard_backspace</mat-icon> ₪ 19,000
     <span class="divider">|</span>
     <mat-icon class="question-mark">help_outline</mat-icon><mat-icon class="icon-up">keyboard_backspace</mat-icon> 4.5%
-    :Summary
+    {{'SUMMARY.LABEL' | translate}}
   </div>
 </div>

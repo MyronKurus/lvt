@@ -1,20 +1,53 @@
+.description {
+  width: 100%;
+  text-align: right;
+  margin-bottom: 20px;
+  color: #545454;
+  font-size: 14px;
+
+  span {
+    padding-right: 37px;
+  }
+}
+
 .add-index {
   width: 100%;
-  margin: 40px 0;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  display: block;
+
+  a {
+    text-decoration: underline;
+    font-size: 14px;
+    color: #18285F;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   button {
     font-size: 18px;
     font-weight: 700;
-    color: #19285f;
     float: right;
+    color: #18285F;
     padding: 0;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     span {
-      background-color: #ffc00e;
-      padding: 0 8px;
+      background-color: #ffc10e;
+      width: 24px;
+      height: 24px;
+      padding-top: 2px;
       margin-left: 10px;
-      width: 26px;
-      height: 26px;
+
+      .mat-icon {
+        vertical-align: bottom;
+      }
     }
   }
 }

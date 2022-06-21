@@ -6,9 +6,9 @@
 
   .index-col {
     .header {
-      color: #19285f;
+      color: #18285F;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 20px;
       text-transform: uppercase;
       width: 100%;
       text-align: right;
@@ -25,7 +25,9 @@
       }
 
       .mat-checkbox-layout .mat-checkbox-label {
-        color: #52575b;
+        font-family: 'Assistant', sans-serif;
+        color: #545454;
+        font-size: 14px;
       }
 
       .mat-checkbox-inner-container {

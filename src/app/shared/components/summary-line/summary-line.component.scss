@@ -2,22 +2,24 @@
   display: flex;
   justify-content: space-between;
   background-color: #f6f6f6;
-  padding: 10px 15px;
+  padding: 0 15px 5px;
+  margin-bottom: 30px;
+  margin-top: 10px;
 
   .time-range {
-    color: #85898c;
-    margin-top: 10px;
+    color: #545454;
+    margin-top: 13px;
+    font-size: 14px;
 
     span {
-      color: #52575b;
-      font-weight: 500;
+      font-weight: bold;
     }
   }
 
   .profit {
     font-size: 20px;
     font-weight: 700;
-    color: #19285f;
+    color: #18285F;
   }
 
   .divider {
@@ -35,5 +37,14 @@
     transform: rotate(90deg);
     color: #43b11f;
     font-size: 14px;
+  }
+
+  .icon-down {
+    transform: rotate(-90deg);
+    color: #b11f1f;
+    font-size: 14px;
+    vertical-align: super;
+    margin-right: -10px;
+    margin-left: 10px;
   }
 }
