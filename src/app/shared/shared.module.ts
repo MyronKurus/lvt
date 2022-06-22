@@ -11,6 +11,7 @@ import {ChartComponent} from './components/chart/chart.component';
 import {SelectionFiltersComponent} from "./components/selection-filters/selection-filters.component";
 import {IndexSelectionComponent} from "./components/index-selection/index-selection.component";
 import {SummaryLineComponent} from './components/summary-line/summary-line.component';
+import {RangeSelectionComponent} from './components/range-selection/range-selection.component';
 
 const MODULES = [
   CommonModule,
@@ -26,6 +27,7 @@ const COMPONENTS = [
   ChartComponent,
   IndexSelectionComponent,
   SummaryLineComponent,
+  RangeSelectionComponent,
 ];
 
 

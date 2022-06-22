@@ -10,12 +10,12 @@
     "CUSTOM": "תאריך לבחירה"
   },
   "BUTTON": {
-    "SAVE": "SAVE",
-    "CLOSE": "CLOSE"
+    "SAVE": "הצגה",
+    "CLOSE": "ביטול"
   },
   "DATE_RANGE": {
-    "START": "Start:",
-    "END": "End:"
+    "START": ":מתאריך",
+    "END": ":עד תאריך"
   },
   "SUMMARY": {
     "LABEL": " :תשואה לתקופה",
@@ -30,6 +30,7 @@
   "VALIDATION": {
     "REQUIRED": "All fields are required!",
     "GREATER_THAN": "End date should be greater than Start date!",
-    "INVALID_DATE": "Invalid date"
+    "INVALID_DATE": "Invalid date",
+    "HINT": "ניתן לבחור עד 3 שנים אחורה"
   }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimeRangeDialogComponent } from './time-range-dialog.component';
+import { RangeSelectionComponent } from './range-selection.component';
 
-describe('TimeRangeDialogComponent', () => {
-  let component: TimeRangeDialogComponent;
-  let fixture: ComponentFixture<TimeRangeDialogComponent>;
+describe('RangeSelectionComponent', () => {
+  let component: RangeSelectionComponent;
+  let fixture: ComponentFixture<RangeSelectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TimeRangeDialogComponent ]
+      declarations: [ RangeSelectionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TimeRangeDialogComponent);
+    fixture = TestBed.createComponent(RangeSelectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

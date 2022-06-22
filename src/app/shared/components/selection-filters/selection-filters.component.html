@@ -56,3 +56,9 @@
     {{'RANGE.QUARTER' | translate}}
   </button>
 </div>
+
+<app-range-selection
+  *ngIf="!isDialogClosed"
+  (closed)="onClose($event)"
+  (selectedRange)="onSelectCustomRange($event)"
+></app-range-selection>

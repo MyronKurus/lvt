@@ -13,7 +13,8 @@ export class AppComponent {
   constructor(public translate: TranslateService) {
     translate.addLangs(RepoConfig.locales);
     translate.setDefaultLang(RepoConfig.defLocale);
-    translate.use(RepoConfig.defLocale);
+    // translate.use(RepoConfig.defLocale);
+    translate.use('he');
   }
 
 }
