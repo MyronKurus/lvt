@@ -27,6 +27,8 @@ export class ChartComponent implements OnInit {
   ];
 
   public config = {
+    responsive: true,
+    stacked: true,
     scales: {
       x: {
         grid: {
@@ -36,7 +38,7 @@ export class ChartComponent implements OnInit {
       y: {
         grid: {
           drawBorder: false,
-          color: 'orange'
+          color: '#e5e5e5'
         },
       }
     }
@@ -50,14 +52,14 @@ export class ChartComponent implements OnInit {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
         {
-          label: 'First Dataset',
+          label: '1111',
           data: [65, 59, 80, 81, 56, 55, 40],
           fill: false,
           borderColor: '#42A5F5'
         },
         {
           drawTicks: false,
-          label: 'Second Dataset',
+          label: '2222',
           data: [28, 48, 40, 19, 86, 27, 90],
           fill: false,
           borderDash: [5, 5],

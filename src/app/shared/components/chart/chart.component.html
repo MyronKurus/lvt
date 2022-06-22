@@ -1,4 +1,6 @@
-<p-chart type="line" [data]="lineStylesData" [options]="config"></p-chart>
+<div class="chart-container">
+  <p-chart type="line" [data]="lineStylesData" [options]="config" [height]="'325px'"></p-chart>
+</div>
 <app-index-selection
   *ngIf="!isCollapsed"
   [indexCollection]="indexes"
