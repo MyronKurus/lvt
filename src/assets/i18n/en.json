@@ -30,6 +30,7 @@
   "VALIDATION": {
     "REQUIRED": "All fields are required!",
     "GREATER_THAN": "End date should be greater than Start date!",
-    "INVALID_DATE": "Invalid date"
+    "INVALID_DATE": "Invalid date",
+    "HINT": "Yo can select up to 3 years ago"
   }
 }
