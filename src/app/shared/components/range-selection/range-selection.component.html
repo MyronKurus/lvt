@@ -3,7 +3,20 @@
     <div class="triangle"></div>
     <div class="row">
       <mat-form-field class="example-full-width" appearance="fill">
-        <input matInput [matDatepicker]="pickerStart" [min]="minDate" [max]="maxDate" formControlName="startDate" placeholder="DD/MM/YY">
+        <input
+          matInput
+          inputmode="numeric"
+          [matDatepicker]="pickerStart"
+          [min]="minDate"
+          [max]="maxDate"
+          formControlName="startDate"
+          placeholder="DD/MM/YY"
+        >
+        <mat-error
+          *ngIf="form.controls['startDate']?.errors"
+        >
+          {{'DATE_RANGE.INVALID_DATE' | translate}}
+        </mat-error>
         <mat-datepicker-toggle matSuffix [for]="pickerStart">
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
@@ -14,7 +27,19 @@
 
     <div class="row">
       <mat-form-field class="example-full-width" appearance="fill">
-        <input matInput [matDatepicker]="pickerEnd" [min]="minDate" [max]="maxDate" formControlName="endDate"  placeholder="DD/MM/YY">
+        <input
+          matInput
+          inputmode="numeric"
+          [matDatepicker]="pickerEnd"
+          [min]="minDate" [max]="maxDate"
+          formControlName="endDate"
+          placeholder="DD/MM/YY"
+        >
+        <mat-error
+          *ngIf="form.controls['endDate']?.errors"
+        >
+          {{'DATE_RANGE.INVALID_DATE' | translate}}
+        </mat-error>
         <mat-datepicker-toggle matSuffix [for]="pickerEnd">
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>

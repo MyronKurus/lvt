@@ -23,9 +23,13 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
   @Input()
   public indexCollection: StockIndex[] | undefined;
   @Input()
+  public collapsed: boolean = true;
+  @Input()
   public cancel$: Observable<void> | undefined;
   @Output()
   public selectedIndexes: EventEmitter<SelectedIndexes> = new EventEmitter<SelectedIndexes>();
+  @Output()
+  public collapse: EventEmitter<void> = new EventEmitter<void>();
   public form = this.formBuilder.group({
     indexOne: null,
     indexTwo: null,
@@ -69,6 +73,16 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     return JSON.parse(
       JSON.stringify(form.getRawValue()), (k, v) => (v === null || v === undefined || v === '') ? undefined : v
     );
+  }
+
+  public save(): void {
+    this.collapsed = true;
+  }
+
+  public close(): void {
+    this.collapsed = true;
+    this.cleanFormValues();
+    this.collapse.emit();
   }
 
 }

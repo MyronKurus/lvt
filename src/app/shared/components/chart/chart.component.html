@@ -5,8 +5,7 @@
     (click)="onExpand()"
   >
     {{'CHART.COMPARISON' | translate}}
-    <span *ngIf="isCollapsed"><mat-icon>add</mat-icon></span>
-    <span *ngIf="!isCollapsed"><mat-icon>remove</mat-icon></span>
+    <span><mat-icon>{{ isCollapsed ? 'add' : 'remove'}}</mat-icon></span>
   </button>
 </div>
 <div class="description" *ngIf="!isCollapsed">
@@ -14,7 +13,9 @@
 </div>
 <app-index-selection
   *ngIf="!isCollapsed"
+  [collapsed]="isCollapsed"
   [indexCollection]="indexes"
   [cancel$]="cancel$.asObservable()"
   (selectedIndexes)="onIndexChange($event)"
+  (collapse)="onExpand()"
 ></app-index-selection>

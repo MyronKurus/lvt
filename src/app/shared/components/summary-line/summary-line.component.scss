@@ -1,4 +1,5 @@
 .summary {
+  position: relative;
   display: flex;
   justify-content: space-between;
   background-color: #f6f6f6;
@@ -46,5 +47,31 @@
     vertical-align: super;
     margin-right: -10px;
     margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .summary {
+    padding: 3px 0 0;
+
+    .time-range {
+      position: absolute;
+      margin-top: 30px;
+      right: 0;
+    }
+
+    .profit {
+      margin: auto;
+      font-size: 16px;
+
+      span {
+        font-weight: 300;
+        font-size: 14px;
+      }
+
+      .question-mark {
+        font-size: 16px;
+      }
+    }
   }
 }

@@ -24,9 +24,11 @@
 }
 
 .range-selectors {
-  padding: 30px 0;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  overflow: scroll;
+  //flex-flow: wrap;
 
   button {
     font-family: 'Assistant', sans-serif;
@@ -39,6 +41,7 @@
     outline: none;
     border: none;
     border-radius: 20px;
+    margin-bottom: 20px;
 
     &:hover {
       cursor: pointer;
@@ -48,6 +51,35 @@
       background-color: #ffc10e;
       color: #18285F;
       font-weight: 600;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .range-selectors {
+    button {
+      margin-right: 15px;
+
+      &:nth-last-child {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .selectors-wrapper {
+    .assets {
+      h4 {
+        font-size: 16px;
+        color: #545454;
+        border-right: 1px solid #ffc10e;
+        font-weight: 300;
+        padding-right: 5px;
+      }
+    }
+    mat-form-field {
+      margin-right: 10px;
     }
   }
 }
