@@ -100,6 +100,7 @@ export class ChartComponent implements OnInit {
   }
 
   public onCancelIndexes(): void {
+    this.onExpand();
     this.cancel$.next();
   }
 

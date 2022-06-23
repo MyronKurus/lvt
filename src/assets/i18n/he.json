@@ -15,7 +15,8 @@
   },
   "DATE_RANGE": {
     "START": ":מתאריך",
-    "END": ":עד תאריך"
+    "END": ":עד תאריך",
+    "INVALID_DATE": "תאריך לא חוקי"
   },
   "SUMMARY": {
     "LABEL": " :תשואה לתקופה",
@@ -25,7 +26,11 @@
   "CHART": {
     "COMPARISON": "השוואה למדדי שוק",
     "BUTTON_LABEL": "ניתן לבחור עד 3 מדדים",
-    "CANCEL": "ביטול השוואה"
+    "CANCEL": "ביטול השוואה",
+    "BUTTON": {
+      "CANCEL_COMPARISON": "ביטול ההשוואה",
+      "PRESENTATION": "הצגה"
+    }
   },
   "VALIDATION": {
     "REQUIRED": "All fields are required!",

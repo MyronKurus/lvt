@@ -1,6 +1,12 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {dateValidator} from "../../../core/helpers/date.validator";
 
 @Component({
   selector: 'app-range-selection',
@@ -13,6 +19,8 @@ export class RangeSelectionComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
   minDate: Date | undefined;
   maxDate: Date | undefined;
+  @Input()
+  dateSelected: {startDate: string, endDate: string} | undefined;
   @Output()
   closed: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -29,17 +37,16 @@ export class RangeSelectionComponent implements OnInit {
     const currentDay = new Date().getDate();
     this.minDate = new Date(currentYear - 3, currentMonth, currentDay);
     this.maxDate = new Date();
+    console.log('min - ', this.minDate, 'max - ', this.maxDate);
     this.form = this.fb.group({
       startDate: [null, {
         validators: [
           Validators.required,
-          // dateValidator()
         ]
       }],
       endDate: [null, {
         validators: [
           Validators.required,
-          // dateValidator()
         ]
       }],
     });

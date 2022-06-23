@@ -10,7 +10,7 @@
     border-right: 12px solid transparent;
     border-bottom: 12px solid white;
     top: -12px;
-    left: calc(50% - 6px);
+    left: calc(50% - 12px);
   }
   .dialog-content {
     padding: 20px 20px 1px;
@@ -21,8 +21,6 @@
     -webkit-box-shadow: 0 0 30px 0 #00000059;
     box-shadow: 0 0 30px 0 #00000059;
     .row {
-      //margin-bottom: 10px;
-
       .label,
       .example-full-width {
         display: inline-block;
@@ -33,7 +31,6 @@
       width: 65px;
       text-align: right;
       color: #18285f;
-      //vertical-align: super;
     }
 
     .example-full-width {
@@ -43,6 +40,11 @@
     .mat-form-field-prefix,
     .mat-form-field-suffix {
       display: none !important;
+    }
+
+    .mat-form-field-subscript-wrapper {
+      top: calc(100% - 2.5em) !important;
+      padding: 0 !important;
     }
 
     .hint {

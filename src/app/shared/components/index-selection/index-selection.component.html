@@ -1,4 +1,43 @@
-<form [formGroup]="form" novalidate>
+<form
+  [formGroup]="form"
+  novalidate class="mobile-selectors"
+  *ngIf="(form.controls['indexThree'].value || form.controls['indexTwo'].value || form.controls['indexOne'].value) && collapsed"
+>
+  <div class="index-content" *ngIf="indexCollection">
+    <div class="index-col col-3">
+      <div class="checkbox-wrapper" *ngIf="form.controls['indexThree'].value">
+        <mat-checkbox
+          labelPosition="before"
+          [checked]="true"
+        >
+          {{ form.controls['indexThree'].value }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="index-col col-2">
+      <div class="checkbox-wrapper" *ngIf="form.controls['indexTwo'].value">
+        <mat-checkbox
+          labelPosition="before"
+          [checked]="true"
+        >
+          {{ form.controls['indexTwo'].value }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="index-col col-1">
+      <div class="checkbox-wrapper" *ngIf="form.controls['indexOne'].value">
+        <mat-checkbox
+          labelPosition="before"
+          [checked]="true"
+        >
+          {{ form.controls['indexOne'].value }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form [formGroup]="form" novalidate class="selectors" *ngIf="!collapsed">
   <div class="index-content" *ngIf="indexCollection">
     <div class="index-col col-3">
       <div class="header">{{indexCollection[2]?.name}}</div>
@@ -37,4 +76,27 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="actions">
+      <div class="save">
+        <button
+          class="mat-button mat-raised-button mat-primary"
+          (click)="save()"
+          [disabled]="!form.controls['indexThree'].value && !form.controls['indexTwo'].value && !form.controls['indexOne'].value"
+        >
+          {{'CHART.BUTTON.PRESENTATION' | translate}}
+        </button>
+      </div>
+      <div class="close">
+        <button
+          class="mat-button"
+          (click)="close()"
+        >
+          {{'CHART.BUTTON.CANCEL_COMPARISON' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
 </form>
+
+

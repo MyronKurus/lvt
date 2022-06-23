@@ -15,7 +15,8 @@
   },
   "DATE_RANGE": {
     "START": "Start:",
-    "END": "End:"
+    "END": "End:",
+    "INVALID_DATE": "invalid date"
   },
   "SUMMARY": {
     "LABEL": "Yield per period",
@@ -25,7 +26,11 @@
   "CHART": {
     "COMPARISON": "Comparison of market indices",
     "BUTTON_LABEL": "You can select up to 3 metrics",
-    "CANCEL": "Cancel comparison"
+    "CANCEL": "Cancel comparison",
+    "BUTTON" : {
+      "CANCEL_COMPARISON": "Cancel comparison",
+      "PRESENTATION": "Presentation"
+    }
   },
   "VALIDATION": {
     "REQUIRED": "All fields are required!",

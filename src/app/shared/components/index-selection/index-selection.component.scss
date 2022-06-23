@@ -1,57 +1,108 @@
-.index-content {
+.selectors,
+.mobile-selectors {
   padding: 40px;
   background-color: #f6f9fd;
-  display: flex;
-  justify-content: space-between;
+  .index-content {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column;
 
-  .index-col {
-    .header {
-      color: #18285F;
-      font-weight: 500;
-      font-size: 20px;
-      text-transform: uppercase;
-      width: 100%;
-      text-align: right;
-      margin-bottom: 20px;
-    }
-
-    .checkbox-wrapper {
-      display: block;
-
-      .mat-checkbox {
-        margin-bottom: 15px;
+    .index-col {
+      .header {
+        color: #18285F;
+        font-weight: 500;
+        font-size: 20px;
+        text-transform: uppercase;
         width: 100%;
         text-align: right;
+        margin-bottom: 20px;
       }
 
-      .mat-checkbox-layout .mat-checkbox-label {
-        font-family: 'Assistant', sans-serif;
-        color: #545454;
-        font-size: 14px;
+      .checkbox-wrapper {
+        display: block;
+
+        .mat-checkbox {
+          margin-bottom: 15px;
+          width: 100%;
+          text-align: right;
+        }
+
+        .mat-checkbox-layout .mat-checkbox-label {
+          font-family: 'Assistant', sans-serif;
+          color: #545454;
+          font-size: 14px;
+        }
+
+        .mat-checkbox-inner-container {
+          width: 24px !important;
+          height: 24px !important;
+        }
       }
 
-      .mat-checkbox-inner-container {
-        width: 24px !important;
-        height: 24px !important;
+      &.col-1 {
+        .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+          background-color: #ef6e4b;
+        }
+      }
+
+      &.col-2 {
+        .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+          background-color: #186dc8;
+        }
+      }
+
+      &.col-3 {
+        .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+          background-color: #27aa95;
+        }
       }
     }
+  }
 
-    &.col-1 {
-      .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-        background-color: #ef6e4b;
+  .actions {
+    margin-top: 30px;
+    .save,
+    .close {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+
+      .mat-button {
+        width: 150px;
+        color: #18285f;
+        height: 38px;
+        border: none;
+
+        :hover {
+          cursor: pointer;
+        }
+      }
+
+      .mat-raised-button.mat-primary {
+        color: #18285f;
+        background-color: #ffc00e;
+        border-radius: 0;
+      }
+
+      .mat-raised-button:disabled,
+      .mat-raised-button[disabled] {
+        border: 1px solid #999999;
+        background-color: #cccccc;
+        color: #666666;
       }
     }
+  }
+}
 
-    &.col-2 {
-      .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-        background-color: #186dc8;
-      }
-    }
+.mobile-selectors {
+  background-color: transparent;
+  padding: 0;
+}
 
-    &.col-3 {
-      .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-        background-color: #27aa95;
-      }
-    }
+@media screen and (min-width: 651px) {
+  .mobile-selectors,
+  .actions {
+    display: none;
   }
 }
