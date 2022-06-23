@@ -17,9 +17,20 @@
     "START": "Start:",
     "END": "End:"
   },
+  "SUMMARY": {
+    "LABEL": "Yield per period",
+    "FROM": "from",
+    "TO": "to"
+  },
+  "CHART": {
+    "COMPARISON": "Comparison of market indices",
+    "BUTTON_LABEL": "You can select up to 3 metrics",
+    "CANCEL": "Cancel comparison"
+  },
   "VALIDATION": {
     "REQUIRED": "All fields are required!",
     "GREATER_THAN": "End date should be greater than Start date!",
-    "INVALID_DATE": "Invalid date"
+    "INVALID_DATE": "Invalid date",
+    "HINT": "Yo can select up to 3 years ago"
   }
 }

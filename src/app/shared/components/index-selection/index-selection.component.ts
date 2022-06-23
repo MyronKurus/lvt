@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewEncapsulation
@@ -9,6 +10,7 @@ import {
 import {FormBuilder} from "@angular/forms";
 import {SelectedIndexes} from "../../models/selected-indexes.model";
 import {StockIndex} from "../../models/stock-index.model";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-index-selection',
@@ -16,25 +18,33 @@ import {StockIndex} from "../../models/stock-index.model";
   styleUrls: ['./index-selection.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class IndexSelectionComponent implements OnInit {
+export class IndexSelectionComponent implements OnInit, OnDestroy {
 
   @Input()
-  indexCollection: StockIndex[] | undefined;
-
+  public indexCollection: StockIndex[] | undefined;
+  @Input()
+  public cancel$: Observable<void> | undefined;
   @Output()
-  selectedIndexes: EventEmitter<SelectedIndexes> = new EventEmitter<SelectedIndexes>();
-
-  form = this.formBuilder.group({
+  public selectedIndexes: EventEmitter<SelectedIndexes> = new EventEmitter<SelectedIndexes>();
+  public form = this.formBuilder.group({
     indexOne: null,
     indexTwo: null,
     indexThree: null,
   });
+  private subscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.subscription = this.cancel$?.subscribe(() => {
+      this.cleanFormValues();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   onCheckValue(value: string, property: string, checked: boolean): void {
@@ -44,12 +54,21 @@ export class IndexSelectionComponent implements OnInit {
       this.form.controls[property].setValue(null);
     }
 
-    const result = this.cleanData();
-    this.selectedIndexes.emit(result);
+    this.selectedIndexes.emit(this.cleanData());
+  }
+
+  private cleanFormValues(): void {
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.controls[key].setValue(null);
+    });
+
+    this.selectedIndexes.emit(this.cleanData());
   }
 
   private cleanData(form = this.form): SelectedIndexes {
-    return JSON.parse(JSON.stringify(form.getRawValue()), (k, v) => (v === null || v === undefined || v === '') ? undefined : v);
+    return JSON.parse(
+      JSON.stringify(form.getRawValue()), (k, v) => (v === null || v === undefined || v === '') ? undefined : v
+    );
   }
 
 }

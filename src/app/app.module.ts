@@ -8,7 +8,6 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "./core/helpers/http-loader-factory";
 
 import {AppRoutingModule} from "./app-routing.module";
-import {DialogModule} from "./shared/dialogs/dialog.module";
 
 import {AppComponent} from './app.component';
 
@@ -20,7 +19,6 @@ import {AppComponent} from './app.component';
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
-    DialogModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       loader: {

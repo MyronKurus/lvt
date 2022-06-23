@@ -11,6 +11,12 @@
     h4 {
       display: inline !important;
     }
+
+    h4 {
+      color: #18285F;
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
   mat-form-field {
     margin-right: 20px;
@@ -23,11 +29,13 @@
   justify-content: space-between;
 
   button {
+    font-family: 'Assistant', sans-serif;
+    font-size: 14px;
     background-color: #f6f6f6;
-    color: #43507c;
-    width: 170px;
+    color: #18285F;
+    width: 130px;
     min-width: 100px;
-    height: 40px;
+    height: 30px;
     outline: none;
     border: none;
     border-radius: 20px;
@@ -37,9 +45,9 @@
     }
 
     &.active {
-      background-color: #ffc00e;
-      color: #19285f;
-      font-weight: 700;
+      background-color: #ffc10e;
+      color: #18285F;
+      font-weight: 600;
     }
   }
 }

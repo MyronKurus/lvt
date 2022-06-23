@@ -1,25 +1,36 @@
 {
   "SELECTOR": {
-    "ASSETS": "My Assets"
+    "ASSETS": " :הנכסים שלי"
   },
   "RANGE": {
-    "QUARTER": "3 Month",
-    "HALF_A_YEAR": "6 Month",
-    "ONE_YEAR": "12 Month",
-    "START_OF_THE_YEAR": "Current Year",
-    "CUSTOM": "Select Period"
+    "QUARTER": "חודשים 3",
+    "HALF_A_YEAR": "חודשים 6",
+    "ONE_YEAR": "חודשים 12",
+    "START_OF_THE_YEAR": "מתחילת השנה",
+    "CUSTOM": "תאריך לבחירה"
   },
   "BUTTON": {
-    "SAVE": "SAVE",
-    "CLOSE": "CLOSE"
+    "SAVE": "הצגה",
+    "CLOSE": "ביטול"
   },
   "DATE_RANGE": {
-    "START": "Start:",
-    "END": "End:"
+    "START": ":מתאריך",
+    "END": ":עד תאריך"
+  },
+  "SUMMARY": {
+    "LABEL": " :תשואה לתקופה",
+    "FROM": "נכון מ",
+    "TO": "עד"
+  },
+  "CHART": {
+    "COMPARISON": "השוואה למדדי שוק",
+    "BUTTON_LABEL": "ניתן לבחור עד 3 מדדים",
+    "CANCEL": "ביטול השוואה"
   },
   "VALIDATION": {
     "REQUIRED": "All fields are required!",
     "GREATER_THAN": "End date should be greater than Start date!",
-    "INVALID_DATE": "Invalid date"
+    "INVALID_DATE": "Invalid date",
+    "HINT": "ניתן לבחור עד 3 שנים אחורה"
   }
 }

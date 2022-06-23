@@ -1,11 +1,8 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import * as moment from 'moment';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {TimeRangeDialogComponent} from "../../dialogs/time-range-dialog/time-range-dialog.component";
 import {FormValue} from "../../models/form-value.model";
 import {Subscription} from "rxjs";
-
 
 interface Currency {
   value: string;
@@ -26,6 +23,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   ];
   assets: string[] = ['Securities', 'Deposits and Savings', 'Current'];
   selectedRange: string = '12 month';
+  isDialogClosed: boolean = true;
 
   form = this.formBuilder.group({
     currency: ['ils'],
@@ -41,7 +39,6 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -83,32 +80,23 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
         this.form.controls['startDate'].patchValue(moment().startOf('year').format());
         break;
       case  'custom':
-        this.openDialog(value);
+        this.openDialog();
         break;
     }
   }
 
-  openDialog(value: string) {
+  openDialog() {
+    this.isDialogClosed = false;
+  }
 
-    const dialogConfig = new MatDialogConfig();
+  onSelectCustomRange(value: {startDate: string, endDate: string}):void {
+    this.form.controls['startDate'].patchValue(value.startDate);
+    this.form.controls['endDate'].patchValue(value.endDate);
+    this.selectedRange = 'custom';
+  }
 
-    dialogConfig.autoFocus = true;
-    dialogConfig.position = {
-      top: '180px',
-      left: '20px'
-    };
-
-    const dialogRef = this.dialog.open(TimeRangeDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed()
-      .subscribe(data => {
-        if (data) {
-          this.form.controls['startDate'].patchValue(data.startDate);
-          this.form.controls['endDate'].patchValue(data.endDate);
-          this.selectedRange = value;
-        }
-      }
-    );
+  onClose(closed: boolean): void {
+    this.isDialogClosed = closed;
   }
 
 }
