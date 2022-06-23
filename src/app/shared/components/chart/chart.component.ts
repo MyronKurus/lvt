@@ -29,15 +29,23 @@ export class ChartComponent implements OnInit {
   public config = {
     responsive: true,
     stacked: true,
+    datasets: {
+      line: {
+        spanGaps: true,
+        pointBorderWidth: 0,
+        pointBackgroundColor: 'transparent',
+      }
+    },
     scales: {
       x: {
         grid: {
+          drawBorder: true,
           display: false,
         }
       },
       y: {
         grid: {
-          drawBorder: false,
+          drawBorder: true,
           color: '#e5e5e5'
         },
       }
@@ -49,21 +57,33 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
     this.lineStylesData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'],
       datasets: [
         {
-          label: '1111',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          borderColor: '#42A5F5'
+          label: 'First',
+          data: [0, -0.25, -1, 0.45, 0.25, 0.85, -0.35, 0.4, 0, 0.25, 0.20, 0.30, 0.20],
+          borderColor: '#19295f',
+          pointBorderWidth: 2,
+          pointBackgroundColor: '#19295f',
+          pointHoverBorderWidth: 4
         },
         {
-          drawTicks: false,
-          label: '2222',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          borderDash: [5, 5],
-          borderColor: '#66BB6A',
+          label: 'Second',
+          data: [0, 0.25, 1, 1.45, 1.25, 1.85, 2.35, 2.4, 3, 3.25, 2.50, 1.30, 0.75],
+          borderWidth: 1,
+          borderColor: '#37ae9b',
+        },
+        {
+          label: 'Third',
+          data: [0, 0.75, 1.5, 2.05, 3.5, 4.85, 5.35, 4.45, 4, 4.25, 3.50, 3.30, 3.75],
+          borderWidth: 1,
+          borderColor: '#3e83d1',
+        },
+        {
+          label: 'Four',
+          data: [0, 1.25, 2, 2.45, 3.25, 3.85, 3.65, 3.4, 2.5, 2.75, 2.45, 2.30, 2.20],
+          borderWidth: 1,
+          borderColor: '#f2866a',
         },
       ]
     };
