@@ -93,3 +93,71 @@ html, body {
     background-color: red !important;;
   }
 }
+
+.tooltip-table {
+  direction: rtl;
+  box-shadow: 0 2px 8px 0 rgba(21, 39, 99, 0.37);
+  background-color: white;
+  border-spacing: 0;
+  border-collapse: unset;
+
+  &__head {
+    background-color: rgba(102, 119, 158, 1);
+
+    tr th {
+      padding: 14px 18px;
+
+      .tooltip-table__title {
+        font-size: 14px;
+        font-weight: 400;
+        word-spacing: 2.5px;
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+
+  &__body tr {
+    &:last-of-type {
+      td {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      display: flex;
+      align-items: center;
+      margin: 0 18px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(206, 212, 224, 1);
+
+      p {
+        margin: 0;
+        padding: 0;
+
+        &.name {
+          max-width: 80px;
+        }
+
+        &.to-end {
+          font-weight: bold;
+          margin-right: auto;
+        }
+      }
+
+      .tooltip-pin {
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        margin: 0 8px;
+      }
+    }
+  }
+}
+
+.tooltip-vertical-line {
+  width: 1px;
+  position: absolute;
+  transform: translateX(-50%);
+  background-color: #18285fa6;
+  pointer-events: none;
+}

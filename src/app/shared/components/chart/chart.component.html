@@ -1,12 +1,17 @@
-<p-chart type="line" [data]="lineStylesData" [options]="config"></p-chart>
+<p-chart type="line"
+         [data]="lineStylesData"
+         [options]="config"
+         [height]="'350px'"
+></p-chart>
+<!--<canvas id="myChart" height="350px"></canvas>-->
+
 <div class="add-index">
     <a *ngIf="!isCollapsed" (click)="onCancelIndexes()">{{'CHART.CANCEL' | translate}}</a>
   <button
     (click)="onExpand()"
   >
     {{'CHART.COMPARISON' | translate}}
-    <span *ngIf="isCollapsed"><mat-icon>add</mat-icon></span>
-    <span *ngIf="!isCollapsed"><mat-icon>remove</mat-icon></span>
+    <span><mat-icon>{{isCollapsed ? 'add' : 'remove'}}</mat-icon></span>
   </button>
 </div>
 <div class="description" *ngIf="!isCollapsed">
