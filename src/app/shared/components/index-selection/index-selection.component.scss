@@ -5,7 +5,6 @@
   .index-content {
     display: flex;
     justify-content: space-between;
-    flex-flow: column;
 
     .index-col {
       .header {
@@ -19,7 +18,7 @@
       }
 
       .checkbox-wrapper {
-        display: block;
+        //display: block;
 
         .mat-checkbox {
           margin-bottom: 15px;
@@ -59,7 +58,7 @@
     }
   }
 
-  .actions {
+  .action-buttons {
     margin-top: 30px;
     .save,
     .close {
@@ -98,11 +97,18 @@
 .mobile-selectors {
   background-color: transparent;
   padding: 0;
+  flex-flow: column;
+}
+
+@media screen and (max-width: 650px) {
+  .index-content {
+    flex-flow: column;
+  }
 }
 
 @media screen and (min-width: 651px) {
   .mobile-selectors,
-  .actions {
+  .action-buttons {
     display: none;
   }
 }
