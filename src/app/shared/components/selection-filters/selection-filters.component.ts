@@ -15,22 +15,22 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   currencies: Currency[] = [
     {
-      KOD_MATBEA: "1",
+      KOD_MATBEA: 1,
       SHEM_ISO: "USD",
       SHEM_MATBEA: "דולר אמריקאי"
     },
     {
-      KOD_MATBEA: "2",
+      KOD_MATBEA: 2,
       SHEM_ISO: "GBP",
       SHEM_MATBEA: "ליש\"ט"
     },
     {
-      KOD_MATBEA: "97",
+      KOD_MATBEA: 97,
       SHEM_ISO: "ILS",
       SHEM_MATBEA: "שקל חדש"
     },
     {
-      KOD_MATBEA: "20",
+      KOD_MATBEA: 20,
       SHEM_ISO: "EUR",
       SHEM_MATBEA: "יוֹרוֹ"
     }

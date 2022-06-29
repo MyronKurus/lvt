@@ -11,6 +11,7 @@
           [max]="maxDate"
           formControlName="startDate"
           placeholder="DD/MM/YY"
+          autocomplete="off"
         >
         <mat-error
           *ngIf="form.controls['startDate']?.errors"
@@ -34,6 +35,7 @@
           [min]="minDate" [max]="maxDate"
           formControlName="endDate"
           placeholder="DD/MM/YY"
+          autocomplete="off"
         >
         <mat-error
           *ngIf="form.controls['endDate']?.errors"
