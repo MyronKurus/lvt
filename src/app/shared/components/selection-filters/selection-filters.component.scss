@@ -3,7 +3,7 @@
   justify-content: space-between;
 
   .currency {
-    width: 40px;
+    width: 58px;
   }
 
   .assets {
@@ -71,11 +71,12 @@
   .selectors-wrapper {
     .assets {
       h4 {
-        font-size: 16px;
+        font-size: 20px;
         color: #545454;
         border-right: 1px solid #ffc10e;
         font-weight: 300;
         padding-right: 5px;
+        margin-left: 15px;
       }
     }
     mat-form-field {

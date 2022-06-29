@@ -3,8 +3,8 @@
     <div class="currency">
       <mat-form-field appearance="fill">
         <mat-select formControlName="currency">
-          <mat-option *ngFor="let currency of currencies" [value]="currency.value">
-            {{currency.viewValue}}
+          <mat-option *ngFor="let currency of currencies" [value]="currency.SHEM_ISO">
+            {{currency.SHEM_MATBEA}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -13,7 +13,10 @@
     <div class="assets">
       <mat-form-field appearance="fill">
         <mat-select formControlName="assets" multiple (selectionChange)="onMultiselectClick($event.value)">
-          <mat-option *ngFor="let asset of assets" [value]="asset">{{asset}}</mat-option>
+          <mat-option
+            *ngFor="let asset of assets" [value]="asset.value"
+            [disabled]="!form.controls['assets'].value.includes('Securities') && asset.value !== 'Securities'"
+          >{{asset.label}}</mat-option>
         </mat-select>
       </mat-form-field>
       <h4>{{'SELECTOR.ASSETS' | translate}}</h4>
