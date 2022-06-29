@@ -102,6 +102,11 @@ html, body {
   }
 }
 
+
+.mat-raised-button:not([class*=mat-elevation-z]) {
+  box-shadow: none !important;
+}
+
 .tooltip-table {
   direction: rtl;
   box-shadow: 0 2px 8px 0 rgba(21, 39, 99, 0.37);

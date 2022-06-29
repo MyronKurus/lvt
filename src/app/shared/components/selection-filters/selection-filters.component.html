@@ -30,8 +30,8 @@
   >
     <span *ngIf="selectedRange !== 'custom'">{{'RANGE.CUSTOM' | translate}}</span>
     <span *ngIf="selectedRange === 'custom'">
-      {{form.controls['startDate']['value'] | date: 'dd.MM.yy'}} -
-      {{form.controls['endDate']['value'] | date: 'dd.MM.yy'}}
+      {{form.controls['startDate'].value | date: 'dd.MM.yy'}} -
+      {{form.controls['endDate'].value | date: 'dd.MM.yy'}}
     </span>
   </button>
   <button
