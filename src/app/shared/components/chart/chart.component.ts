@@ -155,7 +155,7 @@ export class ChartComponent implements OnInit {
   private setCustomTooltip(context: any): void {
     const yAxis = context.chart.chartArea;
     const tooltipModel = context.tooltip;
-    this.isMobile = window.innerWidth < 624;
+    const isMobile = window.innerWidth < 624;
 
     let tooltipEl = document.getElementById('chartjs-tooltip');
     let verticalLineEL = document.getElementById('chartjs-vertical-line');
@@ -218,7 +218,7 @@ export class ChartComponent implements OnInit {
     const offsetDiff = tooltipModel.xAlign === 'left' ? 0 : 250;
     const leftPosition = position.left - offsetDiff + window.scrollX + tooltipModel.caretX;
 
-    tooltipEl.style.opacity = this.isMobile ? '0' : '1';
+    tooltipEl.style.opacity = isMobile ? '0' : '1';
     tooltipEl.style.position = 'absolute';
     tooltipEl.style.left = leftPosition + 'px';
     tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY + 'px';
