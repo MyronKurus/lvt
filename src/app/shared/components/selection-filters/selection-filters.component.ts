@@ -1,13 +1,10 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {FormValue} from "../../models/form-value.model";
 import {Subscription} from "rxjs";
+import {Currency} from "../../models/currency.model";
 
-interface Currency {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-selection-filters',
@@ -17,18 +14,39 @@ interface Currency {
 export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   currencies: Currency[] = [
-    {value: 'usd', viewValue: '$'},
-    {value: 'eur', viewValue: '€'},
-    {value: 'ils', viewValue: '₪'},
+    {
+      KOD_MATBEA: "1",
+      SHEM_ISO: "USD",
+      SHEM_MATBEA: "דולר אמריקאי"
+    },
+    {
+      KOD_MATBEA: "2",
+      SHEM_ISO: "GBP",
+      SHEM_MATBEA: "ליש\"ט"
+    },
+    {
+      KOD_MATBEA: "97",
+      SHEM_ISO: "ILS",
+      SHEM_MATBEA: "שקל חדש"
+    },
+    {
+      KOD_MATBEA: "20",
+      SHEM_ISO: "EUR",
+      SHEM_MATBEA: "יוֹרוֹ"
+    }
   ];
-  assets: string[] = ['Securities', 'Deposits and Savings', 'Current'];
+  assets: {value: string, label: string}[] = [
+    {value: 'Securities', label: 'ניירות ערך'},
+    {value: 'Deposits and Savings', label: 'פיקדונות וחסכונות'},
+    {value: 'Current', label: 'עו"ש'}
+  ];
   selectedRange: string = '12 month';
   isDialogClosed: boolean = true;
 
   form = this.formBuilder.group({
-    currency: ['ils'],
-    assets: [['Securities']],
-    startDate:  moment().startOf('day').subtract(1, 'year').add(1, 'day').format(),
+    currency: ['ILS', Validators.required],
+    assets: [['Securities'], Validators.required],
+    startDate: moment().startOf('day').subtract(1, 'year').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
   });
 
@@ -53,7 +71,9 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   }
 
   onMultiselectClick(value: string[]) {
-    // console.log(value);
+    if (!value?.includes('Securities')) {
+      this.form.controls['assets'].patchValue([]);
+    }
   }
 
   onSelectRange(value: string) {
