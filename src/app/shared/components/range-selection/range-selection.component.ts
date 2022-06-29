@@ -37,7 +37,6 @@ export class RangeSelectionComponent implements OnInit {
     const currentDay = new Date().getDate();
     this.minDate = new Date(currentYear - 3, currentMonth, currentDay);
     this.maxDate = new Date();
-    console.log('min - ', this.minDate, 'max - ', this.maxDate);
     this.form = this.fb.group({
       startDate: [null, {
         validators: [
