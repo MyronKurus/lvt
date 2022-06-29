@@ -55,3 +55,21 @@
     }
   }
 }
+
+.mobile-tooltips {
+  width: calc(100% + 40px);
+  margin-left: - 20px;
+  overflow: hidden;
+
+  &__wrapper {
+    display: none;
+    gap: 12px;
+    padding: 24px 0 12px;
+    margin: 0 12px;
+    transition: ease-in-out .5s;
+
+    &--show {
+      display: flex;
+    }
+  }
+}

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 
 import {Chart} from 'chart.js';
 import chartAnnotationPlugin from 'chartjs-plugin-annotation';
@@ -18,9 +18,12 @@ export class ChartComponent implements OnInit {
   cancel$: Subject<void> = new Subject<void>();
   ctx: any;
   isCollapsed = true;
+  isMobile = false;
   config: any;
   lineStylesData: any;
-  public plugin = chartAnnotationPlugin;
+  tooltip: any;
+  mobileTooltipsArray: any[] = [];
+
   indexes: StockIndex[] = [
     {
       name: "Some Index One",
@@ -41,6 +44,8 @@ export class ChartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkAgentType();
+
     this.config = {
       datasets: {
         line: {
@@ -51,7 +56,7 @@ export class ChartComponent implements OnInit {
       },
       interaction: {
         intersect: false,
-        mode: 'index'
+        mode: 'index',
       },
       scales: {
         x: {
@@ -64,7 +69,7 @@ export class ChartComponent implements OnInit {
           min: -2,
           grid: {
             drawBorder: true,
-            color: '#e5e5e5'
+            color: 'rgba(229,229,229,0.65)',
           },
         }
       },
@@ -73,97 +78,18 @@ export class ChartComponent implements OnInit {
           display: false
         },
         annotation: {
-          drawTime: 'afterDatasetsDraw',
+          drawTime: 'beforeDatasetsDraw',
           annotations: [
             {
               type: 'line',
               yMin: 0,
               yMax: 0,
-              borderColor: '#18285fa6',
+              borderColor: 'rgba(29,24,95,0.51)',
               borderWidth: 1,
             }
           ]
         },
-        tooltip: {
-          enabled: false,
-          external: function (context: any) {
-            const yAxis = context.chart.chartArea;
-
-            let tooltipEl = document.getElementById('chartjs-tooltip');
-            let verticalLineEL = document.getElementById('chartjs-vertical-line');
-
-            if (!tooltipEl) {
-              tooltipEl = document.createElement('div');
-              tooltipEl.id = 'chartjs-tooltip';
-              tooltipEl.innerHTML = '<table class="tooltip-table"></table>';
-              document.body.appendChild(tooltipEl);
-            }
-
-            if (!verticalLineEL) {
-              verticalLineEL = document.createElement('div');
-              verticalLineEL.id = 'chartjs-vertical-line';
-              verticalLineEL.className = 'tooltip-vertical-line';
-              document.body.appendChild(verticalLineEL);
-            }
-
-            const tooltipModel = context.tooltip;
-            if (tooltipModel.opacity === 0) {
-              tooltipEl.style.opacity = '0';
-              verticalLineEL.style.opacity = '0';
-              return;
-            }
-
-            function getBody(bodyItem: any) {
-              return bodyItem.lines;
-            }
-
-            if (tooltipModel.body) {
-              const titleLines = tooltipModel.title || [];
-              const bodyLines = tooltipModel.body.map(getBody);
-
-              let innerHtml = '<thead class="tooltip-table__head">';
-
-              titleLines.forEach(function (title: any) {
-                // innerHtml += '<tr><th>' + title + '</th></tr>';
-                innerHtml += '<tr><th><span class="tooltip-table__title">עד 30.11.21  |  שווי תיק:  <strong>454,125</strong> ₪</span></th></tr>';
-              });
-              innerHtml += '</thead><tbody class="tooltip-table__body">';
-
-              bodyLines.forEach(function (body: any, i: any) {
-                body = body[0].split(':');
-                const colors = tooltipModel.labelColors[i];
-                let style = 'background:' + colors.borderColor;
-                const span = '<span class="tooltip-pin" style="' + style + '"></span>';
-                innerHtml += `<tr>
-                                <td>${span} <p class="name">${body[0]}</p>
-                                    <p class="to-end">${body[1].trim()}%</p>
-                                </td>
-                              </tr>`;
-              });
-              innerHtml += '</tbody>';
-
-              let tableRoot = tooltipEl.querySelector('table');
-              // @ts-ignore
-              tableRoot.innerHTML = innerHtml;
-            }
-
-            const position = context.chart.canvas.getBoundingClientRect();
-            const offsetDiff = tooltipModel.xAlign === 'left' ? 0 : 250;
-            const leftPosition = position.left - offsetDiff + window.scrollX + tooltipModel.caretX;
-
-            tooltipEl.style.opacity = '1';
-            tooltipEl.style.position = 'absolute';
-            tooltipEl.style.left = leftPosition + 'px';
-            tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY + 'px';
-            tooltipEl.style.transform = 'translate(10px, -50%)';
-            tooltipEl.style.pointerEvents = 'none';
-
-            verticalLineEL.style.opacity = '1';
-            verticalLineEL.style.height = yAxis.height + 'px';
-            verticalLineEL.style.left = position.left + window.scrollX + tooltipModel.caretX + 'px';
-            verticalLineEL.style.top = position.top + window.scrollY + yAxis.top + 'px';
-          }
-        }
+        tooltip: this.tooltip,
       }
     };
 
@@ -201,6 +127,8 @@ export class ChartComponent implements OnInit {
         },
       ]
     };
+
+    this.setMobileTooltipsArray();
   }
 
   public onIndexChange(value: SelectedIndexes): void {
@@ -216,4 +144,160 @@ export class ChartComponent implements OnInit {
     this.cancel$.next();
   }
 
+  public closeMobileTooltipsView(): void {
+    const tooltipsWrapper = document.querySelector('.mobile-tooltips__wrapper');
+
+    if (tooltipsWrapper) {
+      tooltipsWrapper.classList.remove('mobile-tooltips__wrapper--show');
+    }
+  }
+
+  private setCustomTooltip(context: any): void {
+    const yAxis = context.chart.chartArea;
+    const tooltipModel = context.tooltip;
+    this.isMobile = window.innerWidth < 624;
+
+    let tooltipEl = document.getElementById('chartjs-tooltip');
+    let verticalLineEL = document.getElementById('chartjs-vertical-line');
+
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.id = 'chartjs-tooltip';
+      tooltipEl.innerHTML = '<table class="tooltip-table"></table>';
+      document.body.appendChild(tooltipEl);
+    }
+
+    if (!verticalLineEL) {
+      verticalLineEL = document.createElement('div');
+      verticalLineEL.id = 'chartjs-vertical-line';
+      verticalLineEL.className = 'tooltip-vertical-line';
+      document.body.appendChild(verticalLineEL);
+    }
+
+    if (tooltipModel.opacity === 0) {
+      tooltipEl.style.opacity = '0';
+      verticalLineEL.style.opacity = '0';
+      return;
+    }
+
+    function getBody(bodyItem: any) {
+      return bodyItem.lines;
+    }
+
+    if (tooltipModel.body) {
+      const titleLines = tooltipModel.title || [];
+      const bodyLines = tooltipModel.body.map(getBody);
+
+      let innerHtml = '<thead class="tooltip-table__head">';
+
+      titleLines.forEach(function (title: any) {
+        // innerHtml += '<tr><th>' + title + '</th></tr>';
+        innerHtml += '<tr><th><span class="tooltip-table__title">עד 30.11.21  |  שווי תיק:  <strong>454,125</strong> ₪</span></th></tr>';
+      });
+      innerHtml += '</thead><tbody class="tooltip-table__body">';
+
+      bodyLines.forEach(function (body: any, i: any) {
+        body = body[0].split(':');
+        const colors = tooltipModel.labelColors[i];
+        let style = 'background:' + colors.borderColor;
+        const span = '<span class="tooltip-pin" style="' + style + '"></span>';
+        innerHtml += `<tr>
+                        <td>${span} <p class="name">${body[0]}</p>
+                            <p class="to-end">${body[1].trim()}%</p>
+                        </td>
+                      </tr>`;
+      });
+      innerHtml += '</tbody>';
+
+      let tableRoot = tooltipEl.querySelector('table');
+      // @ts-ignore
+      tableRoot.innerHTML = innerHtml;
+    }
+
+    const position = context.chart.canvas.getBoundingClientRect();
+    const offsetDiff = tooltipModel.xAlign === 'left' ? 0 : 250;
+    const leftPosition = position.left - offsetDiff + window.scrollX + tooltipModel.caretX;
+
+    tooltipEl.style.opacity = this.isMobile ? '0' : '1';
+    tooltipEl.style.position = 'absolute';
+    tooltipEl.style.left = leftPosition + 'px';
+    tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY + 'px';
+    tooltipEl.style.transform = 'translate(10px, -50%)';
+    tooltipEl.style.pointerEvents = 'none';
+
+    verticalLineEL.style.opacity = '1';
+    verticalLineEL.style.height = yAxis.height + 'px';
+    verticalLineEL.style.left = position.left + window.scrollX + tooltipModel.caretX + 'px';
+    verticalLineEL.style.top = position.top + window.scrollY + yAxis.top + 'px';
+  }
+
+  private selectCurrentDataset(datasets: Array<any>): void {
+    const dataIndex = datasets[0].dataIndex;
+    const tooltipsWrapper = document.querySelector('.mobile-tooltips__wrapper');
+
+    if (tooltipsWrapper) {
+      tooltipsWrapper.classList.add('mobile-tooltips__wrapper--show');
+      const tooltipsItems = tooltipsWrapper.querySelectorAll('.tooltip-table');
+      const tooltipItem = tooltipsItems[dataIndex];
+      tooltipsItems.forEach((item, index) => {
+        if (dataIndex !== index) {
+          item.classList.remove('tooltip-table--selected');
+        }
+      });
+      tooltipItem.classList.add('tooltip-table--selected');
+      let offsetNumber = (dataIndex * tooltipsItems[dataIndex].clientWidth) + (dataIndex * 12) - 40;
+      if (dataIndex === 0) {
+        offsetNumber = 0;
+      } else if (dataIndex + 1 === tooltipsItems.length) {
+        offsetNumber -= 40;
+      }
+
+      tooltipsWrapper.setAttribute('style', `transform: translateX(-${offsetNumber}px)`);
+    }
+  }
+
+  private checkAgentType(): void {
+    this.isMobile = window.innerWidth < 624;
+    if (this.isMobile) {
+      this.tooltip = {
+        enabled: false,
+        external: this.setCustomTooltip,
+        callbacks: {
+          title: this.selectCurrentDataset
+        }
+      }
+
+      return;
+    }
+
+    this.tooltip = {
+      enabled: false,
+      external: this.setCustomTooltip,
+    };
+  }
+
+  private setMobileTooltipsArray(): void {
+    const datasetLength = this.lineStylesData.datasets.length;
+    const dataLength = this.lineStylesData.datasets[0].data.length;
+
+    for (let i = 0; i < dataLength; i++) {
+      let sum = 0;
+      let dataInfo = [];
+
+      for (let j = 0; j < datasetLength; j++) {
+        const dataSet = this.lineStylesData.datasets[j];
+        sum += dataSet.data[i];
+        dataInfo.push({
+          label: dataSet.label,
+          color: dataSet.borderColor,
+          value: dataSet.data[i],
+        });
+      }
+
+      this.mobileTooltipsArray.push({
+        sum: sum,
+        data: dataInfo
+      });
+    }
+  }
 }

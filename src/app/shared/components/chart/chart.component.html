@@ -4,6 +4,30 @@
          [height]="'350px'"
 ></p-chart>
 
+<div class="mobile-tooltips" *ngIf="isMobile">
+  <div class="mobile-tooltips__wrapper">
+    <table class="tooltip-table tooltip-table--mobile" *ngFor="let tooltip of mobileTooltipsArray; index as i">
+      <thead class="tooltip-table__head">
+      <tr>
+        <th>
+          <span class="tooltip-table__close" (click)="closeMobileTooltipsView()"></span>
+          <span class="tooltip-table__title">עד 30.11.21  |  שווי תיק: <strong>{{tooltip.sum}}</strong> ₪</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody class="tooltip-table__body">
+      <tr class="mobile-tooltips__value" *ngFor="let data of tooltip.data">
+        <td>
+          <span class="tooltip-pin" [style.backgroundColor]="data.color"></span>
+          <p class="name">{{data.label}}</p>
+          <p class="to-end">{{data.value}}%</p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div class="add-index">
     <a *ngIf="!isCollapsed" (click)="onCancelIndexes()">{{'CHART.CANCEL' | translate}}</a>
   <button
