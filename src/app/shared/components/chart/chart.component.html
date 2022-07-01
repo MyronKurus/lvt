@@ -1,8 +1,32 @@
-<p-chart type="line"
-         [data]="lineStylesData"
-         [options]="config"
-         [height]="'350px'"
-></p-chart>
+<div id="lvt-chart-box" class="chart-box">
+  <p-chart type="line"
+           [data]="lineStylesData"
+           [options]="config"
+           [height]="'350px'"
+  ></p-chart>
+
+  <div id="chartJs-shit" class="highlighted-area">
+    <div class="highlighted-area__info">
+      <mat-icon (click)="showInfoBox = true">info_outline</mat-icon>
+    </div>
+
+    <div class="highlighted-area__box" *ngIf="showInfoBox">
+      <div class="highlighted-area__header">
+        <span class="highlighted-area__close" (click)="showInfoBox = false"></span>
+        <p>{{'HIGHLIGHT_BOX.TITLE' | translate}}</p>
+      </div>
+      <div class="highlighted-area__body">
+        <p>{{'HIGHLIGHT_BOX.DESCRIPTION' | translate}}</p>
+      </div>
+    </div>
+  </div>
+<!--  <div class="chart-box__no-data">-->
+<!--    <div class="no-data">-->
+<!--      <mat-icon>info_outline</mat-icon>-->
+<!--      <p class="no-data__text">{{'CHART.NO_DATA' | translate}}</p>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
 
 <div class="mobile-tooltips" *ngIf="isMobile">
   <div class="mobile-tooltips__wrapper">

@@ -71,5 +71,11 @@ export class AuthService {
     return this.http.post<BankProfile>(`${this.appUrl}Authorization/BankProfile`, params);
   }
 
+  public authorization(hash: string): Observable<any> {
+    return this.http.post(
+      `${this.appUrl}authorization/web/post`,
+      `hashKey=${hash}`,
+      {headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
+  }
 
 }

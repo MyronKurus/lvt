@@ -1,4 +1,5 @@
 {
+  "SOMETHING_WRONG_AUTH": "אופס! משהו השתבש...",
   "SELECTOR": {
     "ASSETS": "My Assets"
   },
@@ -26,6 +27,7 @@
   "CHART": {
     "COMPARISON": "Comparison of market indices",
     "BUTTON_LABEL": "You can select up to 3 metrics",
+    "NO_DATA": "No Data",
     "CANCEL": "Cancel comparison",
     "BUTTON" : {
       "CANCEL_COMPARISON": "Cancel comparison",
@@ -37,5 +39,9 @@
     "GREATER_THAN": "End date should be greater than Start date!",
     "INVALID_DATE": "Invalid date",
     "HINT": "Yo can select up to 3 years ago"
+  },
+  "HIGHLIGHT_BOX": {
+    "TITLE": "לתשומת לבך",
+    "DESCRIPTION": "הנתונים מוצגים ביחס לפקדון ניירות הערך שלך בבנק - לא יוצגו נתוני פקדון ניירות ערך ביחס לתאריכים בהם ניתנו בחשבון שירותי ניהול השקעות"
   }
 }
