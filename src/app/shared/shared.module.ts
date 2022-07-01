@@ -38,7 +38,7 @@ const COMPONENTS = [
     ...COMPONENTS,
   ],
   imports: [
-    ...MODULES
+    ...MODULES,
   ],
   exports: [
     ...MODULES,

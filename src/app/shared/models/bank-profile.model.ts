@@ -1,5 +1,5 @@
 export interface BankProfile {
-  Bank: number;
-  Branch: number
-  Account: number;
+  Bank: string;
+  Branch: string
+  Account: string;
 }
