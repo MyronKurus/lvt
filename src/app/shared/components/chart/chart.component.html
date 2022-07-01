@@ -13,11 +13,10 @@
     <div class="highlighted-area__box" *ngIf="showInfoBox">
       <div class="highlighted-area__header">
         <span class="highlighted-area__close" (click)="showInfoBox = false"></span>
-        <p>לתשומת לבך</p>
+        <p>{{'HIGHLIGHT_BOX.TITLE' | translate}}</p>
       </div>
       <div class="highlighted-area__body">
-        <p>הנתונים מוצגים ביחס לפקדון ניירות הערך שלך בבנק -
-          לא יוצגו נתוני פקדון ניירות ערך ביחס לתאריכים בהם ניתנו בחשבון שירותי ניהול השקעות</p>
+        <p>{{'HIGHLIGHT_BOX.DESCRIPTION' | translate}}</p>
       </div>
     </div>
   </div>

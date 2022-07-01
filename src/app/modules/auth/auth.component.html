@@ -1,1 +1,5 @@
-<p>auth works!</p>
+<div class="auth-box">
+  <app-loader *ngIf="loading"></app-loader>
+
+  <h3 *ngIf="error">{{'SOMETHING_WRONG_AUTH' | translate}}</h3>
+</div>

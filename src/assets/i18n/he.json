@@ -1,4 +1,5 @@
 {
+  "SOMETHING_WRONG_AUTH": "אופס! משהו השתבש...",
   "SELECTOR": {
     "ASSETS": " :הנכסים שלי"
   },
@@ -38,5 +39,9 @@
     "GREATER_THAN": "End date should be greater than Start date!",
     "INVALID_DATE": "Invalid date",
     "HINT": "ניתן לבחור עד 3 שנים אחורה"
+  },
+  "HIGHLIGHT_BOX": {
+    "TITLE": "לתשומת לבך",
+    "DESCRIPTION": "הנתונים מוצגים ביחס לפקדון ניירות הערך שלך בבנק - לא יוצגו נתוני פקדון ניירות ערך ביחס לתאריכים בהם ניתנו בחשבון שירותי ניהול השקעות"
   }
 }
