@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import {FormValue} from "../../models/form-value.model";
 import {Subscription} from "rxjs";
 import {Currency} from "../../models/currency.model";
+import {DataService} from "../../services/data.service";
 
 
 @Component({
@@ -13,28 +14,7 @@ import {Currency} from "../../models/currency.model";
 })
 export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
-  currencies: Currency[] = [
-    {
-      KOD_MATBEA: 1,
-      SHEM_ISO: "USD",
-      SHEM_MATBEA: "דולר אמריקאי"
-    },
-    {
-      KOD_MATBEA: 2,
-      SHEM_ISO: "GBP",
-      SHEM_MATBEA: "ליש\"ט"
-    },
-    {
-      KOD_MATBEA: 97,
-      SHEM_ISO: "ILS",
-      SHEM_MATBEA: "שקל חדש"
-    },
-    {
-      KOD_MATBEA: 20,
-      SHEM_ISO: "EUR",
-      SHEM_MATBEA: "יוֹרוֹ"
-    }
-  ];
+  currencies: Currency[] = [];
   assets: {value: string, label: string}[] = [
     {value: 'Securities', label: 'ניירות ערך'},
     {value: 'Deposits and Savings', label: 'פיקדונות וחסכונות'},
@@ -57,6 +37,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
+    private data: DataService,
   ) { }
 
   ngOnInit(): void {
@@ -64,6 +45,8 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
     this.subscription = this.form.valueChanges?.subscribe(value => {
       this.formValue.emit(value);
     });
+    this.data.getCurrencyList()
+      .subscribe(currencies => this.currencies = currencies);
   }
 
   ngOnDestroy() {
