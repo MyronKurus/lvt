@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+
+import {AuthService} from "../../shared/services/auth.service";
+import {ERoutes} from "../../core/enums/routes";
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +11,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  loading = true;
+  error = false;
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.authService.authorization(encodeURIComponent(params['hash']))
+        .subscribe(() => {
+          this.loading = false;
+          this.router.navigate([ERoutes.EMPTY]).then();
+        }, () => {
+          this.loading = false;
+          this.error = true;
+        });
+    });
+
+    setTimeout(() => {
+      this.loading = false;
+      this.error = true;
+    }, 25000);
   }
 
 }

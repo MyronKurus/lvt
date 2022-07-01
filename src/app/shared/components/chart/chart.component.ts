@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import {BehaviorSubject, Subject} from "rxjs";
+import {Subject} from "rxjs";
 
 import {Chart} from 'chart.js';
 import chartAnnotationPlugin from 'chartjs-plugin-annotation';
@@ -19,6 +19,7 @@ export class ChartComponent implements OnInit {
   ctx: any;
   isCollapsed = true;
   isMobile = false;
+  showInfoBox = false;
   config: any;
   lineStylesData: any;
   tooltip: any;
@@ -47,6 +48,41 @@ export class ChartComponent implements OnInit {
     this.checkAgentType();
 
     this.config = {
+      // animation: {
+      //   onComplete: function(e: any) {
+      //     const chartArea = e.chart.chartArea;
+      //     const metaSet = e.chart['_metasets'][0];
+      //     const data = metaSet.data;
+      //     const someShit = 4;
+      //     let startX = 0;
+      //     let endX = 0;
+      //
+      //     data.forEach((item: any, i: number) => {
+      //       if (i === someShit) {
+      //         startX = item.x;
+      //       }
+      //
+      //       if (i == someShit + 1) {
+      //         endX = item.x;
+      //       }
+      //     });
+      //
+      //     const chartBox = document.getElementById('lvt-chart-box');
+      //     const shitEl = document.getElementById('chartJs-shit');
+      //
+      //     if (chartBox && shitEl) {
+      //       shitEl.style.display = 'block';
+      //       const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
+      //
+      //       shitEl.classList.add(position);
+      //       shitEl.style.width = `${endX - startX}px`;
+      //       shitEl.style.height = `${chartArea.height}px`;
+      //       shitEl.style.left = `${startX}px`;
+      //       shitEl.style.top = `${chartArea.top}px`;
+      //       shitEl.style.background = 'rgba(230, 233, 239, 1)';
+      //     }
+      //   }
+      // },
       datasets: {
         line: {
           spanGaps: true,
@@ -62,11 +98,12 @@ export class ChartComponent implements OnInit {
         x: {
           grid: {
             drawBorder: true,
-            display: false,
-          }
+            display: false
+          },
         },
         y: {
           min: -2,
+          max: 6,
           grid: {
             drawBorder: true,
             color: 'rgba(229,229,229,0.65)',
