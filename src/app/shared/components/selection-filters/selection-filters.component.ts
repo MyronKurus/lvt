@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core'
 import {FormBuilder, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {FormValue} from "../../models/form-value.model";
-import {Subscription} from "rxjs";
+import {forkJoin, Subscription} from "rxjs";
 import {Currency} from "../../models/currency.model";
 import {DataService} from "../../services/data.service";
 
@@ -14,26 +14,23 @@ import {DataService} from "../../services/data.service";
 })
 export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
-  currencies: Currency[] = [];
-  assets: {value: string, label: string}[] = [
+  public currencies: Currency[] = [];
+  public assets: {value: string, label: string}[] = [
     {value: 'Securities', label: 'ניירות ערך'},
     {value: 'Deposits and Savings', label: 'פיקדונות וחסכונות'},
     {value: 'Current', label: 'עו"ש'}
   ];
-  selectedRange: string = '12 month';
-  isDialogClosed: boolean = true;
-
-  form = this.formBuilder.group({
+  public selectedRange: string = '12 month';
+  public isDialogClosed: boolean = true;
+  @Output()
+  public formValue: EventEmitter<FormValue> = new EventEmitter<FormValue>();
+  public form = this.formBuilder.group({
     currency: ['ILS', Validators.required],
     assets: [['Securities'], Validators.required],
     startDate: moment().startOf('day').subtract(1, 'year').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
   });
-
   private subscription: Subscription | undefined;
-
-  @Output()
-  formValue: EventEmitter<FormValue> = new EventEmitter<FormValue>();
 
   constructor(
     private formBuilder: FormBuilder,
