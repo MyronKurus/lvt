@@ -29,11 +29,11 @@ export class DataService {
   }
 
   public indexes(body: IndexesBody): Observable<Index[]> {
-    return this.http.post<Index[]>(`${this.appUrl}/CustomerYieldCalculation/Indexes`, body);
+    return this.http.post<Index[]>(`${this.appUrl}CustomerYieldCalculation/Indexes`, body);
   }
 
   public portfolio(body: PortfolioBody): Observable<Portfolio> {
-    return this.http.post<Portfolio>(`${this.appUrl}/CustomerYieldCalculation/Portfolio`, body);
+    return this.http.post<Portfolio>(`${this.appUrl}CustomerYieldCalculation/Portfolio`, body);
   }
 
 }

@@ -67,7 +67,7 @@
 <app-index-selection
   *ngIf="!isCollapsed"
   [collapsed]="isCollapsed"
-  [indexCollection]="indexes"
+  [indexCollection]="stockIndexes"
   [cancel$]="cancel$.asObservable()"
   (selectedIndexes)="onIndexChange($event)"
   (collapse)="onExpand()"
