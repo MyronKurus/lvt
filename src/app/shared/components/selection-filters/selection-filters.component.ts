@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core'
 import {FormBuilder, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {FormValue} from "../../models/form-value.model";
-import {forkJoin, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {Currency} from "../../models/currency.model";
 import {DataService} from "../../services/data.service";
 

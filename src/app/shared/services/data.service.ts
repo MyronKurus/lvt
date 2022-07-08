@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Currency} from "../models/currency.model";
 import {UserProfile} from "../models/user-profile.model";
-import {Index} from "../models/index.model";
+import {IndexCollection} from "../models/index.model";
 import {Portfolio} from "../models/portfolio.model";
 import {IndexesBody} from "../models/indexes-body.model";
 import {PortfolioBody} from "../models/portfolio-body.model";
@@ -28,8 +28,8 @@ export class DataService {
     return this.http.get<UserProfile>(`${this.appUrl}CustomerProfile/UserProfile`);
   }
 
-  public indexes(body: IndexesBody): Observable<Index[]> {
-    return this.http.post<Index[]>(`${this.appUrl}CustomerYieldCalculation/Indexes`, body);
+  public indexes(body: IndexesBody): Observable<IndexCollection[]> {
+    return this.http.post<IndexCollection[]>(`${this.appUrl}CustomerYieldCalculation/Indexes`, body);
   }
 
   public portfolio(body: PortfolioBody): Observable<Portfolio> {

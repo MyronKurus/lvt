@@ -44,19 +44,19 @@
     [ngClass]="{active: selectedRange === '12 month'}"
     (click)="onSelectRange('12 month')"
   >
-    {{'RANGE.ONE_YEAR' | translate}}
+    <span dir="rtl">{{'RANGE.ONE_YEAR' | translate}}</span>
   </button>
   <button
     [ngClass]="{active: selectedRange === '6 month'}"
     (click)="onSelectRange('6 month')"
   >
-    {{'RANGE.HALF_A_YEAR' | translate}}
+    <span dir="rtl">{{'RANGE.HALF_A_YEAR' | translate}}</span>
   </button>
   <button
     [ngClass]="{active: selectedRange === '3 month'}"
     (click)="onSelectRange('3 month')"
   >
-    {{'RANGE.QUARTER' | translate}}
+    <span dir="rtl">{{'RANGE.QUARTER' | translate}}</span>
   </button>
 </div>
 

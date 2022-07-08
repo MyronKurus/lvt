@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {SelectedIndexes} from "../../models/selected-indexes.model";
-import {StockIndex} from "../../models/stock-index.model";
 import {Observable, Subscription} from "rxjs";
+import {IndexCollection} from "../../models/index.model";
 
 @Component({
   selector: 'app-index-selection',
@@ -21,7 +21,7 @@ import {Observable, Subscription} from "rxjs";
 export class IndexSelectionComponent implements OnInit, OnDestroy {
 
   @Input()
-  public indexCollection: StockIndex[] | undefined;
+  public indexCollection: IndexCollection[] | undefined;
   @Input()
   public collapsed: boolean = true;
   @Input()
