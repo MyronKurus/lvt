@@ -15,7 +15,7 @@ import {DataService} from "../../services/data.service";
 export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   public currencies: Currency[] = [];
-  public assets: {value: string, label: string}[] = [
+  public assets: {value: string, label: string} [] = [
     {value: 'Securities', label: 'ניירות ערך'},
     {value: 'Deposits and Savings', label: 'פיקדונות וחסכונות'},
     {value: 'Current', label: 'עו"ש'}
