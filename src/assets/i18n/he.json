@@ -4,9 +4,9 @@
     "ASSETS": " :הנכסים שלי"
   },
   "RANGE": {
-    "QUARTER": "חודשים 3",
-    "HALF_A_YEAR": "חודשים 6",
-    "ONE_YEAR": "חודשים 12",
+    "QUARTER": "3 חודשים",
+    "HALF_A_YEAR": "6 חודשים",
+    "ONE_YEAR": "12 חודשים",
     "START_OF_THE_YEAR": "מתחילת השנה",
     "CUSTOM": "תאריך לבחירה"
   },

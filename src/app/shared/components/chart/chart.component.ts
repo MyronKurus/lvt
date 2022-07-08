@@ -5,9 +5,8 @@ import {Subject} from "rxjs";
 import {Chart} from 'chart.js';
 import chartAnnotationPlugin from 'chartjs-plugin-annotation';
 
-import {StockIndex} from "../../models/stock-index.model";
 import {SelectedIndexes} from "../../models/selected-indexes.model";
-import {Index} from "../../models/index.model";
+import {IndexCollection} from "../../models/index.model";
 import {Portfolio} from "../../models/portfolio.model";
 
 @Component({
@@ -27,23 +26,23 @@ export class ChartComponent implements OnInit {
   tooltip: any;
   mobileTooltipsArray: any[] = [];
   @Input()
-  indexes: Index[] | undefined;
+  stockIndexes: IndexCollection[] | undefined;
   @Input()
   portfolio: Portfolio | undefined;
-  stockIndexes: StockIndex[] = [
-    {
-      name: "Some Index One",
-      values: ['125', '9.05% 90', 'S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'MSCI World'],
-    },
-    {
-      name: "Some Index Two",
-      values: ['S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'Bloomberg US Agg TR'],
-    },
-    {
-      name: "Some Index Three",
-      values: ['125', '35'],
-    }
-  ];
+  // stockIndexes: StockIndex[] = [
+  //   {
+  //     name: "Some Index One",
+  //     values: ['125', '9.05% 90', 'S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'MSCI World'],
+  //   },
+  //   {
+  //     name: "Some Index Two",
+  //     values: ['S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'Bloomberg US Agg TR'],
+  //   },
+  //   {
+  //     name: "Some Index Three",
+  //     values: ['125', '35'],
+  //   }
+  // ];
 
   constructor() {
     Chart.register(chartAnnotationPlugin);

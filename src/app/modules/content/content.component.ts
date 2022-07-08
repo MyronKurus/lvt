@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { FormValue } from "../../shared/models/form-value.model";
+import {FormValue} from "../../shared/models/form-value.model";
 import {DataService} from "../../shared/services/data.service";
-import {forkJoin, Subscription} from "rxjs";
-import {Currency} from "../../shared/models/currency.model";
+import {forkJoin} from "rxjs";
 import {UserProfile} from "../../shared/models/user-profile.model";
-import {Index} from "../../shared/models/index.model";
+import {IndexCollection} from "../../shared/models/index.model";
 import {Portfolio} from "../../shared/models/portfolio.model";
 
 @Component({
@@ -16,7 +15,7 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   public formValue: FormValue | undefined;
   public profile: UserProfile | undefined;
-  public indexes: Index[] | undefined;
+  public indexes: IndexCollection[] | undefined;
   public portfolio: Portfolio | undefined;
 
   constructor(
