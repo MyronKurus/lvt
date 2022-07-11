@@ -1,20 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {DatePipe} from "@angular/common";
 
 import {Subject} from "rxjs";
 
 import {Chart} from 'chart.js';
 import chartAnnotationPlugin from 'chartjs-plugin-annotation';
 
-import {SelectedIndexes} from "../../models/selected-indexes.model";
-import {IndexCollection} from "../../models/index.model";
 import {Portfolio} from "../../models/portfolio.model";
+import {IndexCollection} from "../../models/index.model";
+import {SelectedIndexes} from "../../models/selected-indexes.model";
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
 
   cancel$: Subject<void> = new Subject<void>();
   ctx: any;
@@ -25,155 +26,189 @@ export class ChartComponent implements OnInit {
   lineStylesData: any;
   tooltip: any;
   mobileTooltipsArray: any[] = [];
-  @Input()
-  stockIndexes: IndexCollection[] | undefined;
-  @Input()
-  portfolio: Portfolio | undefined;
-  // stockIndexes: StockIndex[] = [
-  //   {
-  //     name: "Some Index One",
-  //     values: ['125', '9.05% 90', 'S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'MSCI World'],
-  //   },
-  //   {
-  //     name: "Some Index Two",
-  //     values: ['S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'Bloomberg US Agg TR'],
-  //   },
-  //   {
-  //     name: "Some Index Three",
-  //     values: ['125', '35'],
-  //   }
-  // ];
+  @Input() stockIndexes: IndexCollection[] | undefined;
+  @Input() portfolio: Portfolio | undefined;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef,
+              private datePipe: DatePipe) {
     Chart.register(chartAnnotationPlugin);
   }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
     this.checkAgentType();
 
-    this.config = {
-      // animation: {
-      //   onComplete: function(e: any) {
-      //     const chartArea = e.chart.chartArea;
-      //     const metaSet = e.chart['_metasets'][0];
-      //     const data = metaSet.data;
-      //     const someShit = 4;
-      //     let startX = 0;
-      //     let endX = 0;
-      //
-      //     data.forEach((item: any, i: number) => {
-      //       if (i === someShit) {
-      //         startX = item.x;
-      //       }
-      //
-      //       if (i == someShit + 1) {
-      //         endX = item.x;
-      //       }
-      //     });
-      //
-      //     const chartBox = document.getElementById('lvt-chart-box');
-      //     const shitEl = document.getElementById('chartJs-shit');
-      //
-      //     if (chartBox && shitEl) {
-      //       shitEl.style.display = 'block';
-      //       const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
-      //
-      //       shitEl.classList.add(position);
-      //       shitEl.style.width = `${endX - startX}px`;
-      //       shitEl.style.height = `${chartArea.height}px`;
-      //       shitEl.style.left = `${startX}px`;
-      //       shitEl.style.top = `${chartArea.top}px`;
-      //       shitEl.style.background = 'rgba(230, 233, 239, 1)';
-      //     }
-      //   }
-      // },
-      datasets: {
-        line: {
-          spanGaps: true,
-          pointBorderWidth: 0,
-          pointBackgroundColor: 'transparent',
-        }
-      },
-      interaction: {
-        intersect: false,
-        mode: 'index',
-      },
-      scales: {
-        x: {
-          grid: {
-            drawBorder: true,
+    if (this.portfolio) {
+      let yMaxAxios = 0;
+      let yMinAxios = 0;
+      this.lineStylesData = {
+        labels: this.setLabels(this.portfolio.periodYield),
+        datasets: [
+          {
+            label: 'תקופה',
+            data: this.setDataset(this.portfolio.periodYield),
+            borderColor: '#19295f',
+            pointBorderWidth: 2,
+            pointBackgroundColor: '#19295f',
+            pointHoverBorderWidth: 4
+          },
+        ]
+      };
+
+      this.config = {
+        animation: {
+          onComplete: function(e: any) {
+            const yAxios = e.chart.scales.y;
+            yMaxAxios = yAxios.max + yAxios['_valueRange'];
+            yMinAxios = yAxios.min - yAxios['_valueRange'];
+            const chartArea = e.chart.chartArea;
+            const metaSet = e.chart['_metasets'][0];
+            const data = metaSet.data;
+            const someShit = -1;
+            let startX = 0;
+            let endX = 0;
+
+            if (someShit >= 0) {
+              data.forEach((item: any, i: number) => {
+                if (i === someShit) {
+                  startX = item.x;
+                }
+
+                if (i == someShit + 1) {
+                  endX = item.x;
+                }
+              });
+
+              const chartBox = document.getElementById('lvt-chart-box');
+              const shitEl = document.getElementById('chartJs-shit');
+
+              if (chartBox && shitEl) {
+                shitEl.style.display = 'block';
+                const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
+
+                shitEl.classList.add(position);
+                shitEl.style.width = `${endX - startX}px`;
+                shitEl.style.height = `${chartArea.height}px`;
+                shitEl.style.left = `${startX}px`;
+                shitEl.style.top = `${chartArea.top}px`;
+                shitEl.style.background = 'rgba(230, 233, 239, 1)';
+              }
+            }
+          }
+        },
+        datasets: {
+          line: {
+            spanGaps: true,
+            pointBorderWidth: 0,
+            pointBackgroundColor: 'transparent',
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          x: {
+            grid: {
+              drawBorder: true,
+              display: false
+            },
+          },
+          y: {
+            max: 0.06,
+            min: -0.06,
+            ticks: {
+              callback: function(value: any) {
+                return value + '%';
+              }
+            },
+            grid: {
+              drawBorder: true,
+              color: 'rgba(229,229,229,0.65)',
+            },
+          }
+        },
+        plugins: {
+          legend: {
             display: false
           },
-        },
-        y: {
-          min: -2,
-          max: 6,
-          grid: {
-            drawBorder: true,
-            color: 'rgba(229,229,229,0.65)',
+          annotation: {
+            drawTime: 'beforeDatasetsDraw',
+            annotations: [
+              {
+                type: 'line',
+                yMin: 0,
+                yMax: 0,
+                borderColor: 'rgba(29,24,95,0.51)',
+                borderWidth: 1,
+              }
+            ]
           },
+          tooltip: this.tooltip,
         }
-      },
-      plugins: {
-        legend: {
-          display: false
-        },
-        annotation: {
-          drawTime: 'beforeDatasetsDraw',
-          annotations: [
-            {
-              type: 'line',
-              yMin: 0,
-              yMax: 0,
-              borderColor: 'rgba(29,24,95,0.51)',
-              borderWidth: 1,
-            }
-          ]
-        },
-        tooltip: this.tooltip,
-      }
-    };
+      };
 
-    this.lineStylesData = {
-      labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'],
-      datasets: [
-        {
-          label: 'First',
-          data: [0, -0.25, -1, 0.45, 0.25, 0.85, -0.35, 0.4, 0, 0.25, 0.20, 0.30, 0.20],
-          borderColor: '#19295f',
-          pointBorderWidth: 2,
-          pointBackgroundColor: '#19295f',
-          pointHoverBorderWidth: 4
-        },
-        {
-          label: 'Second',
-          data: [0, 0.25, 1, 1.45, 1.25, 1.85, 2.35, 2.4, 3, 3.25, 2.50, 1.30, 0.75],
-          borderWidth: 1,
-          borderColor: '#37ae9b',
-          pointHoverBackgroundColor: '#37ae9b',
-        },
-        {
-          label: 'Third Third Third',
-          data: [0, 0.75, 1.5, 2.05, 3.5, 4.85, 5.35, 4.45, 4, 4.25, 3.50, 3.30, 3.75],
-          borderWidth: 1,
-          borderColor: '#3e83d1',
-          pointHoverBackgroundColor: '#3e83d1',
-        },
-        {
-          label: 'Four',
-          data: [0, 1.25, 2, 2.45, 3.25, 3.85, 3.65, 3.4, 2.5, 2.75, 2.45, 2.30, 2.20],
-          borderWidth: 1,
-          borderColor: '#f2866a',
-          pointHoverBackgroundColor: '#f2866a',
-        },
-      ]
-    };
+      this.setMobileTooltipsArray();
+      this.cdr.markForCheck();
+    }
+  }
 
-    this.setMobileTooltipsArray();
+  ngOnInit() {
+    let axis: any;
   }
 
   public onIndexChange(value: SelectedIndexes): void {
-    console.log(value);
+    const dataSets: any[] = [];
+
+    this.stockIndexes?.forEach(item => {
+      const foundRes = item.indices.find(indicate => {
+        if (indicate.indexName === value.indexOne) {
+          dataSets.push({
+            label: value.indexOne,
+            data: this.setDataset(indicate.periodIndexesYield),
+            borderWidth: 1,
+            borderColor: '#f2866a',
+            pointHoverBackgroundColor: '#f2866a',
+          });
+        } else if (indicate.indexName === value.indexTwo) {
+          dataSets.push({
+            label: value.indexTwo,
+            data: this.setDataset(indicate.periodIndexesYield),
+            borderWidth: 1,
+            borderColor: '#3e83d1',
+            pointHoverBackgroundColor: '#3e83d1',
+          });
+        } else if (indicate.indexName === value.indexThree) {
+          dataSets.push({
+            label: value.indexThree,
+            data: this.setDataset(indicate.periodIndexesYield),
+            borderWidth: 1,
+            borderColor: '#37ae9b',
+            pointHoverBackgroundColor: '#37ae9b',
+          });
+        }
+      });
+    });
+
+    if (dataSets.length) {
+      this.lineStylesData = {
+        // @ts-ignore
+        labels: this.setLabels(this.portfolio.periodYield),
+        datasets: [
+          {
+            label: 'תקופה',
+            // @ts-ignore
+            data: this.setDataset(this.portfolio.periodYield),
+            borderColor: '#19295f',
+            pointBorderWidth: 2,
+            pointBackgroundColor: '#19295f',
+            pointHoverBorderWidth: 4
+          },
+          ...dataSets
+        ]
+      };
+      this.setMobileTooltipsArray();
+      this.cdr.markForCheck();
+    }
   }
 
   public onExpand(): void {
@@ -317,7 +352,19 @@ export class ChartComponent implements OnInit {
     };
   }
 
+  private setLabels(mainYields: any[]): (string | null)[] {
+    return mainYields.map((item, index) => {
+      const dateFormat = (index === 0 || index === mainYields.length - 1) ? 'MMM d, y' : 'MMM d';
+      return this.datePipe.transform(item.startOfPeriod, dateFormat)
+    });
+  }
+
+  private setDataset(mainYields: any[]): number[] {
+    return mainYields.map(item => Number(item.precentageYieldPeriod.toFixed(3)));
+  }
+
   private setMobileTooltipsArray(): void {
+    this.mobileTooltipsArray = [];
     const datasetLength = this.lineStylesData.datasets.length;
     const dataLength = this.lineStylesData.datasets[0].data.length;
 
@@ -336,7 +383,7 @@ export class ChartComponent implements OnInit {
       }
 
       this.mobileTooltipsArray.push({
-        sum: sum,
+        sum: sum.toFixed(3),
         data: dataInfo
       });
     }

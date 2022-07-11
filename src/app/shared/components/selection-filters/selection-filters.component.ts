@@ -21,14 +21,14 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
     {value: 'Deposits and Savings', label: 'פיקדונות וחסכונות'},
     {value: 'Current', label: 'עו"ש'}
   ];
-  public selectedRange: string = '12 month';
+  public selectedRange: string = '3 month';
   public isDialogClosed: boolean = true;
   @Output()
   public formValue: EventEmitter<FormValue> = new EventEmitter<FormValue>();
   public form = this.formBuilder.group({
     currency: ['ILS', Validators.required],
     assets: [['Securities'], Validators.required],
-    startDate: moment().startOf('day').subtract(1, 'year').add(1, 'day').format(),
+    startDate: moment().startOf('day').subtract(1, 'month').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
   });
   private subscription: Subscription | undefined;
