@@ -1,20 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {DatePipe} from "@angular/common";
 
 import {Subject} from "rxjs";
 
 import {Chart} from 'chart.js';
 import chartAnnotationPlugin from 'chartjs-plugin-annotation';
 
-import {SelectedIndexes} from "../../models/selected-indexes.model";
-import {IndexCollection} from "../../models/index.model";
 import {Portfolio} from "../../models/portfolio.model";
+import {IndexCollection} from "../../models/index.model";
+import {SelectedIndexes} from "../../models/selected-indexes.model";
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
 
   cancel$: Subject<void> = new Subject<void>();
   ctx: any;
@@ -25,32 +26,38 @@ export class ChartComponent implements OnInit {
   lineStylesData: any;
   tooltip: any;
   mobileTooltipsArray: any[] = [];
-  @Input()
-  stockIndexes: IndexCollection[] | undefined;
-  @Input()
-  portfolio: Portfolio | undefined;
-  // stockIndexes: StockIndex[] = [
-  //   {
-  //     name: "Some Index One",
-  //     values: ['125', '9.05% 90', 'S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'MSCI World'],
-  //   },
-  //   {
-  //     name: "Some Index Two",
-  //     values: ['S&P500', 'Nasdaq 100', 'Eurostoxx 600', 'Eurostoxx 50', 'Bloomberg US Agg TR'],
-  //   },
-  //   {
-  //     name: "Some Index Three",
-  //     values: ['125', '35'],
-  //   }
-  // ];
+  @Input() stockIndexes: IndexCollection[] | undefined;
+  @Input() portfolio: Portfolio | undefined;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef,
+              private datePipe: DatePipe) {
     Chart.register(chartAnnotationPlugin);
   }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
     this.checkAgentType();
 
+    if (this.portfolio) {
+      this.lineStylesData = {
+        labels: this.setLabels(this.portfolio.periodYield),
+        datasets: [
+          {
+            label: 'תקופה',
+            data: this.setDataset(this.portfolio.periodYield),
+            borderColor: '#19295f',
+            pointBorderWidth: 2,
+            pointBackgroundColor: '#19295f',
+            pointHoverBorderWidth: 4
+          },
+        ]
+      };
+
+      this.setMobileTooltipsArray();
+      this.cdr.markForCheck();
+    }
+  }
+
+  ngOnInit() {
     this.config = {
       // animation: {
       //   onComplete: function(e: any) {
@@ -106,8 +113,6 @@ export class ChartComponent implements OnInit {
           },
         },
         y: {
-          min: -2,
-          max: 6,
           grid: {
             drawBorder: true,
             color: 'rgba(229,229,229,0.65)',
@@ -133,47 +138,59 @@ export class ChartComponent implements OnInit {
         tooltip: this.tooltip,
       }
     };
-
-    this.lineStylesData = {
-      labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'],
-      datasets: [
-        {
-          label: 'First',
-          data: [0, -0.25, -1, 0.45, 0.25, 0.85, -0.35, 0.4, 0, 0.25, 0.20, 0.30, 0.20],
-          borderColor: '#19295f',
-          pointBorderWidth: 2,
-          pointBackgroundColor: '#19295f',
-          pointHoverBorderWidth: 4
-        },
-        {
-          label: 'Second',
-          data: [0, 0.25, 1, 1.45, 1.25, 1.85, 2.35, 2.4, 3, 3.25, 2.50, 1.30, 0.75],
-          borderWidth: 1,
-          borderColor: '#37ae9b',
-          pointHoverBackgroundColor: '#37ae9b',
-        },
-        {
-          label: 'Third Third Third',
-          data: [0, 0.75, 1.5, 2.05, 3.5, 4.85, 5.35, 4.45, 4, 4.25, 3.50, 3.30, 3.75],
-          borderWidth: 1,
-          borderColor: '#3e83d1',
-          pointHoverBackgroundColor: '#3e83d1',
-        },
-        {
-          label: 'Four',
-          data: [0, 1.25, 2, 2.45, 3.25, 3.85, 3.65, 3.4, 2.5, 2.75, 2.45, 2.30, 2.20],
-          borderWidth: 1,
-          borderColor: '#f2866a',
-          pointHoverBackgroundColor: '#f2866a',
-        },
-      ]
-    };
-
-    this.setMobileTooltipsArray();
   }
 
   public onIndexChange(value: SelectedIndexes): void {
-    console.log(value);
+    const dataSets: any[] = [];
+
+    this.stockIndexes?.forEach(item => {
+      const foundRes = item.indices.find(indicate => {
+        if (indicate.indexName === value.indexOne) {
+          dataSets.push({
+            label: value.indexOne,
+            data: this.setDataset(indicate.periodIndexesYield),
+            borderWidth: 1,
+            borderColor: '#f2866a',
+            pointHoverBackgroundColor: '#f2866a',
+          });
+        } else if (indicate.indexName === value.indexTwo) {
+          dataSets.push({
+            label: value.indexTwo,
+            data: this.setDataset(indicate.periodIndexesYield),
+            borderWidth: 1,
+            borderColor: '#3e83d1',
+            pointHoverBackgroundColor: '#3e83d1',
+          });
+        } else if (indicate.indexName === value.indexThree) {
+          dataSets.push({
+            label: value.indexThree,
+            data: this.setDataset(indicate.periodIndexesYield),
+            borderWidth: 1,
+            borderColor: '#37ae9b',
+            pointHoverBackgroundColor: '#37ae9b',
+          });
+        }
+      });
+    });
+
+    if (dataSets.length) {
+      this.lineStylesData = {
+        // @ts-ignore
+        labels: this.setLabels(this.portfolio.periodYield),
+        datasets: [
+          {
+            label: 'תקופה',
+            // @ts-ignore
+            data: this.setDataset(this.portfolio.periodYield),
+            borderColor: '#19295f',
+            pointBorderWidth: 2,
+            pointBackgroundColor: '#19295f',
+            pointHoverBorderWidth: 4
+          },
+          ...dataSets
+        ]
+      };
+    }
   }
 
   public onExpand(): void {
@@ -315,6 +332,17 @@ export class ChartComponent implements OnInit {
       enabled: false,
       external: this.setCustomTooltip,
     };
+  }
+
+  private setLabels(mainYields: any[]): (string | null)[] {
+    return mainYields.map((item, index) => {
+      const dateFormat = (index === 0 || index === mainYields.length - 1) ? 'MMM d, y' : 'MMM d';
+      return this.datePipe.transform(item.startOfPeriod, dateFormat)
+    });
+  }
+
+  private setDataset(mainYields: any[]): number[] {
+    return mainYields.map(item => item.precentageYieldPeriod);
   }
 
   private setMobileTooltipsArray(): void {
