@@ -1,7 +1,8 @@
 {
   "SOMETHING_WRONG_AUTH": "אופס! משהו השתבש...",
   "SELECTOR": {
-    "ASSETS": "My Assets"
+    "ASSETS": "My Assets",
+    "CURRENCY": "Curr"
   },
   "RANGE": {
     "QUARTER": "3 Month",

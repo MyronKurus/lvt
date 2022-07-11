@@ -4,7 +4,7 @@
       <mat-form-field appearance="fill">
         <mat-select formControlName="currency">
           <mat-option *ngFor="let currency of currencies" [value]="currency.SHEM_ISO">
-            {{currency.SHEM_MATBEA}}
+            {{'SELECTOR.CURRENCY' | translate}} {{getSymbol(currency.SHEM_ISO)}}
           </mat-option>
         </mat-select>
       </mat-form-field>

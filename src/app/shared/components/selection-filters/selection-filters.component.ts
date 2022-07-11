@@ -5,6 +5,7 @@ import {FormValue} from "../../models/form-value.model";
 import {Subscription} from "rxjs";
 import {Currency} from "../../models/currency.model";
 import {DataService} from "../../services/data.service";
+import {getCurrencySymbol} from "@angular/common";
 
 
 @Component({
@@ -43,7 +44,10 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
       this.formValue.emit(value);
     });
     this.data.getCurrencyList()
-      .subscribe(currencies => this.currencies = currencies);
+      .subscribe(currencies => {
+        // console.log(getCurrencySymbol(currencies[0].SHEM_ISO, 'narrow'));
+        this.currencies = currencies
+      });
   }
 
   ngOnDestroy() {
@@ -97,6 +101,10 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   onClose(closed: boolean): void {
     this.isDialogClosed = closed;
+  }
+
+  getSymbol(isoCode: string) {
+    return getCurrencySymbol(isoCode, 'narrow');
   }
 
 }
