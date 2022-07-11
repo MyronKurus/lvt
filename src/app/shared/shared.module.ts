@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {TranslateModule} from "@ngx-translate/core";
@@ -43,6 +43,9 @@ const COMPONENTS = [
   exports: [
     ...MODULES,
     ...COMPONENTS,
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class SharedModule {

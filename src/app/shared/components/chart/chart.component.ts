@@ -38,6 +38,8 @@ export class ChartComponent implements OnInit, OnChanges {
     this.checkAgentType();
 
     if (this.portfolio) {
+      let yMaxAxios = 0;
+      let yMinAxios = 0;
       this.lineStylesData = {
         labels: this.setLabels(this.portfolio.periodYield),
         datasets: [
@@ -52,92 +54,106 @@ export class ChartComponent implements OnInit, OnChanges {
         ]
       };
 
+      this.config = {
+        animation: {
+          onComplete: function(e: any) {
+            const yAxios = e.chart.scales.y;
+            yMaxAxios = yAxios.max + yAxios['_valueRange'];
+            yMinAxios = yAxios.min - yAxios['_valueRange'];
+            const chartArea = e.chart.chartArea;
+            const metaSet = e.chart['_metasets'][0];
+            const data = metaSet.data;
+            const someShit = -1;
+            let startX = 0;
+            let endX = 0;
+
+            if (someShit >= 0) {
+              data.forEach((item: any, i: number) => {
+                if (i === someShit) {
+                  startX = item.x;
+                }
+
+                if (i == someShit + 1) {
+                  endX = item.x;
+                }
+              });
+
+              const chartBox = document.getElementById('lvt-chart-box');
+              const shitEl = document.getElementById('chartJs-shit');
+
+              if (chartBox && shitEl) {
+                shitEl.style.display = 'block';
+                const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
+
+                shitEl.classList.add(position);
+                shitEl.style.width = `${endX - startX}px`;
+                shitEl.style.height = `${chartArea.height}px`;
+                shitEl.style.left = `${startX}px`;
+                shitEl.style.top = `${chartArea.top}px`;
+                shitEl.style.background = 'rgba(230, 233, 239, 1)';
+              }
+            }
+          }
+        },
+        datasets: {
+          line: {
+            spanGaps: true,
+            pointBorderWidth: 0,
+            pointBackgroundColor: 'transparent',
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          x: {
+            grid: {
+              drawBorder: true,
+              display: false
+            },
+          },
+          y: {
+            max: 0.06,
+            min: -0.06,
+            ticks: {
+              callback: function(value: any) {
+                return value + '%';
+              }
+            },
+            grid: {
+              drawBorder: true,
+              color: 'rgba(229,229,229,0.65)',
+            },
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          annotation: {
+            drawTime: 'beforeDatasetsDraw',
+            annotations: [
+              {
+                type: 'line',
+                yMin: 0,
+                yMax: 0,
+                borderColor: 'rgba(29,24,95,0.51)',
+                borderWidth: 1,
+              }
+            ]
+          },
+          tooltip: this.tooltip,
+        }
+      };
+
       this.setMobileTooltipsArray();
       this.cdr.markForCheck();
     }
   }
 
   ngOnInit() {
-    this.config = {
-      // animation: {
-      //   onComplete: function(e: any) {
-      //     const chartArea = e.chart.chartArea;
-      //     const metaSet = e.chart['_metasets'][0];
-      //     const data = metaSet.data;
-      //     const someShit = 4;
-      //     let startX = 0;
-      //     let endX = 0;
-      //
-      //     data.forEach((item: any, i: number) => {
-      //       if (i === someShit) {
-      //         startX = item.x;
-      //       }
-      //
-      //       if (i == someShit + 1) {
-      //         endX = item.x;
-      //       }
-      //     });
-      //
-      //     const chartBox = document.getElementById('lvt-chart-box');
-      //     const shitEl = document.getElementById('chartJs-shit');
-      //
-      //     if (chartBox && shitEl) {
-      //       shitEl.style.display = 'block';
-      //       const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
-      //
-      //       shitEl.classList.add(position);
-      //       shitEl.style.width = `${endX - startX}px`;
-      //       shitEl.style.height = `${chartArea.height}px`;
-      //       shitEl.style.left = `${startX}px`;
-      //       shitEl.style.top = `${chartArea.top}px`;
-      //       shitEl.style.background = 'rgba(230, 233, 239, 1)';
-      //     }
-      //   }
-      // },
-      datasets: {
-        line: {
-          spanGaps: true,
-          pointBorderWidth: 0,
-          pointBackgroundColor: 'transparent',
-        }
-      },
-      interaction: {
-        intersect: false,
-        mode: 'index',
-      },
-      scales: {
-        x: {
-          grid: {
-            drawBorder: true,
-            display: false
-          },
-        },
-        y: {
-          grid: {
-            drawBorder: true,
-            color: 'rgba(229,229,229,0.65)',
-          },
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        },
-        annotation: {
-          drawTime: 'beforeDatasetsDraw',
-          annotations: [
-            {
-              type: 'line',
-              yMin: 0,
-              yMax: 0,
-              borderColor: 'rgba(29,24,95,0.51)',
-              borderWidth: 1,
-            }
-          ]
-        },
-        tooltip: this.tooltip,
-      }
-    };
+    let axis: any;
   }
 
   public onIndexChange(value: SelectedIndexes): void {
@@ -190,6 +206,8 @@ export class ChartComponent implements OnInit, OnChanges {
           ...dataSets
         ]
       };
+      this.setMobileTooltipsArray();
+      this.cdr.markForCheck();
     }
   }
 
@@ -342,10 +360,11 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   private setDataset(mainYields: any[]): number[] {
-    return mainYields.map(item => item.precentageYieldPeriod);
+    return mainYields.map(item => Number(item.precentageYieldPeriod.toFixed(3)));
   }
 
   private setMobileTooltipsArray(): void {
+    this.mobileTooltipsArray = [];
     const datasetLength = this.lineStylesData.datasets.length;
     const dataLength = this.lineStylesData.datasets[0].data.length;
 
@@ -364,7 +383,7 @@ export class ChartComponent implements OnInit, OnChanges {
       }
 
       this.mobileTooltipsArray.push({
-        sum: sum,
+        sum: sum.toFixed(3),
         data: dataInfo
       });
     }
