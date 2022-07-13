@@ -25,6 +25,12 @@
     "FROM": "from",
     "TO": "to"
   },
+  "TOOLTIP": {
+    "PERCENTAGE_HEADER": "Calculation of yield in percent",
+    "PERCENTAGE_BODY": "The percentage of the securities deposit will be calculated using the TWR method without tax expenses being taken into account. This method calculates returns for sub-periods in which there was a cash flow in the account. The cumulative return is the product of all sub-periods.",
+    "CURRENCY_HEADER": "Calculation of return in shekels",
+    "CURRENCY_BODY": "The return on a securities deposit will be calculated as the difference between the balance of assets at the beginning and end of the period, excluding purchases less sales, dividends, coupons and interest, and reflects an increase / decrease in the value of assets not realized at the end of the period, before tax."
+  },
   "CHART": {
     "COMPARISON": "Comparison of market indices",
     "BUTTON_LABEL": "You can select up to 3 metrics",

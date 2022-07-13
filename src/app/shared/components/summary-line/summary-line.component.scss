@@ -18,6 +18,7 @@
   }
 
   .profit {
+    position: relative;
     font-size: 20px;
     font-weight: 700;
     color: #18285F;
@@ -72,6 +73,57 @@
       .question-mark {
         font-size: 16px;
       }
+    }
+  }
+}
+
+.tooltip-container {
+  position: absolute;
+  z-index: 100;
+  width: 297px;
+  top: 50px;
+  box-shadow: 2px 2px 23px 0 #000000;
+  font-weight: 300;
+
+  .triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #ffc10e;
+    top: -12px;
+    left: calc(50% - 12px);
+  }
+  .tooltip-content {
+    position: relative;
+    height: 183px;
+    width: 297px;
+    background-color: #ffffff;
+
+    .tooltip-header {
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: 100%;
+      background-color: #ffc10e;
+      font-family: 'Assistant', sans-serif;
+      font-size: 14px;
+      color: #18285f;
+      letter-spacing: 0;
+    }
+
+    .tooltip-body {
+      padding-top: 20px;
+      padding-right: 15px;
+      padding-left: 15px;
+      height: 140px;
+      background-color: #ffffff;
+      font-family: 'Assistant', sans-serif;
+      font-size: 14px;
+      color: #52575c;
+      text-align: right;
+      line-height: 20px;
     }
   }
 }

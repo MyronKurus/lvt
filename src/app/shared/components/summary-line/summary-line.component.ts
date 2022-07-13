@@ -8,6 +8,10 @@ import {FormValue} from "../../models/form-value.model";
 })
 export class SummaryLineComponent implements OnInit {
 
+  isOpen: boolean = false;
+  currency: boolean = false;
+  percentage: boolean = false;
+
   @Input()
   data: FormValue | undefined;
 
