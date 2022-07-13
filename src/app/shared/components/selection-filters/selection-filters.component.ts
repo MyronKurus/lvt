@@ -28,7 +28,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   public form = this.formBuilder.group({
     currency: ['ILS', Validators.required],
     assets: [['Securities'], Validators.required],
-    startDate: moment().startOf('day').subtract(1, 'month').add(1, 'day').format(),
+    startDate: moment().startOf('day').subtract(3, 'month').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
   });
   private subscription: Subscription | undefined;

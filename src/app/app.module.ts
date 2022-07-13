@@ -1,4 +1,6 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeHe from '@angular/common/locales/he'
 import {BrowserModule} from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -12,6 +14,8 @@ import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from './app.component';
 import {AuthInterceptorService} from "./shared/interceptors/auth-interceptor.service";
 import {BankProfileInterceptorService} from "./shared/interceptors/bank-profile-interceptor.service";
+
+registerLocaleData(localeHe);
 
 @NgModule({
   declarations: [
@@ -32,6 +36,7 @@ import {BankProfileInterceptorService} from "./shared/interceptors/bank-profile-
     }),
   ],
   providers: [
+    {provide: LOCALE_ID, useValue: 'he-IL' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
