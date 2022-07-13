@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {OverlayModule} from '@angular/cdk/overlay';
+import {FullscreenOverlayContainer, OverlayContainer} from "@angular/cdk/overlay";
 
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -20,7 +22,8 @@ const MODULES = [
   ReactiveFormsModule,
   MaterialModule,
   TranslateModule,
-  ChartModule
+  ChartModule,
+  OverlayModule,
 ];
 
 const COMPONENTS = [
@@ -45,7 +48,11 @@ const COMPONENTS = [
     ...COMPONENTS,
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {
+      provide: OverlayContainer,
+      useClass: FullscreenOverlayContainer,
+    }
   ]
 })
 export class SharedModule {
