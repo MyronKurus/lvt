@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {DatePipe} from "@angular/common";
 
 import {Subject} from "rxjs";
@@ -9,16 +18,50 @@ import chartAnnotationPlugin from 'chartjs-plugin-annotation';
 import {Portfolio} from "../../models/portfolio.model";
 import {IndexCollection} from "../../models/index.model";
 import {SelectedIndexes} from "../../models/selected-indexes.model";
+import {UIChart} from "primeng/chart";
+
+export class Scales {
+  x: any;
+  y: any;
+
+  constructor(xMin: number, xMax: number) {
+    this.x = {
+      min: xMin,
+      max: xMax,
+      grid: {
+        drawBorder: true,
+        display: false
+      },
+      ticks: {
+        autoSkip: false,
+        maxRotation: 0,
+        minRotation: 0
+      }
+    }
+    this.y = {
+      max: 0.1,
+      min: -0.1,
+      ticks: {
+        callback: function (value: any) {
+          return value + '%';
+        }
+      },
+      grid: {
+        drawBorder: true,
+        color: 'rgba(229,229,229,0.65)',
+      },
+    }
+  }
+}
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit, OnChanges {
+export class ChartComponent implements AfterViewInit, OnChanges {
 
   cancel$: Subject<void> = new Subject<void>();
-  ctx: any;
   isCollapsed = true;
   isMobile = false;
   showInfoBox = false;
@@ -29,6 +72,8 @@ export class ChartComponent implements OnInit, OnChanges {
   @Input() stockIndexes: IndexCollection[] | undefined;
   @Input() portfolio: Portfolio | undefined;
 
+  @ViewChild('chart') chartEl?: UIChart;
+
   constructor(private cdr: ChangeDetectorRef,
               private datePipe: DatePipe) {
     Chart.register(chartAnnotationPlugin);
@@ -38,8 +83,7 @@ export class ChartComponent implements OnInit, OnChanges {
     this.checkAgentType();
 
     if (this.portfolio) {
-      let yMaxAxios = 0;
-      let yMinAxios = 0;
+      sessionStorage.setItem('FIB-DATASETS', JSON.stringify(this.portfolio.periodYield));
       this.lineStylesData = {
         labels: this.setLabels(this.portfolio.periodYield),
         datasets: [
@@ -57,40 +101,37 @@ export class ChartComponent implements OnInit, OnChanges {
       this.config = {
         animation: {
           onComplete: function(e: any) {
-            const yAxios = e.chart.scales.y;
-            yMaxAxios = yAxios.max + yAxios['_valueRange'];
-            yMinAxios = yAxios.min - yAxios['_valueRange'];
             const chartArea = e.chart.chartArea;
             const metaSet = e.chart['_metasets'][0];
             const data = metaSet.data;
-            const someShit = -1;
+            const someShift = -1;
             let startX = 0;
             let endX = 0;
 
-            if (someShit >= 0) {
+            if (someShift >= 0) {
               data.forEach((item: any, i: number) => {
-                if (i === someShit) {
+                if (i === someShift) {
                   startX = item.x;
                 }
 
-                if (i == someShit + 1) {
+                if (i == someShift + 1) {
                   endX = item.x;
                 }
               });
 
               const chartBox = document.getElementById('lvt-chart-box');
-              const shitEl = document.getElementById('chartJs-shit');
+              const shiftEl = document.getElementById('chartJs-shift');
 
-              if (chartBox && shitEl) {
-                shitEl.style.display = 'block';
+              if (chartBox && shiftEl) {
+                shiftEl.style.display = 'block';
                 const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
 
-                shitEl.classList.add(position);
-                shitEl.style.width = `${endX - startX}px`;
-                shitEl.style.height = `${chartArea.height}px`;
-                shitEl.style.left = `${startX}px`;
-                shitEl.style.top = `${chartArea.top}px`;
-                shitEl.style.background = 'rgba(230, 233, 239, 1)';
+                shiftEl.classList.add(position);
+                shiftEl.style.width = `${endX - startX}px`;
+                shiftEl.style.height = `${chartArea.height}px`;
+                shiftEl.style.left = `${startX}px`;
+                shiftEl.style.top = `${chartArea.top}px`;
+                shiftEl.style.background = 'rgba(230, 233, 239, 1)';
               }
             }
           }
@@ -106,27 +147,7 @@ export class ChartComponent implements OnInit, OnChanges {
           intersect: false,
           mode: 'index',
         },
-        scales: {
-          x: {
-            grid: {
-              drawBorder: true,
-              display: false
-            },
-          },
-          y: {
-            max: 0.06,
-            min: -0.06,
-            ticks: {
-              callback: function(value: any) {
-                return value + '%';
-              }
-            },
-            grid: {
-              drawBorder: true,
-              color: 'rgba(229,229,229,0.65)',
-            },
-          }
-        },
+        scales: new Scales(0, 12),
         plugins: {
           legend: {
             display: false
@@ -138,7 +159,7 @@ export class ChartComponent implements OnInit, OnChanges {
                 type: 'line',
                 yMin: 0,
                 yMax: 0,
-                borderColor: 'rgba(29,24,95,0.51)',
+                borderColor: 'rgba(29,24,95,0.50)',
                 borderWidth: 1,
               }
             ]
@@ -152,8 +173,8 @@ export class ChartComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit() {
-    let axis: any;
+  ngAfterViewInit() {
+    console.log(this.portfolio?.periodYield?.length);
   }
 
   public onIndexChange(value: SelectedIndexes): void {
@@ -228,10 +249,21 @@ export class ChartComponent implements OnInit, OnChanges {
     }
   }
 
+  public scrollChartHandler(value: number): void {
+    this.config.scales.x.min += value;
+    this.config.scales.x.max += value;
+
+    console.log(this.config.scales.x.max);
+    if (this.chartEl) {
+      this.chartEl.chart.update();
+    }
+  }
+
   private setCustomTooltip(context: any): void {
     const yAxis = context.chart.chartArea;
     const tooltipModel = context.tooltip;
     const isMobile = window.innerWidth < 624;
+    let fibDatasets: any = JSON.parse(sessionStorage.getItem('FIB-DATASETS') as string) || [];
 
     let tooltipEl = document.getElementById('chartjs-tooltip');
     let verticalLineEL = document.getElementById('chartjs-vertical-line');
@@ -260,17 +292,25 @@ export class ChartComponent implements OnInit, OnChanges {
       return bodyItem.lines;
     }
 
+    function getParsedDate(dateString: string): string {
+      const dateArray = dateString.split('-');
+      const day = dateArray[0].substring(2, 4)
+      const month = dateArray[1];
+      const year = dateArray[2].substring(0, 2);
+      return year + '.' + month + '.' + day;
+    }
+
     if (tooltipModel.body) {
-      const titleLines = tooltipModel.title || [];
+      const dataIndex = tooltipModel.dataPoints[0].dataIndex;
       const bodyLines = tooltipModel.body.map(getBody);
+      const dateTitle = getParsedDate(fibDatasets[dataIndex].startOfPeriod);
+      const sum = Math.floor(Math.random() * 500) + 1;
 
-      let innerHtml = '<thead class="tooltip-table__head">';
-
-      titleLines.forEach(function (title: any) {
-        // innerHtml += '<tr><th>' + title + '</th></tr>';
-        innerHtml += '<tr><th><span class="tooltip-table__title">עד 30.11.21  |  שווי תיק:  <strong>454,125</strong> ₪</span></th></tr>';
-      });
-      innerHtml += '</thead><tbody class="tooltip-table__body">';
+      let innerHtml = `<thead class="tooltip-table__head">
+                       <tr><th>
+                         <span class="tooltip-table__title">עד ${dateTitle}  |  שווי תיק:  <strong>${sum}.42</strong> ₪</span>
+                       </th></tr>
+                       </thead><tbody class="tooltip-table__body">`;
 
       bodyLines.forEach(function (body: any, i: any) {
         body = body[0].split(':');
@@ -295,6 +335,7 @@ export class ChartComponent implements OnInit, OnChanges {
     const leftPosition = position.left - offsetDiff + window.scrollX + tooltipModel.caretX;
 
     tooltipEl.style.opacity = isMobile ? '0' : '1';
+    tooltipEl.style.width = '230px';
     tooltipEl.style.position = 'absolute';
     tooltipEl.style.left = leftPosition + 'px';
     tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY + 'px';
@@ -305,6 +346,10 @@ export class ChartComponent implements OnInit, OnChanges {
     verticalLineEL.style.height = yAxis.height + 'px';
     verticalLineEL.style.left = position.left + window.scrollX + tooltipModel.caretX + 'px';
     verticalLineEL.style.top = position.top + window.scrollY + yAxis.top + 'px';
+  }
+
+  get portfolio1(): any {
+    return this.portfolio;
   }
 
   private selectCurrentDataset(datasets: Array<any>): void {
@@ -352,10 +397,22 @@ export class ChartComponent implements OnInit, OnChanges {
     };
   }
 
-  private setLabels(mainYields: any[]): (string | null)[] {
+  private setLabels(mainYields: any[]): (string | string[] | null)[] {
+    let oldMonth = '';
+    let oldYear = '';
     return mainYields.map((item, index) => {
-      const dateFormat = (index === 0 || index === mainYields.length - 1) ? 'MMM d, y' : 'MMM d';
-      return this.datePipe.transform(item.startOfPeriod, dateFormat)
+      const currentMonth = this.datePipe.transform(item.startOfPeriod, 'MMM') || '';
+      const currentYear = this.datePipe.transform(item.startOfPeriod, 'y') || '';
+      let dateFormat = index === 0 || currentYear !== oldYear ? 'd MMM y' : 'd MMM';
+
+      if (index > 0 && currentMonth === oldMonth && currentYear === oldYear) {
+        dateFormat = 'd';
+      }
+
+      oldYear = currentYear || '';
+      oldMonth = currentMonth || '';
+
+      return this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ') || '';
     });
   }
 
@@ -371,10 +428,15 @@ export class ChartComponent implements OnInit, OnChanges {
     for (let i = 0; i < dataLength; i++) {
       let sum = 0;
       let dataInfo = [];
+      let date = '';
 
       for (let j = 0; j < datasetLength; j++) {
         const dataSet = this.lineStylesData.datasets[j];
         sum += dataSet.data[i];
+        if (j === 0) {
+          date = this.datePipe.transform(this.portfolio?.periodYield[i].startOfPeriod, 'dd.MM.yy') || '';
+        }
+
         dataInfo.push({
           label: dataSet.label,
           color: dataSet.borderColor,
@@ -384,6 +446,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
       this.mobileTooltipsArray.push({
         sum: sum.toFixed(3),
+        date: date,
         data: dataInfo
       });
     }

@@ -1,11 +1,25 @@
 <div id="lvt-chart-box" class="chart-box">
-  <p-chart type="line"
+  <p-chart #chart
+           type="line"
            [data]="lineStylesData"
            [options]="config"
            [height]="'350px'"
   ></p-chart>
 
-  <div id="chartJs-shit" class="highlighted-area">
+  <div class="chart-box__navigation">
+    <mat-icon class="chart-box__controller"
+              [class.show]="config?.scales.x.min > 0"
+              (click)="scrollChartHandler(-1)">
+      arrow_back_ios
+    </mat-icon>
+    <mat-icon class="chart-box__controller"
+              [class.show]="config?.scales.x.max !== portfolio?.periodYield?.length"
+              (click)="scrollChartHandler(1)">
+      arrow_forward_ios
+    </mat-icon>
+  </div>
+
+  <div id="chartJs-shift" class="highlighted-area">
     <div class="highlighted-area__info">
       <mat-icon (click)="showInfoBox = true">info_outline</mat-icon>
     </div>
@@ -35,7 +49,7 @@
       <tr>
         <th>
           <span class="tooltip-table__close" (click)="closeMobileTooltipsView()"></span>
-          <span class="tooltip-table__title">עד 30.11.21  |  שווי תיק: <strong>{{tooltip.sum}}</strong> ₪</span>
+          <span class="tooltip-table__title"> עד {{tooltip.date}}  |  שווי תיק: <strong>{{tooltip.sum}}</strong> ₪</span>
         </th>
       </tr>
       </thead>
