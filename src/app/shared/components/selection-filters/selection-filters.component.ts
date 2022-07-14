@@ -26,7 +26,8 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   @Output()
   public formValue: EventEmitter<FormValue> = new EventEmitter<FormValue>();
   public form = this.formBuilder.group({
-    currency: ['ILS', Validators.required],
+    requestedPeriod: 1,
+    currency: ['97', Validators.required],
     assets: [['Securities'], Validators.required],
     startDate: moment().startOf('day').subtract(3, 'month').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
@@ -43,11 +44,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
     this.subscription = this.form.valueChanges?.subscribe(value => {
       this.formValue.emit(value);
     });
-    this.data.getCurrencyList()
-      .subscribe(currencies => {
-        // console.log(getCurrencySymbol(currencies[0].SHEM_ISO, 'narrow'));
-        this.currencies = currencies
-      });
+    this.data.getCurrencyList().subscribe(currencies => this.currencies = currencies);
   }
 
   ngOnDestroy() {
@@ -69,21 +66,29 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
         this.form.controls['startDate'].patchValue(
           moment().startOf('day').subtract(3, 'months').add(1, 'day').format()
         );
+        this.form.controls['requestedPeriod'].patchValue(1);
+        this.isDialogClosed = true;
         break;
       case '6 month':
         this.form.controls['startDate'].patchValue(
           moment().startOf('day').subtract(6, 'months').add(1, 'day').format()
         );
+        this.form.controls['requestedPeriod'].patchValue(2);
+        this.isDialogClosed = true;
         break;
       case '12 month':
         this.form.controls['startDate'].patchValue(
           moment().startOf('day').subtract(1, 'year').add(1, 'day').format()
         );
+        this.form.controls['requestedPeriod'].patchValue(3);
+        this.isDialogClosed = true;
         break;
       case 'startOfTheYear':
         this.form.controls['startDate'].patchValue(moment().startOf('year').format());
+        this.form.controls['requestedPeriod'].patchValue(4);
+        this.isDialogClosed = true;
         break;
-      case  'custom':
+      case 'custom':
         this.openDialog();
         break;
     }
@@ -96,6 +101,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   onSelectCustomRange(value: {startDate: string, endDate: string}):void {
     this.form.controls['startDate'].patchValue(value.startDate);
     this.form.controls['endDate'].patchValue(value.endDate);
+    this.form.controls['requestedPeriod'].patchValue(5);
     this.selectedRange = 'custom';
   }
 

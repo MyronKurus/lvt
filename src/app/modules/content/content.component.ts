@@ -32,14 +32,14 @@ export class ContentComponent implements OnInit, OnDestroy {
       this.data.indexes({
         startDate: value.startDate,
         endDate: value.endDate,
-        requestedPeriod: 0
+        requestedPeriod: value.requestedPeriod
       }),
       this.data.portfolio({
         startDate: value.startDate,
         endDate: value.endDate,
-        requestedPeriod: 0,
+        requestedPeriod: value.requestedPeriod,
         portfolioInfoType: 1,
-        currencyId: 0,
+        currencyId: +value.currency,
         brutoOrNetoYield: 0,
       })
     ]).subscribe(([indexes, portfolio]) => {

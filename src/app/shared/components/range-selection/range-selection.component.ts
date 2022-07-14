@@ -20,11 +20,13 @@ export class RangeSelectionComponent implements OnInit {
   minDate: Date | undefined;
   maxDate: Date | undefined;
   @Input()
+  selectedRange: string | undefined;
+  @Input()
   dateSelected: {startDate: string, endDate: string} | undefined;
   @Output()
   closed: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
-  selectedRange: EventEmitter<{startDate: string, endDate: string}> = new EventEmitter<{startDate: string, endDate: string}>();
+  range: EventEmitter<{startDate: string, endDate: string}> = new EventEmitter<{startDate: string, endDate: string}>();
 
   constructor(
     private fb: FormBuilder,
@@ -38,21 +40,27 @@ export class RangeSelectionComponent implements OnInit {
     this.minDate = new Date(currentYear - 3, currentMonth, currentDay);
     this.maxDate = new Date();
     this.form = this.fb.group({
-      startDate: [null, {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      endDate: [null, {
-        validators: [
-          Validators.required,
-        ]
-      }],
+      startDate: [
+        this.selectedRange === 'custom' ? this.dateSelected?.startDate : null,
+        {
+          validators: [
+            Validators.required,
+          ]
+        }
+      ],
+      endDate: [
+        this.selectedRange === 'custom' ? this.dateSelected?.endDate : null,
+        {
+          validators: [
+            Validators.required,
+          ]
+        }
+      ],
     });
   }
 
   save() {
-    this.selectedRange.emit(this.form.getRawValue());
+    this.range.emit(this.form.getRawValue());
     this.close();
   }
 
