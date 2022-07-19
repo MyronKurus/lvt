@@ -12,4 +12,5 @@ export interface IndexRecord {
   periodIndexesGraphType: number;
   periodIndexesYield: PeriodIndexesYield[];
   errorMessage?: null | string;
+  color?: string;
 }
