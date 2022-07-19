@@ -12,7 +12,7 @@
 
     <div class="assets">
       <mat-form-field appearance="fill">
-        <mat-select formControlName="assets" multiple (selectionChange)="onMultiselectClick($event.value)">
+        <mat-select formControlName="assets" (selectionChange)="onMultiselectClick($event.value)">
           <mat-option
             *ngFor="let asset of assets" [value]="asset.value"
             [disabled]="!form.controls['assets'].value.includes('Securities') && asset.value !== 'Securities'"

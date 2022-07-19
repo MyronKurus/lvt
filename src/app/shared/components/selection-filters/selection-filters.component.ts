@@ -18,8 +18,8 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   public currencies: Currency[] = [];
   public assets: {value: string, label: string} [] = [
     {value: 'Securities', label: 'ניירות ערך'},
-    {value: 'Deposits and Savings', label: 'פיקדונות וחסכונות'},
-    {value: 'Current', label: 'עו"ש'}
+    {value: 'Securities + Deposits and Savings', label: 'ניירות ערך + פיקדונות וחסכונות'},
+    {value: 'Current + Securities + Deposits and Savings', label: 'ניירות ערך + פיקדונות וחסכונות + עו"ש'}
   ];
   public selectedRange: string = '3 month';
   public isDialogClosed: boolean = true;
@@ -28,7 +28,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   public form = this.formBuilder.group({
     requestedPeriod: 1,
     currency: ['97', Validators.required],
-    assets: [['Securities'], Validators.required],
+    assets: ['Securities', Validators.required],
     startDate: moment().startOf('day').subtract(3, 'month').add(1, 'day').format(),
     endDate: moment().startOf('day').format()
   });
@@ -51,10 +51,10 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  onMultiselectClick(value: string[]) {
-    if (!value?.includes('Securities')) {
-      this.form.controls['assets'].patchValue([]);
-    }
+  onMultiselectClick(value: string) {
+    // if (!value?.includes('Securities')) {
+    //   this.form.controls['assets'].patchValue([]);
+    // }
   }
 
   onSelectRange(value: string) {
