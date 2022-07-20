@@ -10,7 +10,8 @@ import {
 import {FormBuilder} from "@angular/forms";
 import {SelectedIndexes} from "../../models/selected-indexes.model";
 import {Observable, Subscription} from "rxjs";
-import {IndexCollection} from "../../models/index.model";
+import {IndexCollection, IndexRecord} from "../../models/index.model";
+import {chartColors} from "../../../core/helpers/chart-colors";
 
 @Component({
   selector: 'app-index-selection',
@@ -27,9 +28,13 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
   @Input()
   public cancel$: Observable<void> | undefined;
   @Output()
-  public selectedIndexes: EventEmitter<SelectedIndexes> = new EventEmitter<SelectedIndexes>();
+  public selectedIndexes: EventEmitter<IndexRecord[]> = new EventEmitter<IndexRecord[]>();
   @Output()
   public collapse: EventEmitter<void> = new EventEmitter<void>();
+  public get colors() {
+    return chartColors;
+  }
+  public indexes: IndexRecord[] = [];
   public form = this.formBuilder.group({
     indexOne: null,
     indexTwo: null,
@@ -51,14 +56,16 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  onCheckValue(value: string, property: string, checked: boolean): void {
-    if (checked && this.form.controls[property].value !== value) {
-      this.form.controls[property].setValue(value);
+  onCheckValue(value: IndexRecord, property: string, checked: boolean, color: string): void {
+    if (checked && this.form.controls[property].value !== value.indexName) {
+      this.form.controls[property].setValue(value.indexName);
+      this.indexes.push({...value, color});
     } else {
+      const removedIndex = this.indexes.findIndex(item => item.indexName === value.indexName);
+      this.indexes.splice(removedIndex, 1);
       this.form.controls[property].setValue(null);
     }
-
-    this.selectedIndexes.emit(this.cleanData());
+    this.selectedIndexes.emit(this.indexes);
   }
 
   private cleanFormValues(): void {
@@ -66,7 +73,8 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
       this.form.controls[key].setValue(null);
     });
 
-    this.selectedIndexes.emit(this.cleanData());
+    this.indexes = [];
+    this.selectedIndexes.emit(this.indexes);
   }
 
   private cleanData(form = this.form): SelectedIndexes {
