@@ -4,7 +4,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -99,43 +98,43 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       };
 
       this.config = {
-        animation: {
-          onComplete: function(e: any) {
-            const chartArea = e.chart.chartArea;
-            const metaSet = e.chart['_metasets'][0];
-            const data = metaSet.data;
-            const someShift = -1;
-            let startX = 0;
-            let endX = 0;
-
-            if (someShift >= 0) {
-              data.forEach((item: any, i: number) => {
-                if (i === someShift) {
-                  startX = item.x;
-                }
-
-                if (i == someShift + 1) {
-                  endX = item.x;
-                }
-              });
-
-              const chartBox = document.getElementById('lvt-chart-box');
-              const shiftEl = document.getElementById('chartJs-shift');
-
-              if (chartBox && shiftEl) {
-                shiftEl.style.display = 'block';
-                const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
-
-                shiftEl.classList.add(position);
-                shiftEl.style.width = `${endX - startX}px`;
-                shiftEl.style.height = `${chartArea.height}px`;
-                shiftEl.style.left = `${startX}px`;
-                shiftEl.style.top = `${chartArea.top}px`;
-                shiftEl.style.background = 'rgba(230, 233, 239, 1)';
-              }
-            }
-          }
-        },
+        // animation: {
+        //   onComplete: function(e: any) {
+        //     const chartArea = e.chart.chartArea;
+        //     const metaSet = e.chart['_metasets'][0];
+        //     const data = metaSet.data;
+        //     const someShift = 8;
+        //     let startX = 0;
+        //     let endX = 0;
+        //
+        //     if (someShift >= 0) {
+        //       data.forEach((item: any, i: number) => {
+        //         if (i === someShift) {
+        //           startX = item.x;
+        //         }
+        //
+        //         if (i == someShift + 1) {
+        //           endX = item.x;
+        //         }
+        //       });
+        //
+        //       const chartBox = document.getElementById('lvt-chart-box');
+        //       const shiftEl = document.getElementById('chartJs-shift');
+        //
+        //       if (chartBox && shiftEl) {
+        //         shiftEl.style.display = 'block';
+        //         const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
+        //
+        //         shiftEl.classList.add(position);
+        //         shiftEl.style.width = `${endX - startX}px`;
+        //         shiftEl.style.height = `${chartArea.height}px`;
+        //         shiftEl.style.left = `${startX}px`;
+        //         shiftEl.style.top = `${chartArea.top}px`;
+        //         shiftEl.style.background = 'rgba(230, 233, 239, 1)';
+        //       }
+        //     }
+        //   }
+        // },
         datasets: {
           line: {
             spanGaps: true,
@@ -147,7 +146,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
           intersect: false,
           mode: 'index',
         },
-        scales: new Scales(0, 12),
+        scales: new Scales(0, 24),
         plugins: {
           legend: {
             display: false
@@ -174,14 +173,13 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    console.log(this.portfolio?.periodYield?.length);
   }
 
   public onIndexChange(value: SelectedIndexes): void {
     const dataSets: any[] = [];
 
     this.stockIndexes?.forEach(item => {
-      const foundRes = item.indices.find(indicate => {
+      item.indices.find(indicate => {
         if (indicate.indexName === value.indexOne) {
           dataSets.push({
             label: value.indexOne,
@@ -253,7 +251,6 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     this.config.scales.x.min += value;
     this.config.scales.x.max += value;
 
-    console.log(this.config.scales.x.max);
     if (this.chartEl) {
       this.chartEl.chart.update();
     }
@@ -346,10 +343,6 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     verticalLineEL.style.height = yAxis.height + 'px';
     verticalLineEL.style.left = position.left + window.scrollX + tooltipModel.caretX + 'px';
     verticalLineEL.style.top = position.top + window.scrollY + yAxis.top + 'px';
-  }
-
-  get portfolio1(): any {
-    return this.portfolio;
   }
 
   private selectCurrentDataset(datasets: Array<any>): void {
