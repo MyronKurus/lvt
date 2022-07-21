@@ -69,6 +69,7 @@
 <div class="add-index">
     <a *ngIf="!isCollapsed" (click)="onCancelIndexes()">{{'CHART.CANCEL' | translate}}</a>
   <button
+    [disabled]="!stockIndexes?.length"
     (click)="onExpand()"
   >
     {{'CHART.COMPARISON' | translate}}
@@ -77,6 +78,9 @@
 </div>
 <div class="description" *ngIf="!isCollapsed">
   <span>{{'CHART.BUTTON_LABEL' | translate}}</span>
+</div>
+<div class="no-indexes-label" *ngIf="!stockIndexes?.length">
+  <span>{{'CHART.NO_INDEXES_LABEL' | translate}}</span>
 </div>
 <app-index-selection
   *ngIf="!isCollapsed"

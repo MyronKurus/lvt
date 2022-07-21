@@ -1,0 +1,11 @@
+<div class="disclaimer-content">
+  <div class="disclaimer" *ngIf="formValue?.assets === tags[0]">
+    {{'DISCLAIMERS.SECURITIES' | translate}}
+  </div>
+  <div class="disclaimer" *ngIf="formValue?.assets === tags[1]">
+    {{'DISCLAIMERS.SECURITIES_DEPOSITS' | translate}}
+  </div>
+  <div class="disclaimer" *ngIf="formValue?.assets === tags[2]">
+    {{'DISCLAIMERS.SECURITIES_CURRENT' | translate}}
+  </div>
+</div>

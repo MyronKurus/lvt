@@ -37,8 +37,11 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
   public indexes: IndexRecord[] = [];
   public form = this.formBuilder.group({
     indexOne: null,
+    indexOneColor: null,
     indexTwo: null,
+    indexTwoColor: null,
     indexThree: null,
+    indexThreeColor: null,
   });
   private subscription: Subscription | undefined;
 
@@ -56,14 +59,17 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  onCheckValue(value: IndexRecord, property: string, checked: boolean, color: string): void {
+  onCheckValue(value: IndexRecord, property: string, checked: boolean, color: string, id: number): void {
+    const col = property + 'Color';
     if (checked && this.form.controls[property].value !== value.indexName) {
       this.form.controls[property].setValue(value.indexName);
+      this.form.controls[col].setValue(id);
       this.indexes.push({...value, color});
     } else {
       const removedIndex = this.indexes.findIndex(item => item.indexName === value.indexName);
       this.indexes.splice(removedIndex, 1);
       this.form.controls[property].setValue(null);
+      this.form.controls[col].setValue(null);
     }
     this.selectedIndexes.emit(this.indexes);
   }
