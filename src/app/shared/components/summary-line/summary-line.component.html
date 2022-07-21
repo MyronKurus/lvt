@@ -29,7 +29,6 @@
   </div>
 </div>
 
-
 <ng-template
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="trigger"
@@ -37,11 +36,12 @@
 >
   <div
     class="tooltip-container"
-    [ngStyle]="{
-      'left': currency ? '-137px' : '36px'
-    }"
+    [ngStyle]="{'left': currency ? '-137px' : '36px'}"
   >
-    <div class="triangle"></div>
+    <div
+      class="triangle"
+      [ngStyle]="{'left': (currency && isMobile) ? '0' : (!currency && isMobile) ? '146px' : 'calc(50% - 12px)'}"
+    ></div>
     <div class="tooltip-content">
       <div class="tooltip-header">
       <span *ngIf="currency">

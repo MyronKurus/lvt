@@ -84,6 +84,11 @@
   box-shadow: 2px 2px 23px 0 rgba(0, 0, 0, 0.15);
   font-weight: 300;
 
+  @media screen and (max-width: 650px) {
+    top: 12px;
+    left: 0 !important;
+  }
+
   .triangle {
     position: absolute;
     width: 0;
@@ -113,10 +118,7 @@
     }
 
     .tooltip-body {
-      padding-top: 20px;
-      padding-right: 15px;
-      padding-left: 15px;
-      height: 140px;
+      padding: 20px 15px 8px;
       background-color: #ffffff;
       font-family: 'Assistant', sans-serif;
       font-size: 14px;
