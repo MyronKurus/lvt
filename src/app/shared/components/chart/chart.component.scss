@@ -209,6 +209,14 @@
       }
     }
   }
+
+  button:disabled,
+  button[disabled] {
+    span {
+      background-color: #cccccc;
+      color: #666666;
+    }
+  }
 }
 
 .mobile-tooltips {
@@ -226,5 +234,17 @@
     &--show {
       display: flex;
     }
+  }
+}
+
+.no-indexes-label {
+  width: 100%;
+  font-size: 14px;
+  color: #ea454f;
+  display: inline-block;
+
+  span {
+    float: right;
+    padding-right: 40px;
   }
 }

@@ -19,7 +19,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   public assets: {value: string, label: string} [] = [
     {value: 'Securities', label: 'ניירות ערך'},
     {value: 'Securities + Deposits and Savings', label: 'ניירות ערך + פיקדונות וחסכונות'},
-    {value: 'Current + Securities + Deposits and Savings', label: 'ניירות ערך + פיקדונות וחסכונות + עו"ש'}
+    {value: 'Securities + Deposits and Savings + Current', label: 'ניירות ערך + פיקדונות וחסכונות + עו"ש'}
   ];
   public selectedRange: string = '3 month';
   public isDialogClosed: boolean = true;

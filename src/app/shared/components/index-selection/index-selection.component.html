@@ -5,7 +5,7 @@
 >
   <div class="index-content" *ngIf="indexCollection">
     <div class="index-col col-3">
-      <div class="checkbox-wrapper" *ngIf="form.controls['indexThree'].value">
+      <div class="checkbox-wrapper item-{{form.controls['indexThreeColor'].value}}" *ngIf="form.controls['indexThree'].value">
         <mat-checkbox
           labelPosition="before"
           [checked]="true"
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="index-col col-2">
-      <div class="checkbox-wrapper" *ngIf="form.controls['indexTwo'].value">
+      <div class="checkbox-wrapper item-{{form.controls['indexTwoColor'].value}}" *ngIf="form.controls['indexTwo'].value">
         <mat-checkbox
           labelPosition="before"
           [checked]="true"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="index-col col-1">
-      <div class="checkbox-wrapper" *ngIf="form.controls['indexOne'].value">
+      <div class="checkbox-wrapper item-{{form.controls['indexOneColor'].value}}" *ngIf="form.controls['indexOne'].value">
         <mat-checkbox
           labelPosition="before"
           [checked]="true"
@@ -46,7 +46,7 @@
         <mat-checkbox
           labelPosition="before"
           [checked]="form.controls['indexThree'].value === ind.indexName"
-          (change)="onCheckValue(ind, 'indexThree', $event.checked, colors[2][i])"
+          (change)="onCheckValue(ind, 'indexThree', $event.checked, colors[2][i], i)"
         >
           {{ ind.indexName }}
         </mat-checkbox>
@@ -58,7 +58,7 @@
         <mat-checkbox
           labelPosition="before"
           [checked]="form.controls['indexTwo'].value === ind.indexName"
-          (change)="onCheckValue(ind, 'indexTwo', $event.checked, colors[1][i])"
+          (change)="onCheckValue(ind, 'indexTwo', $event.checked, colors[1][i], i)"
         >
           {{ ind.indexName }}
         </mat-checkbox>
@@ -70,7 +70,7 @@
         <mat-checkbox
           labelPosition="before"
           [checked]="form.controls['indexOne'].value === ind.indexName"
-          (change)="onCheckValue(ind, 'indexOne', $event.checked, colors[0][i])"
+          (change)="onCheckValue(ind, 'indexOne', $event.checked, colors[0][i], i)"
         >
           {{ ind.indexName }}
         </mat-checkbox>
