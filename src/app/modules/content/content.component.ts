@@ -28,7 +28,6 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   onFormValueChange(value: FormValue) {
     this.formValue = value;
-    console.log(this.formValue);
     forkJoin([
       this.data.indexes({
         startDate: value.startDate,
@@ -44,7 +43,7 @@ export class ContentComponent implements OnInit, OnDestroy {
         brutoOrNetoYield: 0,
       })
     ]).subscribe(([indexes, portfolio]) => {
-      this.indexes = [];
+      this.indexes = indexes;
       this.portfolio = portfolio;
     });
   }
