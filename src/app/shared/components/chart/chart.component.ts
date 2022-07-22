@@ -16,7 +16,6 @@ import chartAnnotationPlugin from 'chartjs-plugin-annotation';
 
 import {Portfolio} from "../../models/portfolio.model";
 import {IndexCollection} from "../../models/index.model";
-import {SelectedIndexes} from "../../models/selected-indexes.model";
 import {UIChart} from "primeng/chart";
 
 export class Scales {
@@ -58,7 +57,7 @@ export class Scales {
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements AfterViewInit, OnChanges {
+export class ChartComponent implements OnChanges {
 
   cancel$: Subject<void> = new Subject<void>();
   isCollapsed = true;
@@ -172,50 +171,27 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  ngAfterViewInit() {
-  }
-
-  public onIndexChange(value: SelectedIndexes): void {
+  public onIndexChange(value: any[]): void {
     const dataSets: any[] = [];
 
-    this.stockIndexes?.forEach(item => {
-      item.indices.find(indicate => {
-        if (indicate.indexName === value.indexOne) {
-          dataSets.push({
-            label: value.indexOne,
-            data: this.setDataset(indicate.periodIndexesYield),
-            borderWidth: 1,
-            borderColor: '#f2866a',
-            pointHoverBackgroundColor: '#f2866a',
-          });
-        } else if (indicate.indexName === value.indexTwo) {
-          dataSets.push({
-            label: value.indexTwo,
-            data: this.setDataset(indicate.periodIndexesYield),
-            borderWidth: 1,
-            borderColor: '#3e83d1',
-            pointHoverBackgroundColor: '#3e83d1',
-          });
-        } else if (indicate.indexName === value.indexThree) {
-          dataSets.push({
-            label: value.indexThree,
-            data: this.setDataset(indicate.periodIndexesYield),
-            borderWidth: 1,
-            borderColor: '#37ae9b',
-            pointHoverBackgroundColor: '#37ae9b',
-          });
-        }
+    console.log(value);
+
+    value.forEach(item => {
+      dataSets.push({
+        label: item.indexName,
+        data: this.setDataset(item.periodIndexesYield),
+        borderWidth: 1,
+        borderColor: item.color,
+        pointHoverBackgroundColor: item.color,
       });
     });
 
-    if (dataSets.length) {
+    if (this.portfolio) {
       this.lineStylesData = {
-        // @ts-ignore
         labels: this.setLabels(this.portfolio.periodYield),
         datasets: [
           {
             label: 'תקופה',
-            // @ts-ignore
             data: this.setDataset(this.portfolio.periodYield),
             borderColor: '#19295f',
             pointBorderWidth: 2,
@@ -232,6 +208,11 @@ export class ChartComponent implements AfterViewInit, OnChanges {
 
   public onExpand(): void {
     this.isCollapsed = !this.isCollapsed;
+
+    if (this.isCollapsed && this.lineStylesData?.datasets?.length > 1) {
+      this.lineStylesData.datasets.length = 1;
+      this.chartEl?.chart.update();
+    }
   }
 
   public onCancelIndexes(): void {
@@ -414,34 +395,39 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   }
 
   private setMobileTooltipsArray(): void {
-    this.mobileTooltipsArray = [];
-    const datasetLength = this.lineStylesData.datasets.length;
-    const dataLength = this.lineStylesData.datasets[0].data.length;
+    this.isMobile = window.innerWidth < 624;
+    if (this.isMobile) {
+      this.config.scales = new Scales(0, 12);
 
-    for (let i = 0; i < dataLength; i++) {
-      let sum = 0;
-      let dataInfo = [];
-      let date = '';
+      this.mobileTooltipsArray = [];
+      const datasetLength = this.lineStylesData.datasets.length;
+      const dataLength = this.lineStylesData.datasets[0].data.length;
 
-      for (let j = 0; j < datasetLength; j++) {
-        const dataSet = this.lineStylesData.datasets[j];
-        sum += dataSet.data[i];
-        if (j === 0) {
-          date = this.datePipe.transform(this.portfolio?.periodYield[i].startOfPeriod, 'dd.MM.yy') || '';
+      for (let i = 0; i < dataLength; i++) {
+        let sum = 0;
+        let dataInfo = [];
+        let date = '';
+
+        for (let j = 0; j < datasetLength; j++) {
+          const dataSet = this.lineStylesData.datasets[j];
+          sum += dataSet.data[i];
+          if (j === 0) {
+            date = this.datePipe.transform(this.portfolio?.periodYield[i].startOfPeriod, 'dd.MM.yy') || '';
+          }
+
+          dataInfo.push({
+            label: dataSet.label,
+            color: dataSet.borderColor,
+            value: dataSet.data[i],
+          });
         }
 
-        dataInfo.push({
-          label: dataSet.label,
-          color: dataSet.borderColor,
-          value: dataSet.data[i],
+        this.mobileTooltipsArray.push({
+          sum: sum.toFixed(3),
+          date: date,
+          data: dataInfo
         });
       }
-
-      this.mobileTooltipsArray.push({
-        sum: sum.toFixed(3),
-        date: date,
-        data: dataInfo
-      });
     }
   }
 }
