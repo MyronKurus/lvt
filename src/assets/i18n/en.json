@@ -39,7 +39,8 @@
     "BUTTON" : {
       "CANCEL_COMPARISON": "Cancel comparison",
       "PRESENTATION": "Presentation"
-    }
+    },
+    "NO_INDEXES_LABEL": "It is not possible to compare returns for the selected period"
   },
   "VALIDATION": {
     "REQUIRED": "All fields are required!",
@@ -48,7 +49,12 @@
     "HINT": "Yo can select up to 3 years ago"
   },
   "HIGHLIGHT_BOX": {
-    "TITLE": "לתשומת לבך",
-    "DESCRIPTION": "הנתונים מוצגים ביחס לפקדון ניירות הערך שלך בבנק - לא יוצגו נתוני פקדון ניירות ערך ביחס לתאריכים בהם ניתנו בחשבון שירותי ניהול השקעות"
+    "TITLE": "Note that",
+    "DESCRIPTION": "The data is displayed in relation to your securities deposit in the bank - no securities deposit data will be displayed in relation to the dates on which investment management services were provided in the account"
+  },
+  "DISCLAIMERS": {
+    "SECURITIES": "The yield calculation was performed for the portfolio of securities and structured deposits in the account only according to the requested period.",
+    "SECURITIES_DEPOSITS": "The yield calculation was performed for the portfolio of securities and/or deposits (including built-ins) in the account only according to the requested period.",
+    "SECURITIES_CURRENT": "The yield calculation was performed with respect to the portfolio of securities and/or deposits (including built-ins) and/or current account balances only according to the requested period."
   }
 }

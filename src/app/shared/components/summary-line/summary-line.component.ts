@@ -11,6 +11,7 @@ export class SummaryLineComponent implements OnInit {
   isOpen: boolean = false;
   currency: boolean = false;
   percentage: boolean = false;
+  isMobile: boolean = false;
 
   @Input()
   data: FormValue | undefined;
@@ -18,6 +19,7 @@ export class SummaryLineComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 651;
   }
 
 }

@@ -34,11 +34,14 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
   public get colors() {
     return chartColors;
   }
-  public indexes: IndexRecord[] = [];
+  public indexes: any = {};
   public form = this.formBuilder.group({
     indexOne: null,
+    indexOneColor: null,
     indexTwo: null,
+    indexTwoColor: null,
     indexThree: null,
+    indexThreeColor: null,
   });
   private subscription: Subscription | undefined;
 
@@ -56,16 +59,28 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  onCheckValue(value: IndexRecord, property: string, checked: boolean, color: string): void {
-    if (checked && this.form.controls[property].value !== value.indexName) {
+  onCheckValue(value: IndexRecord, property: string, checked: boolean, color: string, id: number): void {
+    const col = property + 'Color';
+
+    if(checked) {
+      this.indexes[property] = {...value, color};
       this.form.controls[property].setValue(value.indexName);
-      this.indexes.push({...value, color});
-    } else {
-      const removedIndex = this.indexes.findIndex(item => item.indexName === value.indexName);
-      this.indexes.splice(removedIndex, 1);
+      this.form.controls[col].setValue(id);
+    } else if (!checked) {
+      this.indexes[property] = null;
       this.form.controls[property].setValue(null);
+      this.form.controls[col].setValue(null);
     }
-    this.selectedIndexes.emit(this.indexes);
+
+    this.selectedIndexes.emit(this.cleanIndexes(this.indexes));
+  }
+
+  private cleanIndexes(records: any): IndexRecord[] {
+    const indexes: IndexRecord[] = [];
+    Object.values(this.cleanData(records)).forEach(value => {
+      indexes.push(value);
+    });
+    return indexes;
   }
 
   private cleanFormValues(): void {
@@ -73,13 +88,13 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
       this.form.controls[key].setValue(null);
     });
 
-    this.indexes = [];
+    this.indexes = {};
     this.selectedIndexes.emit(this.indexes);
   }
 
-  private cleanData(form = this.form): SelectedIndexes {
+  private cleanData(indexes: any): SelectedIndexes {
     return JSON.parse(
-      JSON.stringify(form.getRawValue()), (k, v) => (v === null || v === undefined || v === '') ? undefined : v
+      JSON.stringify(indexes), (k, v) => (v === null || v === undefined || v === '') ? undefined : v
     );
   }
 
