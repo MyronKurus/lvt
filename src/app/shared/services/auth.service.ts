@@ -1,19 +1,21 @@
-import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+
 import {Observable} from "rxjs";
+
 import {Token} from "../models/token.model";
 import {BankProfile} from "../models/bank-profile.model";
+
+import {WebApiService} from "./web-api.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  private appUrl: string = 'http://95.215.159.51:55965/';
   private authToken: string = '';
   private refToken: string = '';
   private bnkProfile = {} as BankProfile;
 
-  constructor(private http: HttpClient) {
+  constructor(private webApiService: WebApiService) {
   }
 
   public getAuthToken(): string {
@@ -45,23 +47,23 @@ export class AuthService {
     formData.append('code', '1324523432434dgtftvdfshvht');
     formData.append('redirect', 'https://www.google.com');
 
-    return this.http.post<Token>(`${this.appUrl}Authorization/AccessToken`, formData);
+    return this.webApiService.post<Token>('Authorization/AccessToken', formData);
   }
 
   public refreshToken(): Observable<Token> {
     const formData = new FormData();
     formData.append('Authorization', '1324523432434dgtftvdfshvht');
 
-    return this.http.post<Token>(`${this.appUrl}Authorization/RefreshToken`, formData);
+    return this.webApiService.post<Token>('Authorization/RefreshToken', formData);
   }
 
   public bankProfile(): Observable<BankProfile> {
-    return this.http.post<BankProfile>(`${this.appUrl}Authorization/BankProfile`, null);
+    return this.webApiService.post<BankProfile>('Authorization/BankProfile', null);
   }
 
   public authorization(hash: string): Observable<any> {
-    return this.http.post(
-      `${this.appUrl}authorization/web/post`,
+    return this.webApiService.post(
+      'authorization/web/post',
       `hashKey=${hash}`,
       {headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
   }

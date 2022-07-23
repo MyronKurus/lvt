@@ -32,7 +32,7 @@ registerLocaleData(localeHe);
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       },
-      useDefaultLang: false
+      useDefaultLang: true
     }),
   ],
   providers: [

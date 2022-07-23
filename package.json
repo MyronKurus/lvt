@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:test": "ng build --base-href /fibi-regulation/",
+    "build:dev": "ng build --watch --base-href /YieldReport/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
