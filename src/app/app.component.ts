@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 import {RepoConfig} from "./core/configs/config";
@@ -10,7 +10,7 @@ import {Subscription, switchMap, tap} from "rxjs";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public isLoading = true;
   private subscription: Subscription | undefined;
@@ -18,12 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public translate: TranslateService,
     private auth: AuthService
-  ) {
-    translate.addLangs(RepoConfig.locales);
-    translate.setDefaultLang(RepoConfig.defLocale);
-    translate.use(RepoConfig.defLocale);
-    // translate.use('he');
-  }
+  ) {}
 
   ngOnInit() {
     this.subscription = this.auth.accessToken()
@@ -34,6 +29,12 @@ export class AppComponent implements OnInit, OnDestroy {
       ).subscribe(() => {
         this.isLoading = false;
       });
+  }
+
+  ngAfterViewInit() {
+    this.translate.addLangs(RepoConfig.locales);
+    this.translate.setDefaultLang(RepoConfig.defLocale);
+    this.translate.use(RepoConfig.defLocale);
   }
 
   ngOnDestroy() {
