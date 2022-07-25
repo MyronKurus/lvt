@@ -87,7 +87,6 @@
   [collapsed]="isCollapsed"
   [indexCollection]="stockIndexes"
   [cancel$]="cancel$.asObservable()"
+  (selectedIndexes)="onIndexChange($event)"
   (collapse)="onExpand()"
 ></app-index-selection>
-
-<!--(selectedIndexes)="onIndexChange($event)"-->

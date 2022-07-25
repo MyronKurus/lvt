@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: '',
+  apiUrl: 'http://95.215.159.51:55965',
   languages: ['en', 'he'],
   defaultLang: 'en'
 };

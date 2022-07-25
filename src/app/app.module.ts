@@ -32,11 +32,10 @@ registerLocaleData(localeHe);
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       },
-      useDefaultLang: false
+      useDefaultLang: true
     }),
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'he-IL' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
@@ -46,7 +45,11 @@ registerLocaleData(localeHe);
       provide: HTTP_INTERCEPTORS,
       useClass: BankProfileInterceptorService,
       multi: true
-    }
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'he-IL'
+    },
   ],
   bootstrap: [AppComponent]
 })
