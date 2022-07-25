@@ -1,11 +1,74 @@
-<div class="disclaimer-content">
+<div class="disclaimer-content" dir="rtl">
   <div class="disclaimer" *ngIf="formValue?.assets === tags[0]">
     {{'DISCLAIMERS.SECURITIES' | translate}}
+    <br>
+    {{'DISCLAIMERS.DEFAULT' | translate}}
   </div>
   <div class="disclaimer" *ngIf="formValue?.assets === tags[1]">
     {{'DISCLAIMERS.SECURITIES_DEPOSITS' | translate}}
+    <br>
+    {{'DISCLAIMERS.DEFAULT' | translate}}
   </div>
   <div class="disclaimer" *ngIf="formValue?.assets === tags[2]">
     {{'DISCLAIMERS.SECURITIES_CURRENT' | translate}}
+    <br>
+    {{'DISCLAIMERS.DEFAULT' | translate}}
   </div>
+</div>
+
+<div class="button-block">
+  <button type="button" (click)="isCollapsed = !isCollapsed">
+    <mat-icon>
+      {{isCollapsed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+    </mat-icon>
+    {{'DISCLAIMERS.BUTTON' | translate}}
+  </button>
+</div>
+
+<div class="pay-attention" *ngIf="!isCollapsed" dir="rtl">
+  {{'DISCLAIMERS.PAY_ATTENTION.FIRST' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.SECOND' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.THIRD' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.FOURTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.FIFTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.SIXTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.SEVENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.EIGHTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.NINTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.TENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.ELEVENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.TWELVE' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.THIRTEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.FOURTEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.FIFTEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.SIXTEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.SEVENTEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.EIGHTEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.NINETEENTH' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_FIRST' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_SECOND' | translate}}
+  <br>
+  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_THIRD' | translate}}
 </div>

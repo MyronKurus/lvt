@@ -48,6 +48,7 @@ const COMPONENTS = [
   exports: [
     ...MODULES,
     ...COMPONENTS,
+    DisclaimerComponent,
   ],
   providers: [
     DatePipe,
