@@ -27,17 +27,17 @@
     <div class="highlighted-area__box" *ngIf="showInfoBox">
       <div class="highlighted-area__header">
         <span class="highlighted-area__close" (click)="showInfoBox = false"></span>
-        <p>{{'HIGHLIGHT_BOX.TITLE' | translate}}</p>
+        <p>לתשומת לבך</p>
       </div>
       <div class="highlighted-area__body">
-        <p>{{'HIGHLIGHT_BOX.DESCRIPTION' | translate}}</p>
+        <p>הנתונים מוצגים ביחס לפקדון ניירות הערך שלך בבנק - לא יוצגו נתוני פקדון ניירות ערך ביחס לתאריכים בהם ניתנו בחשבון שירותי ניהול השקעות</p>
       </div>
     </div>
   </div>
 <!--  <div class="chart-box__no-data">-->
 <!--    <div class="no-data">-->
 <!--      <img src="assets/icons/info.svg">-->
-<!--      <p class="no-data__text">{{'CHART.NO_DATA' | translate}}</p>-->
+<!--      <p class="no-data__text">הנתונים מוצגים ביחס לפקדון ניירות הערך שלך בבנק - לא יוצגו נתוני פקדון ניירות ערך ביחס לתאריכים בהם ניתנו בחשבון שירותי ניהול השקעות</p>-->
 <!--    </div>-->
 <!--  </div>-->
 </div>
@@ -67,12 +67,12 @@
 </div>
 
 <div class="add-index">
-    <a *ngIf="!isCollapsed" (click)="onCancelIndexes()">{{'CHART.CANCEL' | translate}}</a>
+    <a *ngIf="!isCollapsed" (click)="onCancelIndexes()">ביטול השוואה</a>
   <button
     [disabled]="!stockIndexes?.length"
     (click)="onExpand()"
   >
-    {{'CHART.COMPARISON' | translate}}
+    השוואה למדדי שוק
     <span>
       <img
         [src]="
@@ -83,10 +83,10 @@
   </button>
 </div>
 <div class="description" *ngIf="!isCollapsed">
-  <span>{{'CHART.BUTTON_LABEL' | translate}}</span>
+  <span>ניתן לבחור עד 3 מדדים</span>
 </div>
 <div class="no-indexes-label" *ngIf="!stockIndexes?.length">
-  <span>{{'CHART.NO_INDEXES_LABEL' | translate}}</span>
+  <span>אין אפשרות להשוות תשואה לתקופה הנבחרת</span>
 </div>
 <app-index-selection
   *ngIf="!isCollapsed"

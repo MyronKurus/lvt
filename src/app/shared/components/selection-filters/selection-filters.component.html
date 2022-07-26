@@ -4,7 +4,7 @@
       <mat-form-field appearance="fill">
         <mat-select formControlName="currency">
           <mat-option *ngFor="let currency of currencies" [value]="currency.KOD_MATBEA">
-            {{'SELECTOR.CURRENCY' | translate}} {{getSymbol(currency.SHEM_ISO)}}
+            שקל {{getSymbol(currency.SHEM_ISO)}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -19,7 +19,7 @@
           >{{asset.label}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <h4>{{'SELECTOR.ASSETS' | translate}}</h4>
+      <h4 dir="rtl">הנכסים שלי:</h4>
     </div>
   </div>
 </form>
@@ -28,7 +28,7 @@
     [ngClass]="{active: selectedRange === 'custom'}"
     (click)="onSelectRange('custom')"
   >
-    <span *ngIf="selectedRange !== 'custom'">{{'RANGE.CUSTOM' | translate}}</span>
+    <span *ngIf="selectedRange !== 'custom'">תאריך לבחירה</span>
     <span *ngIf="selectedRange === 'custom'">
       {{form.controls['startDate'].value | date: 'dd.MM.yy'}} -
       {{form.controls['endDate'].value | date: 'dd.MM.yy'}}
@@ -38,25 +38,25 @@
     [ngClass]="{active: selectedRange === 'startOfTheYear'}"
     (click)="onSelectRange('startOfTheYear')"
   >
-    {{'RANGE.START_OF_THE_YEAR' | translate}}
+    מתחילת השנה
   </button>
   <button
     [ngClass]="{active: selectedRange === '12 month'}"
     (click)="onSelectRange('12 month')"
   >
-    <span dir="rtl">{{'RANGE.ONE_YEAR' | translate}}</span>
+    <span dir="rtl">12 חודשים</span>
   </button>
   <button
     [ngClass]="{active: selectedRange === '6 month'}"
     (click)="onSelectRange('6 month')"
   >
-    <span dir="rtl">{{'RANGE.HALF_A_YEAR' | translate}}</span>
+    <span dir="rtl">6 חודשים</span>
   </button>
   <button
     [ngClass]="{active: selectedRange === '3 month'}"
     (click)="onSelectRange('3 month')"
   >
-    <span dir="rtl">{{'RANGE.QUARTER' | translate}}</span>
+    <span dir="rtl">3 חודשים</span>
   </button>
 </div>
 

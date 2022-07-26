@@ -4,8 +4,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {OverlayModule} from '@angular/cdk/overlay';
 import {FullscreenOverlayContainer, OverlayContainer} from "@angular/cdk/overlay";
 
-import {TranslateModule} from "@ngx-translate/core";
-
 import {ChartModule} from "primeng/chart";
 import {MaterialModule} from "./material/material.module";
 
@@ -15,14 +13,13 @@ import {SummaryLineComponent} from './components/summary-line/summary-line.compo
 import {IndexSelectionComponent} from "./components/index-selection/index-selection.component";
 import {RangeSelectionComponent} from './components/range-selection/range-selection.component';
 import {SelectionFiltersComponent} from "./components/selection-filters/selection-filters.component";
-import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
+import {DisclaimerComponent} from './components/disclaimer/disclaimer.component';
 
 const MODULES = [
   CommonModule,
   FormsModule,
   ReactiveFormsModule,
   MaterialModule,
-  TranslateModule,
   ChartModule,
   OverlayModule,
 ];
@@ -34,13 +31,13 @@ const COMPONENTS = [
   SummaryLineComponent,
   RangeSelectionComponent,
   LoaderComponent,
+  DisclaimerComponent,
 ];
 
 
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    DisclaimerComponent,
   ],
   imports: [
     ...MODULES,
@@ -48,7 +45,6 @@ const COMPONENTS = [
   exports: [
     ...MODULES,
     ...COMPONENTS,
-    DisclaimerComponent,
   ],
   providers: [
     DatePipe,
