@@ -12,6 +12,7 @@ export class SummaryLineComponent implements OnInit {
   currency: boolean = false;
   percentage: boolean = false;
   isMobile: boolean = false;
+  down: boolean = false;
 
   @Input()
   data: FormValue | undefined;

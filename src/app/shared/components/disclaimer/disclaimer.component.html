@@ -1,4 +1,7 @@
-<div class="disclaimer-content" dir="rtl">
+<div
+  class="disclaimer-content"
+  dir="rtl"
+>
   <div class="disclaimer" *ngIf="formValue?.assets === tags[0]">
     {{'DISCLAIMERS.SECURITIES' | translate}}
     <br>
@@ -18,9 +21,7 @@
 
 <div class="button-block">
   <button type="button" (click)="isCollapsed = !isCollapsed">
-    <mat-icon>
-      {{isCollapsed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
-    </mat-icon>
+    <img alt="arrow" [src]="isCollapsed ? 'assets/icons/arrow_down.svg' : 'assets/icons/arrow_up.svg'">
     {{'DISCLAIMERS.BUTTON' | translate}}
   </button>
 </div>
