@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Button/Add/default</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI-KIT---Desktop" transform="translate(-459.000000, -760.000000)" fill-rule="nonzero">
+            <g id="Group-31-Copy" transform="translate(317.000000, 756.000000)">
+                <g id="Button/Add/default" transform="translate(142.500000, 4.288235)">
+                    <rect id="Rectangle" fill="#FFC10E" x="0" y="0" width="19" height="19"></rect>
+                    <path d="M12.7032086,5.62428942 C12.9263654,5.40113268 13.1339339,5.40466363 13.3570906,5.62782037 C13.5802474,5.85097711 13.6272574,6.10202469 13.4041006,6.32518143 L6.54695777,13.1823242 C6.3461167,13.3831653 5.93720454,13.6740825 5.65456036,13.3914383 C5.37191617,13.1087941 5.62290902,12.704589 5.84606576,12.4814323 L12.7032086,5.62428942 Z" id="Combined-Shape" fill="#18285F" transform="translate(9.539280, 9.483779) rotate(45.000000) translate(-9.539280, -9.483779) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

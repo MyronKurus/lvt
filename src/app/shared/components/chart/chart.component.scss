@@ -199,25 +199,16 @@
     }
 
     span {
-      background-color: #ffc10e;
       width: 24px;
       height: 24px;
-      padding-top: 2px;
       margin-left: 10px;
 
-      .mat-icon {
+      img {
         vertical-align: bottom;
       }
     }
   }
 
-  button:disabled,
-  button[disabled] {
-    span {
-      background-color: #cccccc;
-      color: #666666;
-    }
-  }
 }
 
 .mobile-tooltips {

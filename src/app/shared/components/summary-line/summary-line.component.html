@@ -4,27 +4,25 @@
     <span>{{data?.startDate | date : 'dd.MM.yy'}} </span> {{'SUMMARY.TO' | translate}}
   </div>
   <div class="profit">
-    <mat-icon
+    <img
+      src="assets/icons/product_help.svg"
       class="question-mark"
       (mouseover)="isOpen = !isOpen; currency = !currency"
       (mouseleave)="isOpen = !isOpen; currency = !currency"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
-      help_outline
-    </mat-icon>
-    <mat-icon class="icon-up">keyboard_backspace</mat-icon> ₪ 19,000
+    <img [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> ₪ 19,000
     <span class="divider">|</span>
-    <mat-icon
+    <img
+      src="assets/icons/product_help.svg"
       class="question-mark"
       (mouseover)="isOpen = !isOpen; percentage = !percentage"
       (mouseleave)="isOpen = !isOpen; percentage = !percentage"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
-      help_outline
-    </mat-icon>
-    <mat-icon class="icon-up">keyboard_backspace</mat-icon> 4.5%
+    <img [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> 4.5%
     <span>{{'SUMMARY.LABEL' | translate}}</span>
   </div>
 </div>

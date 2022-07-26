@@ -18,9 +18,7 @@
         >
           {{'DATE_RANGE.INVALID_DATE' | translate}}
         </mat-error>
-        <mat-datepicker-toggle matSuffix [for]="pickerStart">
-          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-        </mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
       </mat-form-field>
       <div class="label">{{'DATE_RANGE.START' | translate}}</div>
@@ -42,9 +40,7 @@
         >
           {{'DATE_RANGE.INVALID_DATE' | translate}}
         </mat-error>
-        <mat-datepicker-toggle matSuffix [for]="pickerEnd">
-          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-        </mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
       <div class="label">{{'DATE_RANGE.END' | translate}}</div>
