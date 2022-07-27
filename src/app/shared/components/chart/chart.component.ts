@@ -174,8 +174,6 @@ export class ChartComponent implements OnChanges {
   public onIndexChange(value: any[]): void {
     const dataSets: any[] = [];
 
-    console.log(value);
-
     value.forEach(item => {
       dataSets.push({
         label: item.indexName,
@@ -371,22 +369,34 @@ export class ChartComponent implements OnChanges {
     };
   }
 
-  private setLabels(mainYields: any[]): (string | string[] | null)[] {
+  private setLabels(mainYields: any[]): any {
     let oldMonth = '';
     let oldYear = '';
-    return mainYields.map((item, index) => {
-      const currentMonth = this.datePipe.transform(item.startOfPeriod, 'MMM') || '';
-      const currentYear = this.datePipe.transform(item.startOfPeriod, 'y') || '';
-      let dateFormat = index === 0 || currentYear !== oldYear ? 'd MMM y' : 'd MMM';
+    // return mainYields.map((item, index) => {
+    //   const currentMonth = this.datePipe.transform(item.startOfPeriod, 'MMM') || '';
+    //   const currentYear = this.datePipe.transform(item.startOfPeriod, 'y') || '';
+    //   let dateFormat = index === 0 || currentYear !== oldYear ? 'd MMM y' : 'd MMM';
+    //
+    //   if (index > 0 && currentMonth === oldMonth && currentYear === oldYear) {
+    //     dateFormat = 'd';
+    //   }
+    //
+    //   oldYear = currentYear || '';
+    //   oldMonth = currentMonth || '';
+    //
+    //   return this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ') || '';
+    // });
 
-      if (index > 0 && currentMonth === oldMonth && currentYear === oldYear) {
-        dateFormat = 'd';
-      }
+    return Array.from({length: 36}, (e, i) => {
+      const today = new Date();
+      const period = new Date(today.getFullYear(), i + 1, 1);
+      const currentYear = this.datePipe.transform(period, 'y') || '';
+
+      let dateFormat = i === 0 || currentYear !== oldYear ? 'MMM y' : 'MMM';
 
       oldYear = currentYear || '';
-      oldMonth = currentMonth || '';
 
-      return this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ') || '';
+      return this.datePipe.transform(new Date(today.getFullYear(), i + 1, 1), dateFormat)?.split(' ') || '';
     });
   }
 
