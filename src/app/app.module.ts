@@ -2,12 +2,8 @@ import {LOCALE_ID, NgModule} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeHe from '@angular/common/locales/he'
 import {BrowserModule} from '@angular/platform-browser';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-
-import {HttpLoaderFactory} from "./core/helpers/http-loader-factory";
 
 import {AppRoutingModule} from "./app-routing.module";
 
@@ -26,14 +22,6 @@ registerLocaleData(localeHe);
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
-        deps: [HttpClient]
-      },
-      useDefaultLang: true
-    }),
   ],
   providers: [
     {

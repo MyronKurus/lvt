@@ -16,12 +16,12 @@
         <mat-error
           *ngIf="form.controls['startDate']?.errors"
         >
-          {{'DATE_RANGE.INVALID_DATE' | translate}}
+          תאריך לא חוקי
         </mat-error>
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
       </mat-form-field>
-      <div class="label">{{'DATE_RANGE.START' | translate}}</div>
+      <div class="label" dir="rtl">מתאריך:</div>
     </div>
 
     <div class="row">
@@ -38,17 +38,17 @@
         <mat-error
           *ngIf="form.controls['endDate']?.errors"
         >
-          {{'DATE_RANGE.INVALID_DATE' | translate}}
+          תאריך לא חוקי
         </mat-error>
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
-      <div class="label">{{'DATE_RANGE.END' | translate}}</div>
+      <div class="label" dir="rtl">עד תאריך:</div>
     </div>
 
     <div class="row">
-      <div class="hint">
-        {{'VALIDATION.HINT' | translate}}
+      <div class="hint" dir="rtl">
+        ניתן לבחור עד 3 שנים אחורה
       </div>
     </div>
 
@@ -60,7 +60,7 @@
             (click)="save()"
             [disabled]="!(form.valid && (form.controls['startDate'].value < form.controls['endDate'].value))"
           >
-            {{'BUTTON.SAVE' | translate}}
+            הצגה
           </button>
         </div>
         <div class="close">
@@ -68,7 +68,7 @@
             class="mat-button"
             (click)="close()"
           >
-            {{'BUTTON.CLOSE' | translate}}
+            ביטול
           </button>
         </div>
       </div>

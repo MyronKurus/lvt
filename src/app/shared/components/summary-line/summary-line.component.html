@@ -1,7 +1,7 @@
 <div class="summary">
   <div class="time-range">
-    <span>{{data?.endDate | date : 'dd.MM.yy'}} </span> {{'SUMMARY.FROM' | translate}}
-    <span>{{data?.startDate | date : 'dd.MM.yy'}} </span> {{'SUMMARY.TO' | translate}}
+    <span>{{data?.endDate | date : 'dd.MM.yy'}} </span> נכון מ
+    <span>{{data?.startDate | date : 'dd.MM.yy'}} </span> עד
   </div>
   <div class="profit">
     <img
@@ -23,7 +23,7 @@
       #trigger="cdkOverlayOrigin"
     >
     <img [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> 4.5%
-    <span>{{'SUMMARY.LABEL' | translate}}</span>
+    <span dir="rtl">תשואה לתקופה:</span>
   </div>
 </div>
 
@@ -43,18 +43,18 @@
     <div class="tooltip-content">
       <div class="tooltip-header">
       <span *ngIf="currency">
-        {{'TOOLTIP.CURRENCY_HEADER' | translate}}
+        חישוב תשואה בשקלים
       </span>
         <span *ngIf="percentage">
-        {{'TOOLTIP.PERCENTAGE_HEADER' | translate}}
+        חישוב תשואה באחוזים
       </span>
       </div>
-      <div class="tooltip-body">
+      <div class="tooltip-body" dir="rtl">
       <span *ngIf="currency">
-        {{'TOOLTIP.CURRENCY_BODY' | translate}}
+        תשואת פיקדון ניירות ערך בכסף תחושב כהפרש בין יתרת הנכסים בתחילת ובסוף התקופה, בנטרול רכישות בניכוי מכירות , דיבידנדים, קופונים וריביות, ומשקף עלייה/ירידה בשווי הנכסים שלא מומשו לסוף התקופה, לפני מס.
       </span>
         <span *ngIf="percentage">
-        {{'TOOLTIP.PERCENTAGE_BODY' | translate}}
+        תשואת פיקדון ניירות ערך באחוזים תחושב בשיטת TWR ללא שיובאו בחשבון הוצאות מיסים. בשיטה זו מחשבים תשואות לתתי תקופות בהם התקיים תזרים מזומנים בחשבון. התשואה המצטברת היא מכפלת כל התתי התקופות.
       </span>
       </div>
     </div>
