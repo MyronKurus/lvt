@@ -59,6 +59,9 @@ export class Scales {
 })
 export class ChartComponent implements OnChanges {
 
+  @Input() stockIndexes: IndexCollection[] | undefined;
+  @Input() portfolio: Portfolio | undefined;
+
   cancel$: Subject<void> = new Subject<void>();
   isCollapsed = true;
   isMobile = false;
@@ -67,8 +70,7 @@ export class ChartComponent implements OnChanges {
   lineStylesData: any;
   tooltip: any;
   mobileTooltipsArray: any[] = [];
-  @Input() stockIndexes: IndexCollection[] | undefined;
-  @Input() portfolio: Portfolio | undefined;
+  scrollChartIndex = 0;
 
   @ViewChild('chart') chartEl?: UIChart;
 
@@ -97,43 +99,44 @@ export class ChartComponent implements OnChanges {
       };
 
       this.config = {
-        // animation: {
-        //   onComplete: function(e: any) {
-        //     const chartArea = e.chart.chartArea;
-        //     const metaSet = e.chart['_metasets'][0];
-        //     const data = metaSet.data;
-        //     const someShift = 8;
-        //     let startX = 0;
-        //     let endX = 0;
-        //
-        //     if (someShift >= 0) {
-        //       data.forEach((item: any, i: number) => {
-        //         if (i === someShift) {
-        //           startX = item.x;
-        //         }
-        //
-        //         if (i == someShift + 1) {
-        //           endX = item.x;
-        //         }
-        //       });
-        //
-        //       const chartBox = document.getElementById('lvt-chart-box');
-        //       const shiftEl = document.getElementById('chartJs-shift');
-        //
-        //       if (chartBox && shiftEl) {
-        //         shiftEl.style.display = 'block';
-        //         const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
-        //
-        //         shiftEl.classList.add(position);
-        //         shiftEl.style.width = `${endX - startX}px`;
-        //         shiftEl.style.height = `${chartArea.height}px`;
-        //         shiftEl.style.left = `${startX}px`;
-        //         shiftEl.style.top = `${chartArea.top}px`;
-        //         shiftEl.style.background = 'rgba(230, 233, 239, 1)';
-        //       }
-        //     }
-        //   }
-        // },
+        animation: {
+          onProgress: function(e: any) {
+            const chartArea = e.chart.chartArea;
+            const metaSet = e.chart['_metasets'][0];
+            const data = metaSet.data;
+            const someShift = 8;
+            let startX = 0;
+            let endX = 0;
+
+            if (someShift >= 0) {
+              data.forEach((item: any, i: number) => {
+                if (i === someShift) {
+                  startX = item.x;
+                }
+
+                if (i == someShift + 1) {
+                  endX = item.x;
+                }
+              });
+
+              const chartBox = document.getElementById('lvt-chart-box');
+              const shiftEl = document.getElementById('chartJs-shift');
+
+              if (chartBox && shiftEl) {
+                const display = startX < chartArea.left ? 'none' : 'block';
+                const position = chartBox.clientWidth / 2 - startX > 0 ? 'left' : 'right';
+                shiftEl.style.display = display;
+
+                shiftEl.classList.add(position);
+                shiftEl.style.width = `${endX - startX}px`;
+                shiftEl.style.height = `${chartArea.height}px`;
+                shiftEl.style.left = `${startX}px`;
+                shiftEl.style.top = `${chartArea.top}px`;
+                shiftEl.style.background = 'rgba(230, 233, 239, 1)';
+              }
+            }
+          }
+        },
         datasets: {
           line: {
             spanGaps: true,
@@ -145,7 +148,7 @@ export class ChartComponent implements OnChanges {
           intersect: false,
           mode: 'index',
         },
-        scales: new Scales(0, 24),
+        scales: new Scales(0, 18),
         plugins: {
           legend: {
             display: false
@@ -389,14 +392,15 @@ export class ChartComponent implements OnChanges {
 
     return Array.from({length: 36}, (e, i) => {
       const today = new Date();
-      const period = new Date(today.getFullYear(), i + 1, 1);
+      const monthNumber = today.getMonth() + i;
+      const period = new Date(today.getFullYear(), monthNumber, 1);
       const currentYear = this.datePipe.transform(period, 'y') || '';
 
       let dateFormat = i === 0 || currentYear !== oldYear ? 'MMM y' : 'MMM';
 
       oldYear = currentYear || '';
 
-      return this.datePipe.transform(new Date(today.getFullYear(), i + 1, 1), dateFormat)?.split(' ') || '';
+      return this.datePipe.transform(period, dateFormat)?.split(' ') || '';
     });
   }
 
@@ -407,7 +411,7 @@ export class ChartComponent implements OnChanges {
   private setMobileTooltipsArray(): void {
     this.isMobile = window.innerWidth < 624;
     if (this.isMobile) {
-      this.config.scales = new Scales(0, 12);
+      this.config.scales = new Scales(0, 8);
 
       this.mobileTooltipsArray = [];
       const datasetLength = this.lineStylesData.datasets.length;
