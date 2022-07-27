@@ -10,9 +10,10 @@ export class DisclaimerComponent implements OnInit {
 
   @Input()
   formValue: FormValue | undefined;
+  isCollapsed: boolean = true;
   tags: string[] = [
     'Securities', 'Securities + Deposits and Savings', 'Securities + Deposits and Savings + Current'
-  ]
+  ];
 
   constructor() { }
 

@@ -1,12 +1,12 @@
 {
-  "name": "fibi-regulation",
+  "name": "YieldReport",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:test": "ng build --base-href /fibi-regulation/",
-    "build:dev": "ng build --watch --base-href /YieldReport/",
+    "build:dev": "ng build --base-href /YieldReport/",
+    "build:qa": "ng build --configuration=qa --base-href /YieldReport/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fibi-regulation": {
+    "yieldreport": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/fibi-regulation",
+            "outputPath": "dist/yieldreport",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -75,6 +75,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "qa": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -83,10 +97,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fibi-regulation:build:production"
+              "browserTarget": "yieldreport:build:production"
             },
             "development": {
-              "browserTarget": "fibi-regulation:build:development"
+              "browserTarget": "yieldreport:build:development"
+            },
+            "qa": {
+              "browserTarget": "yieldreport:build:qa"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +111,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fibi-regulation:build"
+            "browserTarget": "yieldreport:build"
           }
         },
         "test": {
@@ -118,5 +135,5 @@
       }
     }
   },
-  "defaultProject": "fibi-regulation"
+  "defaultProject": "yieldreport"
 }

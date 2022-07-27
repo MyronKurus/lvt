@@ -7,38 +7,38 @@
   ></p-chart>
 
   <div class="chart-box__navigation">
-    <mat-icon class="chart-box__controller"
-              [class.show]="config?.scales.x.min > 0"
-              (click)="scrollChartHandler(-1)">
-      arrow_back_ios
-    </mat-icon>
-    <mat-icon class="chart-box__controller"
-              [class.show]="config?.scales.x.max !== portfolio?.periodYield?.length"
-              (click)="scrollChartHandler(1)">
-      arrow_forward_ios
-    </mat-icon>
+    <img
+      src="assets/icons/arrow_left.svg"
+      class="chart-box__controller"
+      [class.show]="config?.scales.x.min > 0"
+      (click)="scrollChartHandler(-1)"
+      alt="">
+    <img
+      src="assets/icons/arrow_right.svg"
+      class="chart-box__controller"
+      [class.show]="config?.scales.x.max !== portfolio?.periodYield?.length"
+      (click)="scrollChartHandler(1)"
+      alt="">
   </div>
 
-  <div id="chartJs-shift-container" class="highlighted-container">
-    <div id="chartJs-shift" class="highlighted-area">
-      <div class="highlighted-area__info">
-        <mat-icon (click)="showInfoBox = true">info_outline</mat-icon>
-      </div>
+  <div id="chartJs-shift" class="highlighted-area">
+    <div class="highlighted-area__info">
+      <img src="assets/icons/info.svg" (click)="showInfoBox = true" alt="">
+    </div>
 
-      <div class="highlighted-area__box" *ngIf="showInfoBox">
-        <div class="highlighted-area__header">
-          <span class="highlighted-area__close" (click)="showInfoBox = false"></span>
-          <p>{{'HIGHLIGHT_BOX.TITLE' | translate}}</p>
-        </div>
-        <div class="highlighted-area__body">
-          <p>{{'HIGHLIGHT_BOX.DESCRIPTION' | translate}}</p>
-        </div>
+    <div class="highlighted-area__box" *ngIf="showInfoBox">
+      <div class="highlighted-area__header">
+        <span class="highlighted-area__close" (click)="showInfoBox = false"></span>
+        <p>{{'HIGHLIGHT_BOX.TITLE' | translate}}</p>
+      </div>
+      <div class="highlighted-area__body">
+        <p>{{'HIGHLIGHT_BOX.DESCRIPTION' | translate}}</p>
       </div>
     </div>
   </div>
 <!--  <div class="chart-box__no-data">-->
 <!--    <div class="no-data">-->
-<!--      <mat-icon>info_outline</mat-icon>-->
+<!--      <img src="assets/icons/info.svg" alt="">-->
 <!--      <p class="no-data__text">{{'CHART.NO_DATA' | translate}}</p>-->
 <!--    </div>-->
 <!--  </div>-->
@@ -75,7 +75,14 @@
     (click)="onExpand()"
   >
     {{'CHART.COMPARISON' | translate}}
-    <span><mat-icon>{{isCollapsed ? 'add' : 'remove'}}</mat-icon></span>
+    <span>
+      <img
+        [src]="
+          !stockIndexes?.length ? 'assets/icons/add_disabled.svg' :
+          isCollapsed ? 'assets/icons/add_default.svg' : 'assets/icons/add_expanded.svg'"
+          alt=""
+      >
+    </span>
   </button>
 </div>
 <div class="description" *ngIf="!isCollapsed">

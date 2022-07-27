@@ -15,12 +15,15 @@
     top: 50%;
     right: 0;
     transform: translateY(calc(-50% - 23px));
+    z-index: 1;
   }
 
   &__controller {
     width: 44px;
     height: 44px;
+    padding: 8px;
     text-align: center;
+    box-sizing: border-box;
     line-height: 44px;
     color: rgba(29, 24, 95, 0.50);
     border-radius: 50%;
@@ -45,10 +48,10 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    bottom: 26px;
-    left: 25px;
-    width: calc(100% - 25px);
-    height: calc(100% - 26px);
+    top: 0;
+    left: 50px;
+    width: calc(100% - 50px);
+    height: calc(100% - 55px);
     background-color: rgba(230, 233, 239, 1);
 
     .no-data {
@@ -199,25 +202,16 @@
     }
 
     span {
-      background-color: #ffc10e;
       width: 24px;
       height: 24px;
-      padding-top: 2px;
       margin-left: 10px;
 
-      .mat-icon {
+      img {
         vertical-align: bottom;
       }
     }
   }
 
-  button:disabled,
-  button[disabled] {
-    span {
-      background-color: #cccccc;
-      color: #666666;
-    }
-  }
 }
 
 .mobile-tooltips {

@@ -1,0 +1,49 @@
+.disclaimer-content {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 400;
+  color: #52575c;
+}
+
+.disclaimer-content,
+.button-block,
+.pay-attention {
+  padding-top: 20px;
+  display: inline-block;
+  width: 100%;
+}
+
+.button-block {
+  text-align: right;
+
+  button {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222020;
+    background-color: transparent;
+    border: none;
+
+    img {
+      width: 16px;
+      height: 16px;
+      vertical-align: bottom;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.pay-attention {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 400;
+  color: #52575c;
+}
