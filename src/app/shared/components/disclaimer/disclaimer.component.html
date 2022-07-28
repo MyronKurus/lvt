@@ -20,56 +20,69 @@
 </div>
 
 <div class="button-block">
-  <button type="button" (click)="isCollapsed = !isCollapsed">
-    <img alt="arrow" [src]="isCollapsed ? 'assets/icons/arrow_down.svg' : 'assets/icons/arrow_up.svg'">
+  <button
+    type="button"
+    (click)="openDialog()"
+    cdkOverlayOrigin
+    #trigger="cdkOverlayOrigin"
+  >
+<!--    <img alt="arrow" [src]="isOpen ? 'assets/icons/arrow_down.svg' : 'assets/icons/arrow_up.svg'">-->
     {{'DISCLAIMERS.BUTTON' | translate}}
   </button>
 </div>
 
-<div class="pay-attention" *ngIf="!isCollapsed" dir="rtl">
-  {{'DISCLAIMERS.PAY_ATTENTION.FIRST' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.SECOND' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.THIRD' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.FOURTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.FIFTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.SIXTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.SEVENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.EIGHTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.NINTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.TENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.ELEVENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.TWELVE' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.THIRTEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.FOURTEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.FIFTEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.SIXTEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.SEVENTEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.EIGHTEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.NINETEENTH' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_FIRST' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_SECOND' | translate}}
-  <br>
-  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_THIRD' | translate}}
-</div>
+<!--<div class="pay-attention" *ngIf="isOpen" dir="rtl">-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.FIRST' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.SECOND' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.THIRD' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.FOURTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.FIFTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.SIXTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.SEVENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.EIGHTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.NINTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.TENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.ELEVENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.TWELVE' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.THIRTEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.FOURTEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.FIFTEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.SIXTEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.SEVENTEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.EIGHTEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.NINETEENTH' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_FIRST' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_SECOND' | translate}}-->
+<!--  <br>-->
+<!--  {{'DISCLAIMERS.PAY_ATTENTION.TWENTY_THIRD' | translate}}-->
+<!--</div>-->
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aliquid animi debitis dignissimos ea necessitatibus numquam omnis placeat quaerat quam recusandae sint tempore! Cupiditate dolore officiis quo quos repudiandae saepe.</p>
+</ng-template>
