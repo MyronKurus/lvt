@@ -7,8 +7,7 @@
     <img
       src="assets/icons/product_help.svg"
       class="question-mark"
-      (mouseover)="isOpen = !isOpen; currency = !currency"
-      (mouseleave)="isOpen = !isOpen; currency = !currency"
+      (click)="isOpen = !isOpen; currency = !currency"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
@@ -17,8 +16,7 @@
     <img
       src="assets/icons/product_help.svg"
       class="question-mark"
-      (mouseover)="isOpen = !isOpen; percentage = !percentage"
-      (mouseleave)="isOpen = !isOpen; percentage = !percentage"
+      (click)="isOpen = !isOpen; percentage = !percentage"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
@@ -34,7 +32,7 @@
 >
   <div
     class="tooltip-container"
-    [ngStyle]="{'left': currency ? '-137px' : '36px'}"
+    [ngStyle]="{'left': currency ? '-137px' : '27px'}"
   >
     <div
       class="triangle"
@@ -42,9 +40,12 @@
     ></div>
     <div class="tooltip-content">
       <div class="tooltip-header">
-      <span *ngIf="currency">
-        {{'TOOLTIP.CURRENCY_HEADER' | translate}}
-      </span>
+        <button  cdkFocusInitial (click)="isOpen = false; currency = false; percentage = false;">
+          <img src="assets/icons/ic_close.svg" alt="close">
+        </button>
+        <span *ngIf="currency">
+          {{'TOOLTIP.CURRENCY_HEADER' | translate}}
+        </span>
         <span *ngIf="percentage">
         {{'TOOLTIP.PERCENTAGE_HEADER' | translate}}
       </span>

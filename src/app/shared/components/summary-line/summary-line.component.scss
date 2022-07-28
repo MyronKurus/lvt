@@ -117,6 +117,20 @@
       font-size: 14px;
       color: #18285f;
       letter-spacing: 0;
+
+      button {
+        float: left;
+        border: none;
+        background: transparent;
+        width: 14px;
+
+        img {
+          width: 14px;
+          height: 14px;
+          font-size: 14px;
+          vertical-align: middle;
+        }
+      }
     }
 
     .tooltip-body {

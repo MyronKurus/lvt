@@ -14,7 +14,7 @@
           autocomplete="off"
         >
         <mat-error
-          *ngIf="form.controls['startDate']?.errors"
+          *ngIf="form.controls['startDate']?.errors && form.controls['startDate']?.value"
         >
           {{'DATE_RANGE.INVALID_DATE' | translate}}
         </mat-error>
@@ -36,7 +36,7 @@
           autocomplete="off"
         >
         <mat-error
-          *ngIf="form.controls['endDate']?.errors"
+          *ngIf="form.controls['endDate']?.errors && form.controls['endDate']?.value"
         >
           {{'DATE_RANGE.INVALID_DATE' | translate}}
         </mat-error>
