@@ -7,8 +7,7 @@
     <img
       src="assets/icons/product_help.svg"
       class="question-mark"
-      (mouseover)="isOpen = !isOpen; currency = !currency"
-      (mouseleave)="isOpen = !isOpen; currency = !currency"
+      (click)="isOpen = !isOpen; currency = !currency"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
@@ -17,8 +16,7 @@
     <img
       src="assets/icons/product_help.svg"
       class="question-mark"
-      (mouseover)="isOpen = !isOpen; percentage = !percentage"
-      (mouseleave)="isOpen = !isOpen; percentage = !percentage"
+      (click)="isOpen = !isOpen; percentage = !percentage"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
@@ -34,7 +32,7 @@
 >
   <div
     class="tooltip-container"
-    [ngStyle]="{'left': currency ? '-137px' : '36px'}"
+    [ngStyle]="{'left': currency ? '-137px' : '27px'}"
   >
     <div
       class="triangle"
@@ -42,20 +40,23 @@
     ></div>
     <div class="tooltip-content">
       <div class="tooltip-header">
-      <span *ngIf="currency">
-        חישוב תשואה בשקלים
-      </span>
-        <span *ngIf="percentage">
-        חישוב תשואה באחוזים
-      </span>
+        <button  cdkFocusInitial (click)="isOpen = false; currency = false; percentage = false;">
+          <img src="assets/icons/ic_close.svg" alt="close">
+        </button>
+        <span *ngIf="currency">
+          חישוב תשואה בשקלים
+        </span>
+          <span *ngIf="percentage">
+          חישוב תשואה באחוזים
+        </span>
       </div>
       <div class="tooltip-body" dir="rtl">
-      <span *ngIf="currency">
-        תשואת פיקדון ניירות ערך בכסף תחושב כהפרש בין יתרת הנכסים בתחילת ובסוף התקופה, בנטרול רכישות בניכוי מכירות , דיבידנדים, קופונים וריביות, ומשקף עלייה/ירידה בשווי הנכסים שלא מומשו לסוף התקופה, לפני מס.
-      </span>
+        <span *ngIf="currency">
+          תשואת פיקדון ניירות ערך בכסף תחושב כהפרש בין יתרת הנכסים בתחילת ובסוף התקופה, בנטרול רכישות בניכוי מכירות , דיבידנדים, קופונים וריביות, ומשקף עלייה/ירידה בשווי הנכסים שלא מומשו לסוף התקופה, לפני מס.
+        </span>
         <span *ngIf="percentage">
-        תשואת פיקדון ניירות ערך באחוזים תחושב בשיטת TWR ללא שיובאו בחשבון הוצאות מיסים. בשיטה זו מחשבים תשואות לתתי תקופות בהם התקיים תזרים מזומנים בחשבון. התשואה המצטברת היא מכפלת כל התתי התקופות.
-      </span>
+          תשואת פיקדון ניירות ערך באחוזים תחושב בשיטת TWR ללא שיובאו בחשבון הוצאות מיסים. בשיטה זו מחשבים תשואות לתתי תקופות בהם התקיים תזרים מזומנים בחשבון. התשואה המצטברת היא מכפלת כל התתי התקופות.
+        </span>
       </div>
     </div>
   </div>

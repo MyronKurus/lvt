@@ -16,8 +16,8 @@ body {
   max-width: 100%;
 }
 
-.mat-select-arrow-wrapper {
-  position: absolute !important;
+.mat-typography {
+  font-family: 'Assistant', sans-serif !important;
 }
 
 .mat-option-text {
@@ -55,7 +55,7 @@ body {
 
 .mat-select-value {
   max-width: 90%;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .mat-primary .mat-pseudo-checkbox-checked,

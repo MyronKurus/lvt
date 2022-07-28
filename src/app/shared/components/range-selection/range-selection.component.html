@@ -14,7 +14,7 @@
           autocomplete="off"
         >
         <mat-error
-          *ngIf="form.controls['startDate']?.errors"
+          *ngIf="form.controls['startDate']?.errors && form.controls['startDate']?.value"
         >
           תאריך לא חוקי
         </mat-error>
@@ -36,7 +36,7 @@
           autocomplete="off"
         >
         <mat-error
-          *ngIf="form.controls['endDate']?.errors"
+          *ngIf="form.controls['endDate']?.errors && form.controls['endDate']?.value"
         >
           תאריך לא חוקי
         </mat-error>
