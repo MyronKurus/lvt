@@ -124,6 +124,10 @@
         background: transparent;
         width: 14px;
 
+        &:hover {
+          cursor: pointer;
+        }
+
         img {
           width: 14px;
           height: 14px;
