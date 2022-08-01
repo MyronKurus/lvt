@@ -1,14 +1,13 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnDestroy,
   OnInit,
-  Output,
+  Output, SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import {FormBuilder} from "@angular/forms";
-import {SelectedIndexes} from "../../models/selected-indexes.model";
+import {FormControl, FormGroup} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import {IndexCollection, IndexRecord} from "../../models/index.model";
 import {chartColors} from "../../../core/helpers/chart-colors";
@@ -19,7 +18,7 @@ import {chartColors} from "../../../core/helpers/chart-colors";
   styleUrls: ['./index-selection.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class IndexSelectionComponent implements OnInit, OnDestroy {
+export class IndexSelectionComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input()
   public indexCollection: IndexCollection[] | undefined;
@@ -35,21 +34,36 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     return chartColors;
   }
   public indexes: any = {};
-  public form = this.formBuilder.group({
-    indexOne: null,
-    indexOneColor: null,
-    indexTwo: null,
-    indexTwoColor: null,
-    indexThree: null,
-    indexThreeColor: null,
+  public collection: IndexRecord [] = [];
+
+  public form = new FormGroup({
+    indexOne: new FormGroup({}),
+    indexTwo: new FormGroup({}),
+    indexThree: new FormGroup({})
   });
   private subscription: Subscription | undefined;
 
-  constructor(
-    private formBuilder: FormBuilder,
-  ) { }
+  constructor() { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['indexCollection']?.currentValue) {
+      this.collection = [];
+    }
+  }
 
   ngOnInit(): void {
+    this.indexCollection?.[0].indices.forEach(item => {
+      (this.form.controls['indexOne'] as FormGroup).addControl(item.indexName, new FormControl(false));
+    });
+
+    this.indexCollection?.[1].indices.forEach(item => {
+      (this.form.controls['indexTwo'] as FormGroup).addControl(item.indexName, new FormControl(false));
+    });
+
+    this.indexCollection?.[1].indices.forEach(item => {
+      (this.form.controls['indexThree'] as FormGroup).addControl(item.indexName, new FormControl(false));
+    });
+
     this.subscription = this.cancel$?.subscribe(() => {
       this.cleanFormValues();
     });
@@ -59,43 +73,22 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  onCheckValue(value: IndexRecord, property: string, checked: boolean, color: string, id: number): void {
-    const col = property + 'Color';
-
+  onCheckValue(value: IndexRecord, checked: boolean, color: string, row: number, col: number): void {
     if(checked) {
-      this.indexes[property] = {...value, color};
-      this.form.controls[property].setValue(value.indexName);
-      this.form.controls[col].setValue(id);
-    } else if (!checked) {
-      this.indexes[property] = null;
-      this.form.controls[property].setValue(null);
-      this.form.controls[col].setValue(null);
+      this.collection?.push({...value, color, row, col});
+    } else {
+      const id = this.collection.findIndex(val => {
+        return val.indexName === value.indexName;
+      });
+      this.collection.splice(id, 1);
     }
+    this.selectedIndexes.emit(this.collection);
 
-    this.selectedIndexes.emit(this.cleanIndexes(this.indexes));
-  }
-
-  private cleanIndexes(records: any): IndexRecord[] {
-    const indexes: IndexRecord[] = [];
-    Object.values(this.cleanData(records)).forEach(value => {
-      indexes.push(value);
-    });
-    return indexes;
   }
 
   private cleanFormValues(): void {
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.controls[key].setValue(null);
-    });
-
-    this.indexes = {};
-    this.selectedIndexes.emit(this.indexes);
-  }
-
-  private cleanData(indexes: any): SelectedIndexes {
-    return JSON.parse(
-      JSON.stringify(indexes), (k, v) => (v === null || v === undefined || v === '') ? undefined : v
-    );
+    this.collection = [];
+    this.selectedIndexes.emit(this.collection);
   }
 
   public save(): void {
@@ -106,6 +99,16 @@ export class IndexSelectionComponent implements OnInit, OnDestroy {
     this.collapsed = true;
     this.cleanFormValues();
     this.collapse.emit();
+  }
+
+  public isChecked(name: string): boolean {
+    if (!this.collection.length) {
+      return false;
+    }
+
+    return this.collection.some(id => {
+      return id.indexName === name;
+    });
   }
 
 }
