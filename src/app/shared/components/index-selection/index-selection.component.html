@@ -1,54 +1,36 @@
 <form
   [formGroup]="form"
   novalidate class="mobile-selectors"
-  *ngIf="(form.controls['indexThree'].value || form.controls['indexTwo'].value || form.controls['indexOne'].value) && collapsed"
+  *ngIf="collection.length && collapsed"
 >
-  <div class="index-content" *ngIf="indexCollection">
-    <div class="index-col col-3">
-      <div class="checkbox-wrapper item-{{form.controls['indexThreeColor'].value}}" *ngIf="form.controls['indexThree'].value">
+  <div class="index-content" *ngIf="collection.length">
+    <div class="index-col col-{{elem.col}}" *ngFor="let elem of collection; let i = index;">
+      <div class="checkbox-wrapper item-{{elem.row}}">
         <mat-checkbox
           labelPosition="before"
           [checked]="true"
+          (change)="onCheckValue(elem, $event.checked, colors[2][i], i, 2+1)"
         >
-          {{ form.controls['indexThree'].value }}
-        </mat-checkbox>
-      </div>
-    </div>
-    <div class="index-col col-2">
-      <div class="checkbox-wrapper item-{{form.controls['indexTwoColor'].value}}" *ngIf="form.controls['indexTwo'].value">
-        <mat-checkbox
-          labelPosition="before"
-          [checked]="true"
-        >
-          {{ form.controls['indexTwo'].value }}
-        </mat-checkbox>
-      </div>
-    </div>
-    <div class="index-col col-1">
-      <div class="checkbox-wrapper item-{{form.controls['indexOneColor'].value}}" *ngIf="form.controls['indexOne'].value">
-        <mat-checkbox
-          labelPosition="before"
-          [checked]="true"
-        >
-          {{ form.controls['indexOne'].value }}
+          {{ elem.indexName }}
         </mat-checkbox>
       </div>
     </div>
   </div>
 </form>
 
-
 <form [formGroup]="form" novalidate class="selectors" *ngIf="!collapsed">
   <div class="index-content" *ngIf="indexCollection">
-    <div class="index-col col-3">
+    <div class="index-col col-3" formGroupName="indexThree">
       <div class="header">{{indexCollection[2]?.productName}}</div>
       <div class="checkbox-wrapper item-{{i}}" *ngFor="let ind of indexCollection[2]?.indices; let i = index;">
         <mat-checkbox
           labelPosition="before"
-          [checked]="form.controls['indexThree'].value === ind.indexName"
-          (change)="onCheckValue(ind, 'indexThree', $event.checked, colors[2][i], i)"
+          [checked]="isChecked(ind.indexName)"
+          (change)="onCheckValue(ind, $event.checked, colors[2][i], i, 2+1)"
+          [disabled]="(!isChecked(ind.indexName) && collection.length >= 3)"
         >
           {{ ind.indexName }}
+          {{collection.length === 3}}
         </mat-checkbox>
       </div>
     </div>
@@ -58,7 +40,8 @@
         <mat-checkbox
           labelPosition="before"
           [checked]="form.controls['indexTwo'].value === ind.indexName"
-          (change)="onCheckValue(ind, 'indexTwo', $event.checked, colors[1][i], i)"
+          (change)="onCheckValue(ind, $event.checked, colors[1][i], i, 1+1)"
+          [disabled]="(!isChecked(ind.indexName) && collection.length >= 3)"
         >
           {{ ind.indexName }}
         </mat-checkbox>
@@ -70,7 +53,8 @@
         <mat-checkbox
           labelPosition="before"
           [checked]="form.controls['indexOne'].value === ind.indexName"
-          (change)="onCheckValue(ind, 'indexOne', $event.checked, colors[0][i], i)"
+          (change)="onCheckValue(ind, $event.checked, colors[0][i], i, 1)"
+          [disabled]="(!isChecked(ind.indexName) && collection.length >= 3)"
         >
           {{ ind.indexName }}
         </mat-checkbox>
@@ -99,5 +83,3 @@
     </div>
   </div>
 </form>
-
-

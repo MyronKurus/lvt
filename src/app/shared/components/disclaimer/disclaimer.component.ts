@@ -23,11 +23,7 @@ export class DisclaimerComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(DisclaimersModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(DisclaimersModalComponent);
   }
 
 }
