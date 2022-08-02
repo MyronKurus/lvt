@@ -23,7 +23,7 @@ export class Scales {
   x: any;
   y: any;
 
-  constructor(xMin: number, xMax: number) {
+  constructor(xMin: number, xMax: number, legendType: LegendType = LegendType.DAILY) {
     this.x = {
       min: xMin,
       max: xMax,
@@ -35,7 +35,7 @@ export class Scales {
         tickColor: 'rgba(206, 212, 224, 1)'
       },
       ticks: {
-        labelOffset: this.labelOffsetWidth,
+        labelOffset: legendType === LegendType.WEEKLY ? this.labelOffsetWidth : 0,
         autoSkip: false,
         maxRotation: 0,
         minRotation: 0,
@@ -188,7 +188,7 @@ export class ChartComponent implements OnChanges {
           intersect: false,
           mode: 'index',
         },
-        scales: new Scales(0, 16),
+        scales: new Scales(0, 16, this.chartLegend.type),
         plugins: {
           legend: {
             display: false
@@ -216,7 +216,7 @@ export class ChartComponent implements OnChanges {
       const interval = setInterval(() => {
         intervalCounter += 1;
         if (this.chartEl?.chart) {
-          this.config.scales = new Scales(0, 16);
+          this.config.scales = new Scales(0, 16, this.chartLegend.type);
           this.chartEl.chart.update();
         }
 
@@ -501,7 +501,7 @@ export class ChartComponent implements OnChanges {
   private setMobileTooltipsArray(): void {
     this.isMobile = window.innerWidth < 624;
     if (this.isMobile) {
-      this.config.scales = new Scales(0, 3);
+      this.config.scales = new Scales(0, 3, this.chartLegend.type);
 
       this.mobileTooltipsArray = [];
       const datasetLength = this.lineStylesData.datasets.length;

@@ -27,14 +27,15 @@
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
-  overflow: scroll;
+  overflow-x: auto;
 
   button {
     font-family: 'Assistant', sans-serif;
     font-size: 14px;
     background-color: #f6f6f6;
     color: #18285F;
-    width: 130px;
+    width: max-content;
+    padding: 0 14px;
     min-width: 100px;
     height: 30px;
     outline: none;

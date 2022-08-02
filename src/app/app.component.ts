@@ -19,19 +19,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = false;
-    // this.auth.bankProfile()
-    //   .pipe(tap(profile => this.auth.setBankProfile(profile)))
-    //   .subscribe(() => {
-    //     this.isLoading = false;
-    //   });
-    // this.subscription = this.auth.accessToken()
-    //   .pipe(
-    //     tap(token => this.auth.setAuthToken(token.access_token)),
-    //     switchMap( () => this.auth.bankProfile()),
-    //     tap(profile => this.auth.setBankProfile(profile))
-    //   ).subscribe(() => {
-    //     this.isLoading = false;
-    //   });
+
+    this.auth.bankProfile()
+      .pipe(tap(profile => this.auth.setBankProfile(profile)))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
+    this.subscription = this.auth.accessToken()
+      .pipe(
+        tap(token => this.auth.setAuthToken(token.access_token)),
+        switchMap( () => this.auth.bankProfile()),
+        tap(profile => this.auth.setBankProfile(profile))
+      ).subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy() {

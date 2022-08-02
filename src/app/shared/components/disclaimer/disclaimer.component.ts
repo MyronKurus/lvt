@@ -17,6 +17,8 @@ export class DisclaimerComponent implements OnInit {
     'Securities', 'Securities + Deposits and Savings', 'Securities + Deposits and Savings + Current'
   ];
 
+  isCollapsed: boolean = true;
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {

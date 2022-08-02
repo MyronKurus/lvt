@@ -6,7 +6,7 @@
            [height]="'350px'"
   ></p-chart>
 
-  <div class="chart-box__navigation">
+  <div class="chart-box__navigation" *ngIf="yieldPeriodLength">
     <img
       src="assets/icons/arrow_left.svg"
       class="chart-box__controller"
