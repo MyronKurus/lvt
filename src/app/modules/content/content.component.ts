@@ -5,6 +5,8 @@ import {forkJoin} from "rxjs";
 import {UserProfile} from "../../shared/models/user-profile.model";
 import {IndexCollection} from "../../shared/models/index.model";
 import {Portfolio} from "../../shared/models/portfolio.model";
+import * as moment from "moment";
+import {DatePipe} from "@angular/common";
 
 export enum LegendType {
   DAILY,
@@ -47,7 +49,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private data: DataService
+    private data: DataService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +58,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   onFormValueChange(value: FormValue) {
+    console.log(value);
+
     this.formValue = value;
     let monthLength = 0;
     forkJoin([
@@ -77,6 +82,19 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
 
     monthLength = ContentComponent.getMonthCount(new Date(value.startDate), new Date(value.endDate));
+
+    if (monthLength === 1) {
+      const startDayNum = this.datePipe.transform(value.startDate, 'd');
+      const endDayNum =  this.datePipe.transform(value.endDate, 'd');
+
+      if (startDayNum && endDayNum && +startDayNum >= +endDayNum) {
+        this.chartLegend.type = LegendType.DAILY;
+        this.chartLegend.length = monthLength;
+        this.chartLegend.startDate = new Date(value.startDate);
+        this.chartLegend.endDate = new Date(value.endDate);
+        return;
+      }
+    }
 
     this.chartLegendBreakpoints.forEach(breakPoint => {
       if (breakPoint.minCount <= monthLength && breakPoint.maxCount >= monthLength) {

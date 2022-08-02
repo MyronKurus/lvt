@@ -5,6 +5,7 @@
 .chart-box {
   overflow: hidden;
   position: relative;
+  user-select: none;
 
   &__navigation {
     width: calc(100% - 46px);
@@ -50,8 +51,8 @@
     justify-content: center;
     position: absolute;
     top: 0;
-    left: 50px;
-    width: calc(100% - 50px);
+    left: 0;
+    width: 100%;
     height: calc(100% - 55px);
     background-color: rgba(230, 233, 239, 1);
 

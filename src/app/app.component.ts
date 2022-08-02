@@ -18,8 +18,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isLoading = false;
-
     this.auth.bankProfile()
       .pipe(tap(profile => this.auth.setBankProfile(profile)))
       .subscribe(() => {

@@ -17,6 +17,8 @@
   }
 
   .profit {
+    display: flex;
+    align-items: center;
     position: relative;
     font-size: 20px;
     font-weight: 700;
@@ -54,11 +56,11 @@
 
 @media screen and (max-width: 650px) {
   .summary {
-    padding: 3px 0 0;
+    padding: 6px 0;
 
     .time-range {
       position: absolute;
-      margin-top: 30px;
+      margin-top: 34px;
       right: 0;
     }
 

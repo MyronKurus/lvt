@@ -91,7 +91,7 @@ export class ChartComponent implements OnChanges {
   lineStylesData: any;
   tooltip: any;
   mobileTooltipsArray: any[] = [];
-  yieldPeriodLength = 12;
+  yieldPeriodLength = 0;
   scrollChartIndex = 0;
 
   @ViewChild('chart') chartEl?: UIChart;
@@ -102,6 +102,8 @@ export class ChartComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.isMobile = window.innerWidth < 624;
+    let maxLegendPerView = this.isMobile ? 4 : 16;
     this.checkAgentType();
 
     if (changes['portfolio'] && changes['portfolio']?.currentValue?.periodYield) {
@@ -113,7 +115,7 @@ export class ChartComponent implements OnChanges {
         labels: this.setLabels(portfolio.periodYield),
         datasets: [
           {
-            label: 'תקופה',
+            label: 'התיק שלי',
             data: this.setDataset(portfolio.periodYield),
             borderColor: '#19295f',
             pointBorderWidth: 2,
@@ -126,7 +128,7 @@ export class ChartComponent implements OnChanges {
       this.config = {
         padding: 0,
         animation: {
-          onProgress: function(e: any) {
+          onProgress: function (e: any) {
             const chartArea = e.chart.chartArea;
             const metaSet = e.chart['_metasets'][0];
             const data = metaSet.data;
@@ -188,7 +190,7 @@ export class ChartComponent implements OnChanges {
           intersect: false,
           mode: 'index',
         },
-        scales: new Scales(0, 16, this.chartLegend.type),
+        scales: new Scales(0, maxLegendPerView, this.chartLegend.type),
         plugins: {
           legend: {
             display: false
@@ -209,21 +211,24 @@ export class ChartComponent implements OnChanges {
         }
       };
 
-      this.setMobileTooltipsArray();
-      this.cdr.markForCheck();
+      if (this.isMobile) {
+        this.setMobileTooltipsArray();
+      }
 
       let intervalCounter = 0;
       const interval = setInterval(() => {
         intervalCounter += 1;
         if (this.chartEl?.chart) {
-          this.config.scales = new Scales(0, 16, this.chartLegend.type);
+          this.config.scales = new Scales(0, maxLegendPerView, this.chartLegend.type);
           this.chartEl.chart.update();
         }
 
-        if (intervalCounter === 4) {
+        if (intervalCounter === 3) {
           clearInterval(interval);
         }
-      }, 1000);
+      }, 500);
+
+      this.cdr.markForCheck();
     }
   }
 
@@ -363,11 +368,11 @@ export class ChartComponent implements OnChanges {
     }
 
     const position = context.chart.canvas.getBoundingClientRect();
-    const offsetDiff = tooltipModel.xAlign === 'left' ? 0 : 250;
+    const offsetDiff = tooltipModel.xAlign === 'left' ? 0 : tooltipEl.clientWidth + 20;
     const leftPosition = position.left - offsetDiff + window.scrollX + tooltipModel.caretX;
 
     tooltipEl.style.opacity = isMobile ? '0' : '1';
-    tooltipEl.style.width = '230px';
+    tooltipEl.style.minWidth = '180px';
     tooltipEl.style.position = 'absolute';
     tooltipEl.style.left = leftPosition + 'px';
     tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY + 'px';
@@ -406,7 +411,6 @@ export class ChartComponent implements OnChanges {
   }
 
   private checkAgentType(): void {
-    this.isMobile = window.innerWidth < 624;
     if (this.isMobile) {
       this.tooltip = {
         enabled: false,
@@ -465,7 +469,7 @@ export class ChartComponent implements OnChanges {
 
         const startOfWeek = this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ')[0] || '';
         const endOfWeek = this.datePipe.transform(item.endOfPeriod, dateFormat)?.split(' ')[0] || '';
-        const weekPeriod = `${startOfWeek} - ${endOfWeek}`;
+        const weekPeriod = `${startOfWeek}-${endOfWeek}`;
 
         const label = this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ');
         if (label) {
@@ -491,47 +495,38 @@ export class ChartComponent implements OnChanges {
   }
 
   private setDataset(mainYields: any[]): number[] {
-    function getRandomInt(min: number, max: number): number {
-      return Math.floor(Math.random()  * (max - min + 1) + min);
-    }
-
-    return mainYields.map(() => getRandomInt(-5, 15));
+    return mainYields.map(item => Number(item.precentageYieldPeriod.toFixed(3)));
   }
 
   private setMobileTooltipsArray(): void {
-    this.isMobile = window.innerWidth < 624;
-    if (this.isMobile) {
-      this.config.scales = new Scales(0, 3, this.chartLegend.type);
+    this.mobileTooltipsArray = [];
+    const datasetLength = this.lineStylesData.datasets.length;
+    const dataLength = this.lineStylesData.datasets[0].data.length;
 
-      this.mobileTooltipsArray = [];
-      const datasetLength = this.lineStylesData.datasets.length;
-      const dataLength = this.lineStylesData.datasets[0].data.length;
+    for (let i = 0; i < dataLength; i++) {
+      let sum = 0;
+      let dataInfo = [];
+      let date = '';
 
-      for (let i = 0; i < dataLength; i++) {
-        let sum = 0;
-        let dataInfo = [];
-        let date = '';
-
-        for (let j = 0; j < datasetLength; j++) {
-          const dataSet = this.lineStylesData.datasets[j];
-          sum += dataSet.data[i];
-          if (j === 0) {
-            date = this.datePipe.transform(this.portfolio?.periodYield[i].startOfPeriod, 'dd.MM.yy') || '';
-          }
-
-          dataInfo.push({
-            label: dataSet.label,
-            color: dataSet.borderColor,
-            value: dataSet.data[i],
-          });
+      for (let j = 0; j < datasetLength; j++) {
+        const dataSet = this.lineStylesData.datasets[j];
+        sum += dataSet.data[i];
+        if (j === 0) {
+          date = this.datePipe.transform(this.portfolio?.periodYield[i].startOfPeriod, 'dd.MM.yy') || '';
         }
 
-        this.mobileTooltipsArray.push({
-          sum: sum.toFixed(3),
-          date: date,
-          data: dataInfo
+        dataInfo.push({
+          label: dataSet.label,
+          color: dataSet.borderColor,
+          value: dataSet.data[i],
         });
       }
+
+      this.mobileTooltipsArray.push({
+        sum: sum.toFixed(3),
+        date: date,
+        data: dataInfo
+      });
     }
   }
 }

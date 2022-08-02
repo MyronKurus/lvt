@@ -44,3 +44,9 @@ button {
     }
   }
 }
+
+@media screen and (max-width: 420px) {
+  .dialog {
+    padding: 0 16px;
+  }
+}

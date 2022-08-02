@@ -41,9 +41,6 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formValue.emit(this.form.getRawValue());
-    this.subscription = this.form.valueChanges?.subscribe(value => {
-      this.formValue.emit(value);
-    });
     this.data.getCurrencyList().subscribe(currencies => this.currencies = currencies);
   }
 
@@ -58,6 +55,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   }
 
   onSelectRange(value: string) {
+    console.log(value);
     if (value !== 'custom') {
       this.selectedRange = value;
     }
@@ -68,6 +66,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
         );
         this.form.controls['requestedPeriod'].patchValue(1);
         this.isDialogClosed = true;
+        this.formValue.emit(this.form.getRawValue());
         break;
       case '6 month':
         this.form.controls['startDate'].patchValue(
@@ -75,6 +74,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
         );
         this.form.controls['requestedPeriod'].patchValue(2);
         this.isDialogClosed = true;
+        this.formValue.emit(this.form.getRawValue());
         break;
       case '12 month':
         this.form.controls['startDate'].patchValue(
@@ -82,11 +82,13 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
         );
         this.form.controls['requestedPeriod'].patchValue(3);
         this.isDialogClosed = true;
+        this.formValue.emit(this.form.getRawValue());
         break;
       case 'startOfTheYear':
         this.form.controls['startDate'].patchValue(moment().startOf('year').format());
         this.form.controls['requestedPeriod'].patchValue(4);
         this.isDialogClosed = true;
+        this.formValue.emit(this.form.getRawValue());
         break;
       case 'custom':
         this.openDialog();
@@ -103,6 +105,7 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
     this.form.controls['endDate'].patchValue(value.endDate);
     this.form.controls['requestedPeriod'].patchValue(5);
     this.selectedRange = 'custom';
+    this.formValue.emit(this.form.getRawValue());
   }
 
   onClose(closed: boolean): void {

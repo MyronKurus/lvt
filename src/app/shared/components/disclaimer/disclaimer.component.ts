@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormValue} from "../../models/form-value.model";
+import {Component, Input} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
+
+import {FormValue} from "../../models/form-value.model";
 import {DisclaimersModalComponent} from "../disclaimers-modal/disclaimers-modal.component";
 
 @Component({
@@ -8,7 +9,7 @@ import {DisclaimersModalComponent} from "../disclaimers-modal/disclaimers-modal.
   templateUrl: './disclaimer.component.html',
   styleUrls: ['./disclaimer.component.scss']
 })
-export class DisclaimerComponent implements OnInit {
+export class DisclaimerComponent {
 
   @Input()
   formValue: FormValue | undefined;
@@ -17,15 +18,14 @@ export class DisclaimerComponent implements OnInit {
     'Securities', 'Securities + Deposits and Savings', 'Securities + Deposits and Savings + Current'
   ];
 
-  isCollapsed: boolean = true;
-
   constructor(public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
-
   openDialog() {
-    this.dialog.open(DisclaimersModalComponent);
+    this.dialog.open(DisclaimersModalComponent, {
+      backdropClass: 'transparent',
+      maxWidth: '96vw',
+      maxHeight: '96vh'
+    });
   }
 
 }
