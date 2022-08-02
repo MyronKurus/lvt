@@ -16,7 +16,7 @@
     <img
       src="assets/icons/arrow_right.svg"
       class="chart-box__controller"
-      [class.show]="config?.scales.x.max !== portfolio?.periodYield?.length"
+      [class.show]="config?.scales.x.max < yieldPeriodLength"
       (click)="scrollChartHandler(1)"
       alt="">
   </div>

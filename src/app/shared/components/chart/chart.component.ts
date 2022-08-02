@@ -12,11 +12,12 @@ import {DatePipe} from "@angular/common";
 import {Subject} from "rxjs";
 
 import {Chart} from 'chart.js';
+import {UIChart} from "primeng/chart";
 import chartAnnotationPlugin from 'chartjs-plugin-annotation';
 
 import {Portfolio} from "../../models/portfolio.model";
 import {IndexCollection} from "../../models/index.model";
-import {UIChart} from "primeng/chart";
+import {LegendType} from "../../../modules/content/content.component";
 
 export class Scales {
   x: any;
@@ -26,19 +27,21 @@ export class Scales {
     this.x = {
       min: xMin,
       max: xMax,
+      alignToPixels: true,
+      padding: 0,
       grid: {
         drawBorder: true,
-        display: false
+        color: 'transparent',
+        tickColor: 'rgba(206, 212, 224, 1)'
       },
       ticks: {
+        labelOffset: this.labelOffsetWidth,
         autoSkip: false,
         maxRotation: 0,
-        minRotation: 0
-      }
+        minRotation: 0,
+      },
     }
     this.y = {
-      max: 0.1,
-      min: -0.1,
       ticks: {
         callback: function (value: any) {
           return value + '%';
@@ -50,6 +53,23 @@ export class Scales {
       },
     }
   }
+
+  get tickWidth(): number {
+    const tickWidth = sessionStorage.getItem('FIB-TICK-WIDTH');
+    if (tickWidth) {
+      return JSON.parse(tickWidth);
+    }
+
+    return 0;
+  }
+
+  get labelOffsetWidth(): number {
+    if (this.tickWidth > 0) {
+      return this.tickWidth / 2;
+    }
+
+    return 0;
+  }
 }
 
 @Component({
@@ -59,6 +79,7 @@ export class Scales {
 })
 export class ChartComponent implements OnChanges {
 
+  @Input() chartLegend: any | undefined;
   @Input() stockIndexes: IndexCollection[] | undefined;
   @Input() portfolio: Portfolio | undefined;
 
@@ -70,6 +91,7 @@ export class ChartComponent implements OnChanges {
   lineStylesData: any;
   tooltip: any;
   mobileTooltipsArray: any[] = [];
+  yieldPeriodLength = 12;
   scrollChartIndex = 0;
 
   @ViewChild('chart') chartEl?: UIChart;
@@ -82,14 +104,17 @@ export class ChartComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.checkAgentType();
 
-    if (this.portfolio) {
-      sessionStorage.setItem('FIB-DATASETS', JSON.stringify(this.portfolio.periodYield));
+    if (changes['portfolio'] && changes['portfolio']?.currentValue?.periodYield) {
+      const portfolio = changes['portfolio'].currentValue;
+      this.yieldPeriodLength = portfolio.periodYield.length
+
+      sessionStorage.setItem('FIB-DATASETS', JSON.stringify(portfolio.periodYield));
       this.lineStylesData = {
-        labels: this.setLabels(this.portfolio.periodYield),
+        labels: this.setLabels(portfolio.periodYield),
         datasets: [
           {
             label: 'תקופה',
-            data: this.setDataset(this.portfolio.periodYield),
+            data: this.setDataset(portfolio.periodYield),
             borderColor: '#19295f',
             pointBorderWidth: 2,
             pointBackgroundColor: '#19295f',
@@ -99,12 +124,13 @@ export class ChartComponent implements OnChanges {
       };
 
       this.config = {
+        padding: 0,
         animation: {
           onProgress: function(e: any) {
             const chartArea = e.chart.chartArea;
             const metaSet = e.chart['_metasets'][0];
             const data = metaSet.data;
-            const someShift = 8;
+            const someShift = -1;
             let startX = 0;
             let endX = 0;
 
@@ -134,6 +160,20 @@ export class ChartComponent implements OnChanges {
                 shiftEl.style.top = `${chartArea.top}px`;
                 shiftEl.style.background = 'rgba(230, 233, 239, 1)';
               }
+
+              sessionStorage.setItem('FIB-TICK-WIDTH', String(endX - startX));
+            } else if (data.length > 2) {
+              for (let i = 0; i < 2; i++) {
+                if (i === 0) {
+                  startX = data[i].x;
+                }
+
+                if (i == 1) {
+                  endX = data[i].x;
+                }
+              }
+
+              sessionStorage.setItem('FIB-TICK-WIDTH', String(endX - startX));
             }
           }
         },
@@ -148,7 +188,7 @@ export class ChartComponent implements OnChanges {
           intersect: false,
           mode: 'index',
         },
-        scales: new Scales(0, 18),
+        scales: new Scales(0, 16),
         plugins: {
           legend: {
             display: false
@@ -171,6 +211,19 @@ export class ChartComponent implements OnChanges {
 
       this.setMobileTooltipsArray();
       this.cdr.markForCheck();
+
+      let intervalCounter = 0;
+      const interval = setInterval(() => {
+        intervalCounter += 1;
+        if (this.chartEl?.chart) {
+          this.config.scales = new Scales(0, 16);
+          this.chartEl.chart.update();
+        }
+
+        if (intervalCounter === 4) {
+          clearInterval(interval);
+        }
+      }, 1000);
     }
   }
 
@@ -375,25 +428,58 @@ export class ChartComponent implements OnChanges {
   private setLabels(mainYields: any[]): any {
     let oldMonth = '';
     let oldYear = '';
-    // return mainYields.map((item, index) => {
-    //   const currentMonth = this.datePipe.transform(item.startOfPeriod, 'MMM') || '';
-    //   const currentYear = this.datePipe.transform(item.startOfPeriod, 'y') || '';
-    //   let dateFormat = index === 0 || currentYear !== oldYear ? 'd MMM y' : 'd MMM';
-    //
-    //   if (index > 0 && currentMonth === oldMonth && currentYear === oldYear) {
-    //     dateFormat = 'd';
-    //   }
-    //
-    //   oldYear = currentYear || '';
-    //   oldMonth = currentMonth || '';
-    //
-    //   return this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ') || '';
-    // });
 
-    return Array.from({length: 36}, (e, i) => {
-      const today = new Date();
-      const monthNumber = today.getMonth() + i;
-      const period = new Date(today.getFullYear(), monthNumber, 1);
+    if (this.chartLegend.type === LegendType.DAILY) {
+      return mainYields.map((item, index) => {
+        const currentMonth = this.datePipe.transform(item.startOfPeriod, 'MMM') || '';
+        const currentYear = this.datePipe.transform(item.startOfPeriod, 'y') || '';
+        let dateFormat = index === 0 || currentYear !== oldYear ? 'd MMM y' : 'd MMM';
+
+        if (index > 0 && currentMonth === oldMonth && currentYear === oldYear) {
+          dateFormat = 'd';
+        }
+
+        oldYear = currentYear || '';
+        oldMonth = currentMonth || '';
+
+        return this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ') || '';
+      });
+    }
+
+    if (this.chartLegend.type === LegendType.WEEKLY) {
+      return mainYields.map((item, index) => {
+        if (index === mainYields.length - 1) {
+          return '';
+        }
+
+        const currentMonth = this.datePipe.transform(item.startOfPeriod, 'dd.MM') || '';
+        const currentYear = this.datePipe.transform(item.startOfPeriod, 'y') || '';
+        let dateFormat = index === 0 || currentYear !== oldYear ? 'dd.MM y' : 'dd.MM';
+
+        if (index > 0 && currentMonth === oldMonth && currentYear === oldYear) {
+          dateFormat = 'dd.MM';
+        }
+
+        oldYear = currentYear || '';
+        oldMonth = currentMonth || '';
+
+        const startOfWeek = this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ')[0] || '';
+        const endOfWeek = this.datePipe.transform(item.endOfPeriod, dateFormat)?.split(' ')[0] || '';
+        const weekPeriod = `${startOfWeek} - ${endOfWeek}`;
+
+        const label = this.datePipe.transform(item.startOfPeriod, dateFormat)?.split(' ');
+        if (label) {
+          label.splice(0, 1, weekPeriod);
+          return label;
+        }
+
+        return '';
+      });
+    }
+
+    return Array.from({length: this.chartLegend.length}, (e, i) => {
+      const monthNumber = this.chartLegend.startDate.getMonth() + i;
+      const period = new Date(this.chartLegend.startDate.getFullYear(), monthNumber, 1);
       const currentYear = this.datePipe.transform(period, 'y') || '';
 
       let dateFormat = i === 0 || currentYear !== oldYear ? 'MMM y' : 'MMM';
@@ -405,13 +491,17 @@ export class ChartComponent implements OnChanges {
   }
 
   private setDataset(mainYields: any[]): number[] {
-    return mainYields.map(item => Number(item.precentageYieldPeriod.toFixed(3)));
+    function getRandomInt(min: number, max: number): number {
+      return Math.floor(Math.random()  * (max - min + 1) + min);
+    }
+
+    return mainYields.map(() => getRandomInt(-5, 15));
   }
 
   private setMobileTooltipsArray(): void {
     this.isMobile = window.innerWidth < 624;
     if (this.isMobile) {
-      this.config.scales = new Scales(0, 8);
+      this.config.scales = new Scales(0, 3);
 
       this.mobileTooltipsArray = [];
       const datasetLength = this.lineStylesData.datasets.length;

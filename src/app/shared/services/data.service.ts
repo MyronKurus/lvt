@@ -30,7 +30,11 @@ export class DataService {
   }
 
   public indexes(body: IndexesBody): Observable<IndexCollection[]> {
-    return this.repoService.post<IndexCollection[]>('CustomerYieldCalculation/Indexes', body);
+    return this.repoService.post<IndexCollection[]>('CustomerYieldCalculation/Indexes', {
+      "requestedPeriod": 5,
+      "startDate": "2022-05-15T00:00:00.000",
+      "endDate": "2022-06-26T00:00:00.000"
+    });
   }
 
   public portfolio(body: PortfolioBody): Observable<Portfolio> {

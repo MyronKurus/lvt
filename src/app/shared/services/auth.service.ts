@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   public getAuthToken(): string {
-    return this.authToken;
+    return 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJMZXZlbnQiLCJzdWIiOiJTdWJqZWN0IiwiYXVkIjoiQXVkaWVuY2UiLCJleHAiOjEyMywibmJmIjoxMjMsImlhdCI6MTIzLCJqdGkiOiJ1bmlxdWUgaWRlbnRpZmllciIsImJhbmsiOjMxLCJicmFuY2giOjQ2LCJhY2NvdW50Ijo0MDQxNDQsImN1c3RvbWVySWQiOiIwMTIzNDU2NyIsImNsZXJrSWQiOiJ0MTIzNDU2In0.deyJmMOlK8nEq9nR4cCmkkajiaGD4RUrS3S2WmMUj5U';
   }
 
   public setAuthToken(token: string): void {
