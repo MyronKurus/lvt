@@ -4,7 +4,7 @@
       <mat-form-field appearance="fill" dir="rtl">
         <mat-select formControlName="currency">
           <mat-option *ngFor="let currency of currencies" [value]="currency.KOD_MATBEA">
-            שקל {{getSymbol(currency.SHEM_ISO)}}
+            {{getSymbol(currency.SHEM_ISO)}} שקל
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -12,7 +12,7 @@
 
     <div class="assets">
       <mat-form-field appearance="fill" dir="rtl">
-        <mat-select formControlName="assets" (selectionChange)="onMultiselectClick($event.value)">
+        <mat-select formControlName="assets">
           <mat-option
             *ngFor="let asset of assets" [value]="asset.value"
             [disabled]="!form.controls['assets'].value.includes('Securities') && asset.value !== 'Securities'"

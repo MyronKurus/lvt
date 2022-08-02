@@ -18,8 +18,8 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
   public currencies: Currency[] = [];
   public assets: {value: string, label: string} [] = [
     {value: 'Securities', label: 'ניירות ערך'},
-    {value: 'Securities + Deposits and Savings', label: 'ניירות ערך + פיקדונות וחסכונות'},
-    {value: 'Securities + Deposits and Savings + Current', label: 'ניירות ערך + פיקדונות וחסכונות + עו"ש'}
+    {value: 'Securities + Deposits and Savings', label: 'ני"ע ופקדונות'},
+    {value: 'Securities + Deposits and Savings + Current', label: 'ני"ע, פקדונות ועו"ש'}
   ];
   public selectedRange: string = '12 month';
   public isDialogClosed: boolean = true;
@@ -46,12 +46,6 @@ export class SelectionFiltersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
-  }
-
-  onMultiselectClick(value: string) {
-    // if (!value?.includes('Securities')) {
-    //   this.form.controls['assets'].patchValue([]);
-    // }
   }
 
   onSelectRange(value: string) {

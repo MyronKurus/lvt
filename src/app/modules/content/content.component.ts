@@ -5,7 +5,6 @@ import {forkJoin} from "rxjs";
 import {UserProfile} from "../../shared/models/user-profile.model";
 import {IndexCollection} from "../../shared/models/index.model";
 import {Portfolio} from "../../shared/models/portfolio.model";
-import * as moment from "moment";
 import {DatePipe} from "@angular/common";
 
 export enum LegendType {
