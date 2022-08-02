@@ -5,24 +5,24 @@
   </div>
   <div class="profit">
     <img
+      alt="help"
       src="assets/icons/product_help.svg"
       class="question-mark"
-      (mouseover)="isOpen = !isOpen; currency = !currency"
-      (mouseleave)="isOpen = !isOpen; currency = !currency"
+      (click)="isOpen = true; currency = true; percentage = false"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
-    <img [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> ₪ 19,000
+    <img alt="arrow" [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> ₪ 19,000
     <span class="divider">|</span>
     <img
+      alt="help"
       src="assets/icons/product_help.svg"
       class="question-mark"
-      (mouseover)="isOpen = !isOpen; percentage = !percentage"
-      (mouseleave)="isOpen = !isOpen; percentage = !percentage"
+      (click)="isOpen = true; percentage = true; currency = false;"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
     >
-    <img [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> 4.5%
+    <img alt="arrow" [src]="!down ? 'assets/icons/stock_arrow_up.svg' : 'assets/icons/stock_arrow_down.svg'"> 4.5%
     <span dir="rtl">תשואה לתקופה:</span>
   </div>
 </div>
@@ -34,7 +34,7 @@
 >
   <div
     class="tooltip-container"
-    [ngStyle]="{'left': currency ? '-137px' : '36px'}"
+    [ngStyle]="{'left': currency ? '-137px' : '27px'}"
   >
     <div
       class="triangle"
@@ -42,9 +42,12 @@
     ></div>
     <div class="tooltip-content">
       <div class="tooltip-header">
-      <span *ngIf="currency">
-        חישוב תשואה בשקלים
-      </span>
+        <button (click)="isOpen = false; currency = false; percentage = false;">
+          <img src="assets/icons/ic_close.svg" alt="close">
+        </button>
+        <span *ngIf="currency">
+           חישוב תשואה בשקלים
+        </span>
         <span *ngIf="percentage">
         חישוב תשואה באחוזים
       </span>

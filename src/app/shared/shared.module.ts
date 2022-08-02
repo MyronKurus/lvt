@@ -13,7 +13,8 @@ import {SummaryLineComponent} from './components/summary-line/summary-line.compo
 import {IndexSelectionComponent} from "./components/index-selection/index-selection.component";
 import {RangeSelectionComponent} from './components/range-selection/range-selection.component';
 import {SelectionFiltersComponent} from "./components/selection-filters/selection-filters.component";
-import {DisclaimerComponent} from './components/disclaimer/disclaimer.component';
+import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
+import { DisclaimersModalComponent } from './components/disclaimers-modal/disclaimers-modal.component';
 
 const MODULES = [
   CommonModule,
@@ -32,6 +33,7 @@ const COMPONENTS = [
   RangeSelectionComponent,
   LoaderComponent,
   DisclaimerComponent,
+  DisclaimersModalComponent,
 ];
 
 

@@ -13,4 +13,6 @@ export interface IndexRecord {
   periodIndexesYield: PeriodIndexesYield[];
   errorMessage?: null | string;
   color?: string;
+  row?: number;
+  col?: number;
 }
